@@ -385,6 +385,7 @@ class _EditScreenState extends State<EditScreen> {
         ),
         child: InkWell(
           onTap: () {
+            Navigator.of(context).pop();
             debugPrint('Saved alarm');
           },
           child: Center(

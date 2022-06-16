@@ -28,6 +28,27 @@ class _TypingMissionState extends State<TypingMission> {
         ),
         body: ListView(
           children: [],
-        ));
+        ),
+        bottomNavigationBar: Container(
+          height: 60,
+          margin: EdgeInsetsDirectional.all(10),
+          decoration: BoxDecoration(
+            color: Colors.blueAccent,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+              debugPrint('Saved alarm');
+            },
+            child: Center(
+              child: Text(
+                'Save',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+      );
   }
 }

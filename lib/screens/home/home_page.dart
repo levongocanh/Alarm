@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import '../alarm_screens/alarm_home.dart';
 
-class HomePageNavigationBar extends StatefulWidget {
-  const HomePageNavigationBar({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePageNavigationBar> createState() => _HomePageNavigationBarState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageNavigationBarState extends State<HomePageNavigationBar> {
+class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Lịch sử',
-      style: optionStyle,
-    ),
+    MyApp(),
     Text(
       'Index 1: Lịch sử',
       style: optionStyle,

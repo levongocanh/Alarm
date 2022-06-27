@@ -5,6 +5,7 @@ import 'package:alarm_app/screens/mission_screens/qr_scan.dart';
 import 'package:alarm_app/screens/mission_screens/step.dart';
 import 'package:alarm_app/screens/mission_screens/take_photo.dart';
 import 'package:alarm_app/screens/mission_screens/typing.dart';
+import 'package:alarm_app/widgets/select_mission_button.dart';
 import 'package:flutter/material.dart';
 
 class SelectMission extends StatefulWidget {
@@ -36,185 +37,59 @@ class _SelectMissionState extends State<SelectMission> {
           child: Center(
             child: ListView(
               children: <Widget>[
-                Container(
-                  height: 70,
-                  margin: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.of(context).pop()
-                    },
-                    child: Row(children: <Widget>[
-                      SizedBox(
-                        width: 50,
-                        child: Icon(
-                            Icons.alarm,
-                          ),
-                        ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Mặc định',
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 50, child: Icon(Icons.chevron_right)),
-                    ]),
-                  ),
+                SelectMissionButton(
+                  missionName: 'Mặc định',
+                  missionIcon: Icon(Icons.alarm),
+                  onTap: () => {
+                    Navigator.of(context).pop(),
+                    debugPrint('Selected Default')
+                  },
+                  color: Colors.grey[300],
                 ),
-                Container(
-                  height: 70,
-                  margin: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => TakePhotoMission()))
-                    },
-                    child: Row(children: <Widget>[
-                      SizedBox(
-                        width: 50,
-                        child: Icon(
-                            Icons.photo_camera,
-                          ),
-                        ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Chụp ảnh',
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 50, child: Icon(Icons.chevron_right)),
-                    ]),
-                  ),
+
+                SelectMissionButton(
+                  missionName: 'Chụp ảnh',
+                  missionIcon: Icon(Icons.photo_camera),
+                  onTap: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TakePhotoMission()))
+                  },
+                  color: Colors.grey[300],
                 ),
-                Container(
-                  height: 70,
-                  margin: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MathMission()))
-                    },
-                    child: Row(children: <Widget>[
-                      SizedBox(
-                        width: 50,
-                        child: Icon(
-                            Icons.calculate,
-                          ),
-                        ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Giải toán',
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 50, child: Icon(Icons.chevron_right)),
-                    ]),
-                  ),
+
+                SelectMissionButton(
+                  missionName: 'Giải toán',
+                  missionIcon: Icon(Icons.calculate),
+                  onTap: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MathMission()))
+                  },
+                  color: Colors.grey[300],
                 ),
-                Container(
-                  height: 70,
-                  margin: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ScanQRMission()))
-                    },
-                    child: Row(children: <Widget>[
-                      SizedBox(
-                        width: 50,
-                        child: Icon(
-                            Icons.qr_code_scanner,
-                          ),
-                        ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Mã vạch/mã QR',
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 50, child: Icon(Icons.chevron_right)),
-                    ]),
-                  ),
+
+                SelectMissionButton(
+                  missionName: 'Mã vạch/mã QR',
+                  missionIcon: Icon(Icons.qr_code_scanner),
+                  onTap: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ScanQRMission()))
+                  },
+                  color: Colors.grey[300],
                 ),
-                Container(
-                  height: 70,
-                  margin: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => TypingMission()))
-                    },
-                    child: Row(children: <Widget>[
-                      SizedBox(
-                        width: 50,
-                        child: Icon(
-                            Icons.keyboard,
-                          ),
-                        ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Typing',
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 50, child: Icon(Icons.chevron_right)),
-                    ]),
-                  ),
+
+                SelectMissionButton(
+                  missionName: 'Typing',
+                  missionIcon: Icon(Icons.keyboard),
+                  onTap: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TypingMission()))
+                  },
+                  color: Colors.grey[300],
                 ),
-                Container(
-                  height: 70,
-                  margin: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => StepMission()))
-                    },
-                    child: Row(children: <Widget>[
-                      SizedBox(
-                        width: 50,
-                        child: Icon(
-                            Icons.directions_run,
-                          ),
-                        ),
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Step',
-                            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 50, child: Icon(Icons.chevron_right)),
-                    ]),
-                  ),
+                
+                SelectMissionButton(
+                  missionName: 'Step',
+                  missionIcon: Icon(Icons.directions_run),
+                  onTap: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => StepMission()))
+                  },
+                  color: Colors.grey[300],
                 ),
               ],
             ),

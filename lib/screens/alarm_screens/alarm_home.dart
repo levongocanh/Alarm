@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, prefer_final_fields, prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:alarm_app/screens/alarm_screens/alarm_edit.dart';
 import 'package:alarm_app/screens/home/home_page.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +11,6 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
-// enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
 class _MyAppState extends State<MyApp> {
   bool? isChecked = false;

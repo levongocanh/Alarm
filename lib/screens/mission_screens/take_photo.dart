@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 
 class TakePhotoMission extends StatefulWidget {

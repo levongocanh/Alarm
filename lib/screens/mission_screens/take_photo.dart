@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 
 class TakePhotoMission extends StatefulWidget {
@@ -29,26 +30,13 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
         body: ListView(
           children: [],
         ),
-        bottomNavigationBar: Container(
-          height: 60,
-          margin: EdgeInsetsDirectional.all(10),
-          decoration: BoxDecoration(
-            color: Colors.blueAccent,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-              debugPrint('Saved alarm');
-            },
-            child: Center(
-              child: Text(
-                'Save',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ),
+        bottomNavigationBar: BottomButton(
+        text: 'Save',
+        onTap: () {
+            Navigator.of(context).pop();
+            debugPrint('Selected Take Photo Mission');
+          },
+        ), 
       );
   }
 }

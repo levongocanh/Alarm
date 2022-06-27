@@ -2,6 +2,8 @@
 
 import 'package:alarm_app/screens/mission_screens/select_mission_screen.dart';
 import 'package:alarm_app/screens/ringtone_screen/select_ringtone_screen.dart';
+import 'package:alarm_app/widgets/bottom_button.dart';
+import 'package:alarm_app/widgets/select_repeat_day.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +17,16 @@ class EditScreen extends StatefulWidget {
 class _EditScreenState extends State<EditScreen> {
   double _sliderValue = 0;
   bool _vibrate = false;
+  bool _sunday = false;
+  bool _monday = false;
+  bool _tueday = false;
+  bool _wednesday = false;
+  bool _thursday = false;
+  bool _friday = false;
+  bool _saturday = false;
+
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -45,153 +53,74 @@ class _EditScreenState extends State<EditScreen> {
               child: Text('Wheel Scroll for Hour and Minute'),
             ),
             Row(
-              
-              // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black54,
-                  ),
-                  child: InkWell(
-                    // change state selected of day for repeat here
-                    onTap: () {},
-                    child: Center(
-                      child: Text(
-                        'CN',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ),
+                SelectRepeatDay(
+                  day: 'CN',
+                  onTap: () => setState(() {
+                    _sunday = !_sunday;
+                    debugPrint(_sunday.toString());
+                  }),
+                  color: _sunday?Colors.blue:Colors.black54,
                 ),
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black54,
-                  ),
-                  child: InkWell(
-                    // change state selected of day for repeat here
-                    onTap: () {},
-                    child: Center(
-                      child: Text(
-                        'T2',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ),
+
+                SelectRepeatDay(
+                  day: 'T2',
+                  onTap: () => setState(() {
+                    _monday = !_monday;
+                    debugPrint(_monday.toString());
+                  }),
+                  color: _monday?Colors.blue:Colors.black54,
                 ),
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black54,
-                  ),
-                  child: InkWell(
-                    // change state selected of day for repeat here
-                    onTap: () {},
-                    child: Center(
-                      child: Text(
-                        'T3',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ),
+
+                SelectRepeatDay(
+                  day: 'T3',
+                  onTap: () => setState(() {
+                    _tueday = !_tueday;
+                    debugPrint(_tueday.toString());
+                  }),
+                  color: _tueday?Colors.blue:Colors.black54,
                 ),
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black54,
-                  ),
-                  child: InkWell(
-                    // change state selected of day for repeat here
-                    onTap: () {},
-                    child: Center(
-                      child: Text(
-                        'T4',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ),
+
+                SelectRepeatDay(
+                  day: 'T4',
+                  onTap: () => setState(() {
+                    _wednesday = !_wednesday;
+                    debugPrint(_wednesday.toString());
+                  }),
+                  color: _wednesday?Colors.blue:Colors.black54,
                 ),
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black54,
-                  ),
-                  child: InkWell(
-                    // change state selected of day for repeat here
-                    onTap: () {},
-                    child: Center(
-                      child: Text(
-                        'T5',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ),
+
+                SelectRepeatDay(
+                  day: 'T5',
+                  onTap: () => setState(() {
+                    _thursday = !_thursday;
+                    debugPrint(_thursday.toString());
+                  }),
+                  color: _thursday?Colors.blue:Colors.black54,
                 ),
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black54,
-                  ),
-                  child: InkWell(
-                    // change state selected of day for repeat here
-                    onTap: () {},
-                    child: Center(
-                      child: Text(
-                        'T6',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ),
+
+                SelectRepeatDay(
+                  day: 'T6',
+                  onTap: () => setState(() {
+                    _friday = !_friday;
+                    debugPrint(_friday.toString());
+                  }),
+                  color: _friday?Colors.blue:Colors.black54,
                 ),
-                Container(
-                  height: 45,
-                  width: 45,
-                  margin: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black54,
-                  ),
-                  child: InkWell(
-                    // change state selected of day for repeat here
-                    onTap: () {},
-                    child: Center(
-                      child: Text(
-                        'T7',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                    ),
-                  ),
+
+                SelectRepeatDay(
+                  day: 'T7',
+                  onTap: () => setState(() {
+                    _saturday = !_saturday;
+                    debugPrint(_saturday.toString());
+                  }),
+                  color: _saturday?Colors.blue:Colors.black54,
                 ),
               ],
             ),
+            
             Divider(color: Colors.black),
             Container(
               height: 70,
@@ -278,7 +207,7 @@ class _EditScreenState extends State<EditScreen> {
                   ),
                   Divider(),
                   InkWell(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectMission())),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectRingtone())),
                     child: Row(
                       children: <Widget>[
                         SizedBox(width: 50, child: Icon(Icons.audiotrack)),
@@ -320,7 +249,7 @@ class _EditScreenState extends State<EditScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () => debugPrint('Open edit label'),
+                onTap: () => {debugPrint('Open edit label')},
                 child: Row(children: <Widget>[
                   SizedBox(
                       width: 50,
@@ -376,27 +305,13 @@ class _EditScreenState extends State<EditScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 60,
-        margin: EdgeInsetsDirectional.all(10),
-        decoration: BoxDecoration(
-          color: Colors.blueAccent,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: InkWell(
-          onTap: () {
+      bottomNavigationBar: BottomButton(
+        text: 'Save',
+        onTap: () {
             Navigator.of(context).pop();
             debugPrint('Saved alarm');
           },
-          child: Center(
-            child: Text(
-              'Save',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ),
+      ), 
     );
   }
 }
-

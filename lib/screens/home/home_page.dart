@@ -10,8 +10,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
   static const List<Widget> _widgetOptions = <Widget>[
     MyApp(),
     Text(
@@ -52,33 +53,26 @@ class _HomePageState extends State<HomePage> {
             label: 'Báo thức',
             backgroundColor: Colors.blue,
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.timeline),
             label: 'Lịch sử',
             backgroundColor: Colors.blue,
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.art_track),
             label: 'Bắt đầu ngày mới',
             backgroundColor: Colors.blue,
           ),
-
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Cài đặt',
             backgroundColor: Colors.blue,
           ),
-
         ],
-
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
-
       ),
-
     );
   }
 }

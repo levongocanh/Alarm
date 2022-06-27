@@ -17,8 +17,6 @@ class _EditScreenState extends State<EditScreen> {
   bool _vibrate = false;
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -33,7 +31,7 @@ class _EditScreenState extends State<EditScreen> {
             },
             child: Icon(Icons.visibility),
           )
-        ],  
+        ],
       ),
       body: Container(
         margin: EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
@@ -45,7 +43,6 @@ class _EditScreenState extends State<EditScreen> {
               child: Text('Wheel Scroll for Hour and Minute'),
             ),
             Row(
-              
               // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -201,7 +198,8 @@ class _EditScreenState extends State<EditScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectMission())),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SelectMission())),
                 child: Row(children: <Widget>[
                   SizedBox(width: 50, child: Icon(Icons.alarm)),
                   Expanded(
@@ -261,24 +259,39 @@ class _EditScreenState extends State<EditScreen> {
                           endIndent: 10,
                           color: Colors.grey,
                         ),
-                        SizedBox(width: 50, child: Icon(Icons.vibration, color: _vibrate?Colors.black:Colors.grey[400]),),
                         SizedBox(
-                          width: 80, 
+                          width: 50,
+                          child: Icon(Icons.vibration,
+                              color:
+                                  _vibrate ? Colors.black : Colors.grey[400]),
+                        ),
+                        SizedBox(
+                          width: 80,
                           child: InkWell(
-                            onTap: () { setState(() { _vibrate = !_vibrate; }); },
+                            onTap: () {
+                              setState(() {
+                                _vibrate = !_vibrate;
+                              });
+                            },
                             child: CupertinoSwitch(
                               value: _vibrate,
-                              onChanged: (bool value) { setState(() { _vibrate = value; }); },
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _vibrate = value;
+                                });
+                              },
                             ),
                           ),
                         ),
-                          
                       ],
                     ),
                   ),
                   Divider(),
                   InkWell(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectMission())),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectRingtone())),
                     child: Row(
                       children: <Widget>[
                         SizedBox(width: 50, child: Icon(Icons.audiotrack)),
@@ -399,4 +412,3 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 }
-

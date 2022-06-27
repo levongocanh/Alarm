@@ -1,7 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alarm_app/screens/mission_screens/take_photo/photo_item.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
+import '../../../models/photo.dart';
+
+const DUMMY_DATA = [
+  Photo(id: '1', dirPhoto: 'assets/photos/photo1.jpg'),
+  Photo(id: '2', dirPhoto: 'assets/photos/photo2.jpg'),
+  Photo(id: '3', dirPhoto: 'assets/photos/photo3.jpg'),
+  Photo(id: '4', dirPhoto: 'assets/photos/photo1.jpg'),
+  Photo(id: '5', dirPhoto: 'assets/photos/photo2.jpg'),
+  Photo(id: '6', dirPhoto: 'assets/photos/photo3.jpg'),
+  Photo(id: '7', dirPhoto: 'assets/photos/photo1.jpg'),
+  Photo(id: '8', dirPhoto: 'assets/photos/photo2.jpg'),
+];
 
 class TakePhotoMission extends StatefulWidget {
   const TakePhotoMission({Key? key}) : super(key: key);
@@ -52,11 +65,11 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
                   ),
                   Text(
                     'Select a spot far from your bed',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
                   ),
                   Text(
                     'you will snap to dismiss your alarm.',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
                   ),
                   SizedBox(
                     height: 12,
@@ -70,11 +83,21 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
             ],
           ),
           // List Photo
-
-          // Add Photo Button
-          SizedBox(
-            height: 24,
+          Expanded(
+            child: GridView(
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20),
+              padding: EdgeInsets.all(8),
+              children: DUMMY_DATA
+                  .map(
+                      (item) => PhotoItem(id: item.id, dirPhoto: item.dirPhoto))
+                  .toList(),
+            ),
           ),
+          // Add Photo Button
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(

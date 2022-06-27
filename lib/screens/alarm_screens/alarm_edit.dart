@@ -24,7 +24,70 @@ class _EditScreenState extends State<EditScreen> {
   bool _thursday = false;
   bool _friday = false;
   bool _saturday = false;
+  String label = '';
 
+  TextEditingController controller = TextEditingController();
+  
+  Future<String?> openEditLabel() => showDialog<String?>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text('Label'),
+      content: TextField(
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: 'Please enter a label',
+        ),
+        controller: controller,
+      ),
+      actions: [
+        MaterialButton(
+          color: Colors.blueAccent,
+          onPressed: () {
+            Navigator.of(context).pop(controller.text);
+          },
+          child: Text('OK'),
+        ),
+        MaterialButton(
+          color: Colors.blueGrey,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+      ],
+    ),
+  );
+
+  Future<String?> openDeleteConfirmationForm() => showDialog<String?>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text('Label'),
+      content: TextField(
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: 'Please enter a label',
+        ),
+        controller: controller,
+      ),
+      actions: [
+        MaterialButton(
+          color: Colors.blueAccent,
+          onPressed: () {
+            Navigator.of(context).pop(controller.text);
+          },
+          child: Text('OK'),
+        ),
+        MaterialButton(
+          color: Colors.blueGrey,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+      ],
+    ),
+  );
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +104,7 @@ class _EditScreenState extends State<EditScreen> {
             },
             child: Icon(Icons.visibility),
           )
-        ],
+        ],  
       ),
       body: Container(
         margin: EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
@@ -57,63 +120,70 @@ class _EditScreenState extends State<EditScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SelectRepeatDay(
-                  day: 'CN',
+                  text: 'CN',
                   onTap: () => setState(() {
                     _sunday = !_sunday;
                     debugPrint(_sunday.toString());
                   }),
-                  color: _sunday ? Colors.blue : Colors.black54,
+                  color: _sunday?Colors.blue:Colors.black54,
                 ),
+
                 SelectRepeatDay(
-                  day: 'T2',
+                  text: 'T2',
                   onTap: () => setState(() {
                     _monday = !_monday;
                     debugPrint(_monday.toString());
                   }),
-                  color: _monday ? Colors.blue : Colors.black54,
+                  color: _monday?Colors.blue:Colors.black54,
                 ),
+
                 SelectRepeatDay(
-                  day: 'T3',
+                  text: 'T3',
                   onTap: () => setState(() {
                     _tueday = !_tueday;
                     debugPrint(_tueday.toString());
                   }),
-                  color: _tueday ? Colors.blue : Colors.black54,
+                  color: _tueday?Colors.blue:Colors.black54,
                 ),
+
                 SelectRepeatDay(
-                  day: 'T4',
+                  text: 'T4',
                   onTap: () => setState(() {
                     _wednesday = !_wednesday;
                     debugPrint(_wednesday.toString());
                   }),
-                  color: _wednesday ? Colors.blue : Colors.black54,
+                  color: _wednesday?Colors.blue:Colors.black54,
                 ),
+
                 SelectRepeatDay(
-                  day: 'T5',
+                  text: 'T5',
                   onTap: () => setState(() {
                     _thursday = !_thursday;
                     debugPrint(_thursday.toString());
                   }),
-                  color: _thursday ? Colors.blue : Colors.black54,
+                  color: _thursday?Colors.blue:Colors.black54,
                 ),
+
                 SelectRepeatDay(
-                  day: 'T6',
+                  text: 'T6',
                   onTap: () => setState(() {
                     _friday = !_friday;
                     debugPrint(_friday.toString());
                   }),
-                  color: _friday ? Colors.blue : Colors.black54,
+                  color: _friday?Colors.blue:Colors.black54,
                 ),
+
                 SelectRepeatDay(
-                  day: 'T7',
+                  text: 'T7',
                   onTap: () => setState(() {
                     _saturday = !_saturday;
                     debugPrint(_saturday.toString());
                   }),
-                  color: _saturday ? Colors.blue : Colors.black54,
+                  color: _saturday?Colors.blue:Colors.black54,
                 ),
               ],
             ),
+            
             Divider(color: Colors.black),
             Container(
               height: 70,
@@ -123,8 +193,7 @@ class _EditScreenState extends State<EditScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectMission())),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectMission())),
                 child: Row(children: <Widget>[
                   SizedBox(width: 50, child: Icon(Icons.alarm)),
                   Expanded(
@@ -184,39 +253,24 @@ class _EditScreenState extends State<EditScreen> {
                           endIndent: 10,
                           color: Colors.grey,
                         ),
+                        SizedBox(width: 50, child: Icon(Icons.vibration, color: _vibrate?Colors.black:Colors.grey[400]),),
                         SizedBox(
-                          width: 50,
-                          child: Icon(Icons.vibration,
-                              color:
-                                  _vibrate ? Colors.black : Colors.grey[400]),
-                        ),
-                        SizedBox(
-                          width: 80,
+                          width: 80, 
                           child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                _vibrate = !_vibrate;
-                              });
-                            },
+                            onTap: () { setState(() { _vibrate = !_vibrate; }); },
                             child: CupertinoSwitch(
                               value: _vibrate,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  _vibrate = value;
-                                });
-                              },
+                              onChanged: (bool value) { setState(() { _vibrate = value; }); },
                             ),
                           ),
                         ),
+                          
                       ],
                     ),
                   ),
                   Divider(),
                   InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SelectRingtone())),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectRingtone())),
                     child: Row(
                       children: <Widget>[
                         SizedBox(width: 50, child: Icon(Icons.audiotrack)),
@@ -258,7 +312,19 @@ class _EditScreenState extends State<EditScreen> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () => {debugPrint('Open edit label')},
+                onTap: () async {
+                  final String? _label = await openEditLabel();
+                  if (_label==null || _label.isEmpty) {
+                    setState(() {
+                      label = '';
+                    });
+                  }
+                  else {
+                    setState(() {
+                      label = _label;
+                    });
+                  }
+                },
                 child: Row(children: <Widget>[
                   SizedBox(
                       width: 50,
@@ -283,7 +349,7 @@ class _EditScreenState extends State<EditScreen> {
                         SizedBox(
                           height: 25,
                           child: Text(
-                            'None',
+                            label==''?'None':label,
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
@@ -317,10 +383,10 @@ class _EditScreenState extends State<EditScreen> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          Navigator.of(context).pop();
-          debugPrint('Saved alarm');
-        },
-      ),
+            Navigator.of(context).pop();
+            debugPrint('Saved alarm');
+          },
+      ), 
     );
   }
 }

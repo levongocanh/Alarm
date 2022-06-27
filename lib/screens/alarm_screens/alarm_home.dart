@@ -176,6 +176,8 @@ class _MyAppState extends State<MyApp> {
         overlayOpacity: 0,
         spacing: 10,
         spaceBetweenChildren: 10,
+        childrenButtonSize: const Size.square(66),
+        buttonSize: const Size.square(56),
         closeManually: false,
         children: [
           SpeedDialChild(

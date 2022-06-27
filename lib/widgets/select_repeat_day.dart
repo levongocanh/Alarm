@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 class SelectRepeatDay extends StatelessWidget {
-  final String day;
+  final String text;
   final double height; 
   final double width;
   final double fontSize;
@@ -15,7 +15,7 @@ class SelectRepeatDay extends StatelessWidget {
   final VoidCallback onTap;
 
   SelectRepeatDay({
-    required this.day,
+    required this.text,
     this.height = 45,
     this.width = 45,
     this.fontSize = 20,
@@ -40,7 +40,7 @@ class SelectRepeatDay extends StatelessWidget {
         onTap: onTap,
         child: Center(
           child: Text(
-            day,
+            text,
             style: TextStyle(
               fontWeight: FontWeight.bold, 
               fontSize: fontSize

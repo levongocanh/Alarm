@@ -47,13 +47,16 @@ class _EditScreenState extends State<EditScreen> {
           },
           child: Text('OK'),
         ),
-        MaterialButton(
-          color: Colors.blueGrey,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text('Cancel'),
-        ),
+
+        // This cancel button will be re-open when I found a way to return old text
+        // MaterialButton(
+        //   color: Colors.blueGrey,
+        //   onPressed: () {
+        //     Navigator.of(context).pop();
+        //   },
+        //   child: Text('Cancel'),
+        // ),
+        
       ],
     ),
   );
@@ -80,7 +83,7 @@ class _EditScreenState extends State<EditScreen> {
         MaterialButton(
           color: Colors.blueGrey,
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop('');
           },
           child: Text('Cancel'),
         ),

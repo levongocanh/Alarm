@@ -142,31 +142,6 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
-
-          // Card(
-          //   child: InkWell(
-          //     onTap: () {
-          //       debugPrint('Card tapped.');
-          //     },
-          //     child: Container(
-          //       height: 85,
-          //       color: Colors.grey[100],
-          //       child: Row(
-          //         children: <Widget>[
-          //           Checkbox(
-          //             value: isChecked,
-          //             onChanged: (bool? value) {
-          //               setState(() {
-          //                 isChecked = value;
-          //               });
-          //             }),
-          //             Container(),
-
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ]),
       ),
       floatingActionButton: SpeedDial(

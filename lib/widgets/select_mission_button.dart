@@ -12,7 +12,7 @@ class SelectMissionButton extends StatelessWidget {
   final double fontSize;
 
 
-  SelectMissionButton({
+  const SelectMissionButton({
     this.height = 70,
     this.margin = 5,
     this.borderRadius = 8,

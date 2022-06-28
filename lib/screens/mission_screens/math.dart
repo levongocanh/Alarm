@@ -62,7 +62,7 @@ class _MathMissionState extends State<MathMission> {
               ),
             ),
             Container(
-              height: 140,
+              height: 145,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.grey.shade300,
@@ -72,7 +72,7 @@ class _MathMissionState extends State<MathMission> {
                 Text(
                   'data',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 23,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -97,13 +97,15 @@ class _MathMissionState extends State<MathMission> {
                           'Easy',
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Expanded(
                           child: Text('Hard',
                             textAlign: TextAlign.right,
                             style: TextStyle(
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -120,6 +122,12 @@ class _MathMissionState extends State<MathMission> {
               ),
             ),
             Container(
+              height: 145,
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: Text('List Wheel Scroll làm sau'),
             )
           ],

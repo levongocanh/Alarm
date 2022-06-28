@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
 import 'package:alarm_app/screens/mission_screens/select_mission_screen.dart';
 import 'package:alarm_app/screens/ringtone_screen/select_ringtone_screen.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/select_repeat_day.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EditScreen extends StatefulWidget {
@@ -56,7 +56,7 @@ class _EditScreenState extends State<EditScreen> {
         //   },
         //   child: Text('Cancel'),
         // ),
-        
+
       ],
     ),
   );
@@ -103,6 +103,7 @@ class _EditScreenState extends State<EditScreen> {
         actions: <Widget>[
           FloatingActionButton(
             onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PreviewAlarm()));
               debugPrint('Open Preview Alarm');
             },
             child: Icon(Icons.visibility),
@@ -261,7 +262,7 @@ class _EditScreenState extends State<EditScreen> {
                           width: 80, 
                           child: InkWell(
                             onTap: () { setState(() { _vibrate = !_vibrate; }); },
-                            child: CupertinoSwitch(
+                            child: Switch(
                               value: _vibrate,
                               onChanged: (bool value) { setState(() { _vibrate = value; }); },
                             ),
@@ -363,22 +364,12 @@ class _EditScreenState extends State<EditScreen> {
                 ]),
               ),
             ),
-            Container(
-              height: 50,
-              margin: EdgeInsetsDirectional.only(top: 5, bottom: 5),
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: InkWell(
-                onTap: () => debugPrint('Deleted Alarm'),
-                child: Center(
-                  child: Text(
-                    'Xóa',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+            BottomButton(
+              height: 55,
+              text: 'Xóa',
+              onTap: () => debugPrint('Deleted Alarm'),
+              color: Colors.grey,
+              margin: EdgeInsetsDirectional.all(0),
             ),
           ],
         ),

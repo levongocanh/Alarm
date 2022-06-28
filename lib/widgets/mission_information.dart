@@ -10,7 +10,7 @@ class MissionInformation extends StatelessWidget {
     required this.missionName,
     this.missionNameSize = 35,
     required this.missionDescription,
-    this.missionDescriptionSize = 20,
+    this.missionDescriptionSize = 22,
   });
 
   @override

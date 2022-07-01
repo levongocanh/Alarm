@@ -11,7 +11,6 @@ class SelectMissionButton extends StatelessWidget {
   final double iconWidth;
   final double fontSize;
 
-
   const SelectMissionButton({
     this.height = 70,
     this.margin = 5,
@@ -39,16 +38,17 @@ class SelectMissionButton extends StatelessWidget {
           SizedBox(
             width: iconWidth,
             child: missionIcon,
-            ),
+          ),
           Expanded(
             child: SizedBox(
               child: Text(
                 missionName,
-                style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
               ),
             ),
           ),
-          SizedBox(width: iconWidth, child: Icon(Icons.chevron_right)),
+          SizedBox(width: iconWidth, child: const Icon(Icons.chevron_right)),
         ]),
       ),
     );

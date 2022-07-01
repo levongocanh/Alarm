@@ -2,6 +2,7 @@
 
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MathMission extends StatefulWidget {
@@ -13,9 +14,11 @@ class MathMission extends StatefulWidget {
 
 class _MathMissionState extends State<MathMission> {
   double _missionLevel = 0;
+  int _selected = 0;
+  
   late String example;
 
-  String getExampleMathMission(missionLevel) {
+  String getMathExpressions(missionLevel) {
     switch(missionLevel){
       case 1:
         return 'case1';
@@ -65,12 +68,12 @@ class _MathMissionState extends State<MathMission> {
               height: 145,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(children: [
                 Text(
-                  'data',
+                  'expression base on mission level',
                   style: TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.bold,
@@ -80,7 +83,7 @@ class _MathMissionState extends State<MathMission> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Slider(
                     value: _missionLevel,
-                    max: 10,
+                    max: 5,
                     onChanged: (double value) {
                       setState(() {
                         _missionLevel = value.ceilToDouble();
@@ -122,13 +125,63 @@ class _MathMissionState extends State<MathMission> {
               ),
             ),
             Container(
-              height: 145,
-              padding: EdgeInsets.all(20),
+              height: 150,
+              width: 80,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Text('List Wheel Scroll làm sau'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: 80,
+                    child: CupertinoPicker(
+                      itemExtent: 50,
+                      looping: false,
+                      squeeze: 1, // display 3 items at time
+                      magnification: 1, // does not zoom the selected item
+                      diameterRatio: 10, // set high value for flat wheel scroll
+                      selectionOverlay: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(color: Colors.grey.shade400, width: 2),
+                              bottom: BorderSide(color: Colors.grey.shade400, width: 2)
+                            ),
+                        ),
+                      ),
+                      onSelectedItemChanged: (int index) {
+                        _selected = index;
+                        debugPrint(_selected.toString());
+                      },
+                      children: List<Widget>.generate(
+                        99,
+                        (int index) {
+                          index = index + 1;
+                          return Center(
+                            child: Text(
+                              '$index',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 35),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      'problems',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),

@@ -100,9 +100,12 @@ class _MyAppState extends State<MyApp> {
                   },
                   child: Row(
                     children: <Widget>[
-                      Text(
-                        'HH:MM',
-                        style: TextStyle(fontSize: 35),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'HH:MM',
+                          style: TextStyle(fontSize: 35),
+                        ),
                       ),
                       Expanded(
                         child: Column(

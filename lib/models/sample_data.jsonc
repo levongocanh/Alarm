@@ -1,0 +1,104 @@
+{
+    // List of alarms
+    "alarm": [
+        {
+            "alarmId": "01",
+            "alarmType": "normal",
+            "isActive": true,
+            "hour": 1,
+            "minute": 30,
+            "ringtoneId": "01",
+            "alarmVolume": 5,
+            "alarmLabel": "",
+            "vibrate": true,
+            "repeatDays": {
+                "sunday": true,
+                "monday": true,
+                "tueday": true,
+                "wednesday": true,
+                "thursday": true,
+                "friday": true,
+                "saturday": true
+            },
+            "alarmMission": {
+                "missionType": "default", // default only required missionType
+                "numberOfProblems": 10, // required for math, typing, steps
+                "missionDifficulty": 1, // required for math, typing, shaking -- WIP
+                "QRCode_BarCode":  "code_here", // required for QR/Barcode mission
+                "imagePath": "img_path" // required for Take a Photo mission
+            }
+        }
+    ],
+    // List of alarm history
+    "alarmHistory": [
+        {
+            "alarmDate": "date",
+            "hour": 1,
+            "minute": 30,
+            "mission": {
+                "missionType": "math" // only required missionType
+            }
+        }
+    ],
+    // Settings for Alarm App
+    "settings": {
+        "theme": "default",
+        "missionDuration": 40,
+        "language": "vi",
+        "muteDuringMission": true 
+    },
+    // List of image path, required for Take a Photo mission
+    "images": [
+        "image1_path",
+        "image2_path"
+    ],
+    // List of QRcode, Barcode required for Scanning mission
+    "QRcode_Barcode": [
+        "code1",
+        "code2"
+    ]
+}
+
+// example data for each mission type
+// {
+//     "alarmMission": {
+//         "missionType": "default",
+//     }
+// }
+
+// {
+//     "alarmMission": {
+//         "missionType": "math",
+//         "numberOfProblems": 10,
+//         "missionDifficulty": 5
+//     }
+// }
+
+// {
+//     "alarmMission": {
+//         "missionType": "typing",
+//         "numberOfProblems": 5,
+//         "missionDifficulty": 1
+//     }
+// }
+
+// {
+//     "alarmMission": {
+//         "missionType": "step",
+//         "numberOfProblems": 100,
+//     }
+// }
+
+// {
+//     "alarmMission": {
+//         "missionType": "codeScanning",
+//         "QRCode_BarCode": "codehere"
+//     }
+// }
+
+// {
+//     "alarmMission": {
+//         "missionType": "takeAPhoto",
+//         "imagePath": "img_path"
+//     }
+// }

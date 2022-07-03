@@ -95,13 +95,15 @@ class _MyAppState extends State<MyApp> {
                 Expanded(
                     child: InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EditScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EditScreen()),
+                    );
                   },
                   child: Row(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
                           'HH:MM',
                           style: TextStyle(fontSize: 35),

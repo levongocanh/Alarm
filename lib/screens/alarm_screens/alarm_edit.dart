@@ -16,7 +16,6 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-
   // bellow variables will replaced by alarm properties
   double _sliderValue = 0;
   bool _vibrate = false;
@@ -28,7 +27,7 @@ class _EditScreenState extends State<EditScreen> {
   bool _friday = false;
   bool _saturday = false;
   String _label = '';
-  int _selectedHour = 1; 
+  int _selectedHour = 1;
   int _selectedMinute = 30;
   String _missionType = 'default';
 
@@ -39,6 +38,7 @@ class _EditScreenState extends State<EditScreen> {
     scrollController = FixedExtentScrollController(initialItem: _selectedHour);
     super.initState();
   }
+
   TextEditingController controller = TextEditingController();
 
   Future<String?> openEditLabel() => showDialog<String?>(
@@ -190,10 +190,9 @@ class _EditScreenState extends State<EditScreen> {
                       child: CupertinoPicker(
                         itemExtent: 50,
                         looping: true,
-                        squeeze: 1, // display 3 items at time
-                        magnification: 1, // does not zoom the selected item
-                        diameterRatio:
-                            10, // set high value for flat wheel scroll
+                        squeeze: 1,
+                        magnification: 1,
+                        diameterRatio: 10,
                         scrollController: FixedExtentScrollController(
                             initialItem: _selectedMinute),
                         selectionOverlay: Container(
@@ -207,15 +206,17 @@ class _EditScreenState extends State<EditScreen> {
                         ),
                         onSelectedItemChanged: (int index) {
                           if (index == 0 && _selectedMinute == 59) {
-                              _selectedHour = (_selectedHour + 1) % 24;
+                            _selectedHour = (_selectedHour + 1) % 24;
                           } else if (index == 59 && _selectedMinute == 0) {
-                              _selectedHour = (_selectedHour - 1) % 24;
+                            _selectedHour = (_selectedHour - 1) % 24;
                           }
-                          scrollController.animateTo(_selectedHour*50, duration: Duration(milliseconds: 10), curve: Curves.ease);
+                          scrollController.animateTo(_selectedHour * 50,
+                              duration: Duration(milliseconds: 10),
+                              curve: Curves.ease);
                           _selectedMinute = index;
-                          
+
                           debugPrint(
-                              'Selected Hour $_selectedHour, Selected minute$_selectedMinute');
+                              'Selected Hour $_selectedHour, Selected minute $_selectedMinute');
                         },
                         children: List<Widget>.generate(
                           60,
@@ -306,7 +307,7 @@ class _EditScreenState extends State<EditScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Repeat day here",
+                  "Time left",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -373,10 +374,12 @@ class _EditScreenState extends State<EditScreen> {
                               value: _sliderValue,
                               max: 10,
                               onChanged: (double value) {
-                                setState(() {
-                                  _sliderValue = value.ceilToDouble();
-                                  debugPrint(_sliderValue.toString());
-                                });
+                                if (value.ceilToDouble() != _sliderValue) {
+                                  setState(() {
+                                    _sliderValue = value.ceilToDouble();
+                                    debugPrint(_sliderValue.toString());
+                                  });
+                                }
                               },
                             ),
                           ),
@@ -417,13 +420,17 @@ class _EditScreenState extends State<EditScreen> {
                     const Divider(),
                     InkWell(
                       onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SelectRingtone())),
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SelectRingtone(),
+                        ),
+                      ),
                       child: Row(
                         children: <Widget>[
                           const SizedBox(
-                              width: 50, child: Icon(Icons.audiotrack)),
+                            width: 50,
+                            child: Icon(Icons.audiotrack),
+                          ),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -448,7 +455,9 @@ class _EditScreenState extends State<EditScreen> {
                             ),
                           ),
                           const SizedBox(
-                              width: 50, child: Icon(Icons.chevron_right)),
+                            width: 50,
+                            child: Icon(Icons.chevron_right),
+                          ),
                         ],
                       ),
                     ),
@@ -475,39 +484,45 @@ class _EditScreenState extends State<EditScreen> {
                       });
                     }
                   },
-                  child: Row(children: <Widget>[
-                    SizedBox(
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
                         width: 50,
                         child: Transform.scale(
                           scaleX: -1,
                           child: const Icon(
                             Icons.sell,
                           ),
-                        )),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 35,
-                            child: Text(
-                              'Label',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 25,
-                            child: Text(
-                              _label == '' ? 'None' : _label,
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 50, child: Icon(Icons.chevron_right)),
-                  ]),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 35,
+                              child: Text(
+                                'Label',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 25,
+                              child: Text(
+                                _label == '' ? 'None' : _label,
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 50,
+                        child: Icon(Icons.chevron_right),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               BottomButton(

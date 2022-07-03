@@ -3,6 +3,7 @@
 import 'package:alarm_app/screens/alarm_screens/dismiss_alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PreviewAlarm extends StatefulWidget {
   const PreviewAlarm({Key? key}) : super(key: key);
@@ -17,7 +18,9 @@ class _PreviewAlarmState extends State<PreviewAlarm> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: DismissAlarm(
         label: 'label',
         time: 'HH:MM',

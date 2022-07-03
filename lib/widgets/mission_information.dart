@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MissionInformation extends StatelessWidget {
-  String missionName;
-  double missionNameSize;
-  String missionDescription;
-  double missionDescriptionSize;
+  final String missionName;
+  final double missionNameSize;
+  final String missionDescription;
+  final double missionDescriptionSize;
 
   MissionInformation({
     required this.missionName,

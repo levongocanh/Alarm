@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:math';
 
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
@@ -15,19 +16,21 @@ class MathMission extends StatefulWidget {
 class _MathMissionState extends State<MathMission> {
   double _missionLevel = 0;
   int _selected = 0;
-  
-  late String example;
 
-  String getMathExpressions(missionLevel) {
-    switch(missionLevel){
+  String getExampleOfExpression(missionLevel) {
+    switch (missionLevel) {
       case 1:
-        return 'case1';
+        return '23+17=?';
       case 2:
-        return 'case2';
+        return '43+24+34=?';
       case 3:
-        return 'case3';
+        return '(72x6)+32=?';
+      case 4:
+        return '(37x11)+321=?';
+      case 5:
+        return '(162x87+1878)=?';
       default:
-        return 'default';
+        return '3+8=?';
     }
   }
 
@@ -54,7 +57,8 @@ class _MathMissionState extends State<MathMission> {
             MissionInformation(
               missionName: 'Giải toán',
               missionNameSize: 35,
-              missionDescription: 'Select the difficulty of the math problems you will solve to dismiss your alarm.',
+              missionDescription:
+                  'Select the difficulty of the math problems you will solve to dismiss your alarm.',
               missionDescriptionSize: 20,
             ),
             Padding(
@@ -73,7 +77,7 @@ class _MathMissionState extends State<MathMission> {
               ),
               child: Column(children: [
                 Text(
-                  'expression base on mission level',
+                  getExampleOfExpression(_missionLevel),
                   style: TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.bold,
@@ -85,10 +89,12 @@ class _MathMissionState extends State<MathMission> {
                     value: _missionLevel,
                     max: 5,
                     onChanged: (double value) {
-                      setState(() {
-                        _missionLevel = value.ceilToDouble();
-                        debugPrint(_missionLevel.toString());
-                      });
+                      if (value.ceilToDouble() != _missionLevel) {
+                        setState(() {
+                          _missionLevel = value.ceilToDouble();
+                          debugPrint(_missionLevel.toString());
+                        });
+                      }
                     },
                   ),
                 ),
@@ -105,7 +111,8 @@ class _MathMissionState extends State<MathMission> {
                           ),
                         ),
                         Expanded(
-                          child: Text('Hard',
+                          child: Text(
+                            'Hard',
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               fontSize: 18,
@@ -120,7 +127,7 @@ class _MathMissionState extends State<MathMission> {
             Padding(
               padding: EdgeInsets.only(bottom: 10, left: 5, top: 20),
               child: Text(
-                'Number of problems',
+                "Number of Problems",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
@@ -146,9 +153,10 @@ class _MathMissionState extends State<MathMission> {
                       selectionOverlay: Container(
                         decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(color: Colors.grey.shade400, width: 2),
-                              bottom: BorderSide(color: Colors.grey.shade400, width: 2)
-                            ),
+                              top: BorderSide(
+                                  color: Colors.grey.shade400, width: 2),
+                              bottom: BorderSide(
+                                  color: Colors.grey.shade400, width: 2)),
                         ),
                       ),
                       onSelectedItemChanged: (int index) {

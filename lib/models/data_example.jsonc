@@ -14,7 +14,7 @@
             "repeatDays": {
                 "sunday": true,
                 "monday": true,
-                "tueday": true,
+                "Tuesday": true,
                 "wednesday": true,
                 "thursday": true,
                 "friday": true,

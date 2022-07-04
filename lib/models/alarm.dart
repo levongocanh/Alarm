@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'alarm.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Alarm {
   static int currentAlarmId = -1;
 

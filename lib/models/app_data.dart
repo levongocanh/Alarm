@@ -8,7 +8,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'app_data.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class AppData {
   List<Alarm>? alarms;
 

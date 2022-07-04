@@ -1,6 +1,18 @@
-class Photo {
-  final String id;
-  final String dirPhoto;
+import 'package:json_annotation/json_annotation.dart';
 
-  const Photo({required this.id, required this.dirPhoto});
+part 'photo.g.dart';
+
+@JsonSerializable()
+class Photo {
+  static int currentId = -1;
+
+  @JsonKey(name: 'photo_id')
+  final String photoId;
+  @JsonKey(name: 'photo_path')
+  final String photoPath;
+
+  Photo({required this.photoId, required this.photoPath});
+
+  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
+  Map<String, dynamic> toJson() => _$PhotoToJson(this);
 }

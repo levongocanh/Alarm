@@ -96,25 +96,25 @@ class _Calculator extends State<Calculator> {
                   child: SizedBox(
                     width: 200,
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            '=',
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            userInput,
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: userInput == '?'
-                                    ? Colors.grey
-                                    : Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ]),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          '=',
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          userInput,
+                          style: TextStyle(
+                              fontSize: 30,
+                              color:
+                                  userInput == '?' ? Colors.grey : Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -123,7 +123,7 @@ class _Calculator extends State<Calculator> {
           Expanded(
             flex: 3,
             child: SizedBox(
-              width: 240,
+              width: 250,
               child: GridView.builder(
                 itemCount: buttons.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -131,7 +131,12 @@ class _Calculator extends State<Calculator> {
                 itemBuilder: (BuildContext context, int index) {
                   // Delete Button
                   if (buttons[index] == 'DEL') {
-                    return NumberButton(
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.backspace,
+                        color: Colors.white,
+                      ),
+                      color: Colors.red,
                       buttontapped: () {
                         if (userInput.isNotEmpty && userInput != '?') {
                           if (userInput.length > 1) {
@@ -146,15 +151,18 @@ class _Calculator extends State<Calculator> {
                           }
                         }
                       },
-                      buttonText: buttons[index],
-                      color: Colors.red,
-                      textColor: Colors.white,
+                      // buttonText: buttons[index],
                     );
                   }
 
                   // evalute button
                   else if (buttons[index] == 'V') {
-                    return NumberButton(
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                      color: Colors.green,
                       buttontapped: () {
                         if (userInput != '?') {
                           if (equalPressed()) {
@@ -164,19 +172,22 @@ class _Calculator extends State<Calculator> {
                         }
                         debugPrint('This is calculate function');
                       },
-                      buttonText: buttons[index],
-                      color: Colors.green,
-                      textColor: Colors.white,
                     );
                   }
+
                   //  number buttons
                   else {
                     return NumberButton(
                       buttontapped: () {
+                        // Max length of result is 7 (9999*100+9999)
                         if (userInput != '?') {
-                          setState(() {
-                            userInput += buttons[index];
-                          });
+                          if (userInput.length < 8) {
+                            setState(() {
+                              userInput += buttons[index];
+                            });
+                          } else {
+                            debugPrint('out of max length');
+                          }
                         } else {
                           setState(() {
                             userInput = buttons[index];
@@ -197,9 +208,8 @@ class _Calculator extends State<Calculator> {
     );
   }
 
-// function to calculate the input operation
+  // function to compare the input and result of expression
   bool equalPressed() {
-    // String finaluserinput = userInput;
     Expression exp = Parser().parse(_expression.replaceAll('x', '*'));
     // debugPrint(_expression);
     double eval = exp.evaluate(EvaluationType.REAL, ContextModel());
@@ -211,28 +221,22 @@ class _Calculator extends State<Calculator> {
 }
 
 class NumberButton extends StatelessWidget {
-  // declaring variables
   final color;
   final textColor;
   final String buttonText;
   final VoidCallback buttontapped;
-  final Widget? child;
 
-  //Constructor
   const NumberButton(
       {this.color,
       this.textColor,
       required this.buttonText,
-      required this.buttontapped,
-      this.child});
+      required this.buttontapped});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(5),
-      height: 50,
-      width: 50,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(5),
@@ -241,6 +245,7 @@ class NumberButton extends StatelessWidget {
         onTap: buttontapped,
         child: Center(
           child: Text(
+            softWrap: true,
             buttonText,
             style: TextStyle(
               color: textColor,
@@ -248,6 +253,33 @@ class NumberButton extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class IconButton extends StatelessWidget {
+  final color;
+  final VoidCallback buttontapped;
+  final Icon icon;
+
+  const IconButton(
+      {this.color, required this.buttontapped, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: InkWell(
+        onTap: buttontapped,
+        child: Center(
+          child: icon,
         ),
       ),
     );

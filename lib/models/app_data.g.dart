@@ -28,10 +28,10 @@ AppData _$AppDataFromJson(Map<String, dynamic> json) => AppData(
     );
 
 Map<String, dynamic> _$AppDataToJson(AppData instance) => <String, dynamic>{
-      'alarms': instance.alarms,
-      'alarm_history': instance.alarmHistory,
-      'settings': instance.settings,
-      'photos': instance.photos,
-      'qrcode_barcode': instance.qRcodeBarcode,
-      'ringtones': instance.ringtones,
+      'alarms': instance.alarms?.map((e) => e.toJson()).toList(),
+      'alarm_history': instance.alarmHistory?.map((e) => e.toJson()).toList(),
+      'settings': instance.settings?.toJson(),
+      'photos': instance.photos?.map((e) => e.toJson()).toList(),
+      'qrcode_barcode': instance.qRcodeBarcode?.map((e) => e.toJson()).toList(),
+      'ringtones': instance.ringtones?.map((e) => e.toJson()).toList(),
     };

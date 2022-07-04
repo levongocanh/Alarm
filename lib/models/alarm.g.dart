@@ -32,6 +32,6 @@ Map<String, dynamic> _$AlarmToJson(Alarm instance) => <String, dynamic>{
       'alarm_volume': instance.alarmVolume,
       'alarm_label': instance.alarmLabel,
       'vibrate': instance.vibrate,
-      'repeat_days': instance.repeatDays,
-      'alarm_mission': instance.alarmMission,
+      'repeat_days': instance.repeatDays.toJson(),
+      'alarm_mission': instance.alarmMission.toJson(),
     };

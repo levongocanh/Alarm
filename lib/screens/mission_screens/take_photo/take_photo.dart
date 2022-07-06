@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:io';
-import 'package:alarm_app/screens/mission_screens/take_photo/photo_item.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import '../../../models/photo.dart';

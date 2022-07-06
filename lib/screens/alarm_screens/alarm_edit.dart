@@ -334,11 +334,14 @@ class _EditScreenState extends State<EditScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 35,
-                            child: Text(
-                              'Cách tắt báo thức',
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            height: 45,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Cách tắt báo thức',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -500,11 +503,15 @@ class _EditScreenState extends State<EditScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(
-                              height: 35,
-                              child: Text(
-                                'Label',
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              height: 45,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Label',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                             SizedBox(

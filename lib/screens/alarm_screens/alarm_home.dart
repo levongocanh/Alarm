@@ -1,46 +1,54 @@
 // ignore_for_file: unused_import, prefer_final_fields, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:alarm_app/models/alarm.dart';
+import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_edit.dart';
 import 'package:alarm_app/screens/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:sqflite/sqflite.dart';
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class AlarmHome extends StatefulWidget {
+  const AlarmHome({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<AlarmHome> createState() => _AlarmHomeState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _AlarmHomeState extends State<AlarmHome> {
   bool? isChecked = false;
+  bool isActive = false;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   // String selectedMenu = '';
+  List<Alarm> _alarms = [];
 
-  Icon getMissionIcon(Alarm _alarm) {
-    return Icon(Icons.alarm);
+  late DatabaseManagement database;
+  @override
+  void initState() {
+    super.initState();
+    database = DatabaseManagement();
+    getAlarmData();
   }
 
-  Alarm _defaultAlarm = Alarm(
-    id: 0,
-    type: 'normal',
-    trackId: 5,
-    volume: 5,
-    hour: 5,
-    minute: 30,
-    label: 'Wake up please',
-    vibrate: true,
-    missionType: 'Default',
-    missionLevel: 0,
-    isActive: false,
-    monday: true,
-    tuesday: false,
-    wednesday: true,
-    thursday: true,
-    friday: true,
-    saturday: false,
-    sunday: false,
-  );
+  void getAlarmData() async {
+    _alarms = await database.getAlarms();
+    setState(() {});
+  }
+
+  Icon getMissionIcon(Alarm alarm) {
+    if (alarm.alarmType == 'fast') {
+      return Icon(Icons.bolt);
+    } else {
+      switch (alarm.alarmMissionType) {
+        case 'default':
+          return Icon(Icons.alarm);
+        case 'math':
+          return Icon(Icons.calculate);
+        default:
+          return Icon(Icons.alarm);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +81,9 @@ class _MyAppState extends State<MyApp> {
       ),
       body: Container(
         color: Colors.grey[600],
-        child: ListView(children: <Widget>[
-          Container(
+        child: ListView.builder(
+          itemCount: _alarms.length,
+          itemBuilder: (context, index) => Container(
             height: 85,
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
@@ -85,10 +94,14 @@ class _MyAppState extends State<MyApp> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Checkbox(
-                    value: _defaultAlarm.isActive,
+                    value: _alarms[index].isActive == 0 ? false : true,
                     onChanged: (bool? value) {
                       setState(() {
-                        _defaultAlarm.isActive = value!;
+                        _alarms[index].isActive = value! == false ? 0 : 1;
+
+                        // update database whenever the [isActive] changed
+                        database.updateAlarm(
+                            _alarms[index], _alarms[index].alarmId!);
                         debugPrint(value ? 'true' : 'false');
                       });
                     }),
@@ -102,32 +115,20 @@ class _MyAppState extends State<MyApp> {
                   },
                   child: Row(
                     children: <Widget>[
-                      Padding(
+                      Container(
+                        width: 100,
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
-                          'HH:MM',
+                          '${_alarms[index].alarmHour}:${_alarms[index].alarmMinute}',
                           style: TextStyle(fontSize: 35),
                         ),
                       ),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 40,
-                              child: Text(
-                                'label here',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 40,
-                              child: Text(
-                                'repeat here',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          _alarms[index].alarmLabel == ''
+                              ? 'test label'
+                              : _alarms[index].alarmLabel,
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                       Icon(
@@ -147,7 +148,7 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
-        ]),
+        ),
       ),
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
@@ -178,141 +179,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
-
-// ---------------------------------------------
-//  Below this line are helper classes and data
-
-Map<int, Alarm> _alarmList = {
-  0: Alarm(
-    id: 0,
-    type: 'normal',
-    trackId: 5,
-    volume: 5,
-    hour: 5,
-    minute: 30,
-    label: 'Wake up!!!!',
-    vibrate: true,
-    missionType: 'Default',
-    missionLevel: 0,
-    isActive: false,
-    monday: true,
-    tuesday: false,
-    wednesday: true,
-    thursday: true,
-    friday: true,
-    saturday: false,
-    sunday: false,
-  ),
-  1: Alarm(
-    id: 1,
-    type: 'normal',
-    trackId: 5,
-    volume: 5,
-    hour: 5,
-    minute: 30,
-    label: 'Wake up!!!',
-    vibrate: true,
-    missionType: 'Math',
-    missionLevel: 1,
-    isActive: false,
-    monday: true,
-    tuesday: false,
-    wednesday: true,
-    thursday: true,
-    friday: true,
-    saturday: false,
-    sunday: false,
-  ),
-  2: Alarm(
-    id: 0,
-    type: 'normal',
-    trackId: 5,
-    volume: 5,
-    hour: 5,
-    minute: 30,
-    label: 'Wake up!!!!',
-    vibrate: true,
-    missionType: 'Default',
-    missionLevel: 0,
-    isActive: true,
-    monday: true,
-    tuesday: false,
-    wednesday: true,
-    thursday: true,
-    friday: true,
-    saturday: false,
-    sunday: false,
-  ),
-  3: Alarm(
-    id: 3,
-    type: 'fast',
-    trackId: 5,
-    volume: 5,
-    hour: 5,
-    minute: 30,
-    label: 'Wake up!',
-    vibrate: true,
-    missionType: 'Default',
-    missionLevel: 0,
-    isActive: false,
-    monday: true,
-    tuesday: false,
-    wednesday: true,
-    thursday: true,
-    friday: true,
-    saturday: false,
-    sunday: false,
-  ),
-};
-
-class Server {
-  static List<Alarm> getAlarmList() => _alarmList.values.toList();
-
-  static Alarm getAlarmByID(int id) {
-    assert(id >= 0 && id <= 6);
-    return _alarmList[id]!;
-  }
-}
-
-class Alarm {
-  int id;
-  String type;
-  int trackId;
-  int volume;
-  int hour;
-  int minute;
-  String label;
-  bool vibrate;
-  String missionType;
-  int missionLevel;
-  bool isActive;
-  bool monday;
-  bool tuesday;
-  bool wednesday;
-  bool thursday;
-  bool friday;
-  bool saturday;
-  bool sunday;
-
-  Alarm({
-    required this.id,
-    required this.type,
-    required this.trackId,
-    required this.volume,
-    required this.hour,
-    required this.minute,
-    required this.label,
-    required this.vibrate,
-    required this.missionType,
-    required this.missionLevel,
-    required this.isActive,
-    required this.monday,
-    required this.tuesday,
-    required this.wednesday,
-    required this.thursday,
-    required this.friday,
-    required this.saturday,
-    required this.sunday,
-  });
 }

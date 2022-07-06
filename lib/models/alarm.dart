@@ -1,5 +1,6 @@
 class Alarm {
   int? alarmId;
+  int isActive;
   String alarmType;
   int alarmHour;
   int alarmMinute;
@@ -24,6 +25,7 @@ class Alarm {
 
   Alarm({
     this.alarmId,
+    required this.isActive,
     required this.alarmType,
     required this.alarmHour,
     required this.alarmMinute,
@@ -47,6 +49,7 @@ class Alarm {
 
   Map<String, dynamic> toMap() => {
         'alarmId': alarmId,
+        'isActive': isActive,
         'alarmType': alarmType,
         'alarmHour': alarmHour,
         'alarmMinute': alarmMinute,
@@ -70,6 +73,7 @@ class Alarm {
 
   factory Alarm.fromMap(Map<String, dynamic> json) => Alarm(
         alarmId: json['alarmId'],
+        isActive: json['isActive'],
         alarmType: json['alarmType'],
         alarmHour: json['alarmHour'],
         alarmMinute: json['alarmMinute'],
@@ -93,6 +97,6 @@ class Alarm {
 
   @override
   String toString() {
-    return 'Alarm{ alarmId: $alarmId, alarmType: $alarmType, alarmHour: $alarmHour, alarmMinute: $alarmMinute, alarmRingtoneId: $alarmRingtoneId, alarmVolume: $alarmVolume, alarmLabel: $alarmLabel, alarmVibrate: $alarmVibrate, sunday: $sunday, monday: $monday, tuesday: $tuesday, wednesday: $wednesday, thursday: $thursday, friday: $friday, saturday: $saturday, alarmMissionType: $alarmMissionType, missionDiffcutly: $missionDiffcutly, barcodeQRcodeId: $barcodeQRcodeId, photoId: $photoId}';
+    return 'Alarm{ alarmId: $alarmId, isActive: $isActive, alarmType: $alarmType, alarmHour: $alarmHour, alarmMinute: $alarmMinute, alarmRingtoneId: $alarmRingtoneId, alarmVolume: $alarmVolume, alarmLabel: $alarmLabel, alarmVibrate: $alarmVibrate, sunday: $sunday, monday: $monday, tuesday: $tuesday, wednesday: $wednesday, thursday: $thursday, friday: $friday, saturday: $saturday, alarmMissionType: $alarmMissionType, missionDiffcutly: $missionDiffcutly, barcodeQRcodeId: $barcodeQRcodeId, photoId: $photoId}';
   }
 }

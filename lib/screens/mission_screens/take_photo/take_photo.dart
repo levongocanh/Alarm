@@ -1,19 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alarm_app/models/photo.dart';
 import 'package:alarm_app/screens/mission_screens/take_photo/photo_item.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
-import '../../../models/photo.dart';
 
 final DUMMY_DATA = [
-  Photo(photoId: '1', photoPath: 'assets/photos/photo1.jpg'),
-  Photo(photoId: '2', photoPath: 'assets/photos/photo2.jpg'),
-  Photo(photoId: '3', photoPath: 'assets/photos/photo3.jpg'),
-  Photo(photoId: '4', photoPath: 'assets/photos/photo1.jpg'),
-  Photo(photoId: '5', photoPath: 'assets/photos/photo2.jpg'),
-  Photo(photoId: '6', photoPath: 'assets/photos/photo3.jpg'),
-  Photo(photoId: '7', photoPath: 'assets/photos/photo1.jpg'),
-  Photo(photoId: '8', photoPath: 'assets/photos/photo2.jpg'),
+  Photo(photoId: 1, photoPath: 'assets/photos/photo1.jpg'),
+  Photo(photoId: 2, photoPath: 'assets/photos/photo2.jpg'),
+  Photo(photoId: 3, photoPath: 'assets/photos/photo3.jpg'),
+  Photo(photoId: 4, photoPath: 'assets/photos/photo1.jpg'),
+  Photo(photoId: 5, photoPath: 'assets/photos/photo2.jpg'),
+  Photo(photoId: 6, photoPath: 'assets/photos/photo3.jpg'),
+  Photo(photoId: 7, photoPath: 'assets/photos/photo1.jpg'),
+  Photo(photoId: 8, photoPath: 'assets/photos/photo2.jpg'),
 ];
 
 class TakePhotoMission extends StatefulWidget {
@@ -93,7 +93,7 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
               padding: EdgeInsets.all(8),
               children: DUMMY_DATA
                   .map(
-                      (item) => PhotoItem(id: item.photoId, dirPhoto: item.photoPath))
+                      (item) => PhotoItem(id: item.photoId!, dirPhoto: item.photoPath))
                   .toList(),
             ),
           ),

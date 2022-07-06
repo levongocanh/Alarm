@@ -1,27 +1,31 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'alarm_history.g.dart';
-
-@JsonSerializable()
 class AlarmHistory {
-  static int currentId = -1;
-  int id;
-
-  @JsonKey(name: 'alarm_date')
-  String alarmDate;
-  int hour;
-  int minute;
-
-  @JsonKey(name: 'mission_type')
-  String missionType;
+  int? alarmHistoryId;
+  String alarmHistoryDate;
+  String alarmHistoryTime;
+  String alarmHistoryMissionType;
 
   AlarmHistory(
-      {required this.id,
-      required this.alarmDate,
-      required this.hour,
-      required this.minute,
-      required this.missionType});
+      {this.alarmHistoryId,
+      required this.alarmHistoryDate,
+      required this.alarmHistoryTime,
+      required this.alarmHistoryMissionType});
 
-  factory AlarmHistory.fromJson(Map<String, dynamic> json) => _$AlarmHistoryFromJson(json);
-  Map<String, dynamic> toJson() => _$AlarmHistoryToJson(this);
+  Map<String, dynamic> toMap() => {
+        'alarmHistoryId': alarmHistoryId,
+        'alarmHistoryDate': alarmHistoryDate,
+        'alarmHistoryTime': alarmHistoryTime,
+        'alarmHistoryMissionType': alarmHistoryMissionType,
+      };
+
+  factory AlarmHistory.fromMap(Map<String, dynamic> json) => AlarmHistory(
+        alarmHistoryId: json['alarmHistoryId'],
+        alarmHistoryDate: json["alarmHistoryDate"],
+        alarmHistoryTime: json["alarmHistoryTime"],
+        alarmHistoryMissionType: json["alarmHistoryMissionType"],
+      );
+
+  @override
+  String toString() {
+    return 'AlarmHistory{alarmHistoryId: $alarmHistoryId, alarmHistoryDate: $alarmHistoryDate, alarmHistoryTime: $alarmHistoryTime, alarmHistoryMissionType: $alarmHistoryMissionType}';
+  }
 }

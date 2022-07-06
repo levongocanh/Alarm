@@ -1,25 +1,39 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'setting.g.dart';
-
-@JsonSerializable()
 class Setting {
-  String theme;
+  int? settingId;
+  String appTheme;
+  int muteDuringMission;
+  String appLanguage;
+  int speakerAlways;
+  int ascendingAlarmVolume;
 
-  @JsonKey(name: 'mission_duration', defaultValue: 120)
-  int? missionDuration;
+  Setting({
+    this.settingId,
+    required this.appTheme,
+    required this.muteDuringMission,
+    required this.appLanguage,
+    required this.speakerAlways,
+    required this.ascendingAlarmVolume,
+  });
 
-  @JsonKey(defaultValue: 'vi')
-  String language;
+  Map<String, dynamic> toMap() => {
+        'settingId': settingId,
+        'appTheme': appTheme,
+        'muteDuringMission': muteDuringMission,
+        'appLanguage': appLanguage,
+        'speakerAlways': speakerAlways,
+        'ascendingAlarmVolume': ascendingAlarmVolume,
+      };
 
-  @JsonKey(name: 'mute_during_mission', defaultValue: true)
-  bool muteDuringMission;
+  factory Setting.fromMap(Map<String, dynamic> json) => Setting(
+      settingId: json['settingId'],
+      appTheme: json["appTheme"],
+      muteDuringMission: json["muteDuringMission"],
+      appLanguage: json["appLanguage"],
+      speakerAlways: json["speakerAlways"],
+      ascendingAlarmVolume: json["ascendingAlarmVolume"]);
 
-  Setting(
-      {required this.theme,
-      required this.missionDuration,
-      required this.language,
-      required this.muteDuringMission});
-
-  factory Setting.fromJson(Map<String, dynamic> json) => _$SettingFromJson(json);
-  Map<String, dynamic> toJson() => _$SettingToJson(this);
+  @override
+  String toString() {
+    return 'Setting{settingId: $settingId, appTheme: $appTheme, muteDuringMission: $muteDuringMission, appLanguage: $appLanguage, speakerAlways: $speakerAlways, ascendingAlarmVolume: $ascendingAlarmVolume}';
+  }
 }

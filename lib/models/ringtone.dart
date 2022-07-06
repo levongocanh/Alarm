@@ -1,19 +1,26 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'ringtone.g.dart';
-
-@JsonSerializable()
 class Ringtone {
-  static int currentId = -1;
+  int? ringtoneId;
+  String ringtonePath;
 
-  @JsonKey(name: 'ringtone_id')
-  final int ringtoneId;
-  
-  @JsonKey(name: 'ringtone_path')
-  final String ringtonePath;
-  
-  Ringtone({required this.ringtoneId, required this.ringtonePath});
+  Ringtone({
+    this.ringtoneId,
+    required this.ringtonePath,
+  });
 
-  factory Ringtone.fromJson(Map<String, dynamic> json) => _$RingtoneFromJson(json);
-  Map<String, dynamic> toJson() => _$RingtoneToJson(this);
+  Map<String, dynamic> toMap() => {
+        'ringtoneId': ringtoneId,
+        'ringtonePath': ringtonePath,
+      };
+
+  factory Ringtone.fromMap(Map<String, dynamic> json) => Ringtone(
+      ringtoneId: json['ringtoneId'], ringtonePath: json["ringtonePath"]);
+
+  String getName() {
+    return ringtonePath.split('/')[-1];
+  }
+
+  @override
+  String toString() {
+    return 'Ringtone{ringtoneId: $ringtoneId, photoPath: $ringtonePath}';
+  }
 }

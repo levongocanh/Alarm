@@ -1,18 +1,22 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'photo.g.dart';
-
-@JsonSerializable()
 class Photo {
-  static int currentId = -1;
+  int? photoId;
+  String photoPath;
 
-  @JsonKey(name: 'photo_id')
-  final String photoId;
-  @JsonKey(name: 'photo_path')
-  final String photoPath;
+  Photo({
+    this.photoId,
+    required this.photoPath,
+  });
 
-  Photo({required this.photoId, required this.photoPath});
+  Map<String, dynamic> toMap() => {
+        'photoId': photoId,
+        'photoPath': photoPath,
+      };
 
-  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
-  Map<String, dynamic> toJson() => _$PhotoToJson(this);
+  factory Photo.fromMap(Map<String, dynamic> json) =>
+      Photo(photoId: json['photoId'], photoPath: json["photoPath"]);
+
+  @override
+  String toString() {
+    return 'Photo{photoId: $photoId, photoPath: $photoPath}';
+  }
 }

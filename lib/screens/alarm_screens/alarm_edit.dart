@@ -546,23 +546,3 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 }
-
-// class RepeatDays {
-//   bool? monday;
-//   bool? tuesday;
-//   bool? wednesday;
-//   bool? thursday;
-//   bool? friday;
-//   bool? saturday;
-//   bool? sunday;
-
-//   RepeatDays({
-//     this.monday,
-//     this.tuesday,
-//     this.wednesday,
-//     this.thursday,
-//     this.friday,
-//     this.saturday,
-//     this.sunday,
-//   })
-// }

@@ -8,11 +8,12 @@ import 'package:flutter/services.dart';
 // ignore: non_constant_identifier_names
 var DUMMY_DATA = [
   QR(id: '1', qrCode: '157875687123'),
-  QR(id: '2', qrCode: '157875687321', isChoice: true),
+  QR(id: '2', qrCode: '157875687321'),
   QR(id: '3', qrCode: '157875687487'),
   QR(id: '4', qrCode: '157875687875'),
   QR(id: '5', qrCode: '157875687458'),
 ];
+String isChoice = '';
 
 class ScanQRMission extends StatefulWidget {
   const ScanQRMission({Key? key}) : super(key: key);
@@ -97,14 +98,13 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () => setState(() {
-                            DUMMY_DATA[index].isChoice =
-                                !(DUMMY_DATA[index].isChoice);
+                            isChoice = DUMMY_DATA[index].id;
                           }),
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: DUMMY_DATA[index].isChoice == false
+                                  color: isChoice != DUMMY_DATA[index].id
                                       ? Colors.transparent
                                       : Colors.blue,
                                   borderRadius: BorderRadius.circular(8),
@@ -172,9 +172,6 @@ class _ScanQRMissionState extends State<ScanQRMission> {
         text: 'Save',
         onTap: () {
           Navigator.of(context).pop();
-          var CodeChoice =
-              DUMMY_DATA.where((element) => element.isChoice == true);
-          print(CodeChoice);
         },
       ),
     );

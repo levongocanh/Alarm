@@ -12,6 +12,10 @@ var DUMMY_DATA = [
   QR(id: '3', qrCode: '157875687487'),
   QR(id: '4', qrCode: '157875687875'),
   QR(id: '5', qrCode: '157875687458'),
+  QR(id: '6', qrCode: '157875687875'),
+  QR(id: '7', qrCode: '157875687458'),
+  QR(id: '8', qrCode: '157875687875'),
+  QR(id: '9', qrCode: '157875687458'),
 ];
 String isChoice = '';
 
@@ -92,35 +96,44 @@ class _ScanQRMissionState extends State<ScanQRMission> {
 
           DUMMY_DATA.isEmpty == false
               ? Expanded(
-                  child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: DUMMY_DATA.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () => setState(() {
-                            isChoice = DUMMY_DATA[index].id;
-                          }),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: isChoice != DUMMY_DATA[index].id
-                                      ? Colors.transparent
-                                      : Colors.blue,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                      color: Colors.black, width: 2)),
-                              height: 80,
-                              child: Center(
-                                  child: Text(
-                                '${DUMMY_DATA[index].qrCode}',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500),
-                              )),
+                  child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.black, width: 1)),
+                    child: ListView.builder(
+                        padding: const EdgeInsets.all(8),
+                        itemCount: DUMMY_DATA.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () => setState(() {
+                              isChoice = DUMMY_DATA[index].id;
+                            }),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: isChoice != DUMMY_DATA[index].id
+                                        ? Colors.transparent
+                                        : Colors.blue,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                        color: Colors.black, width: 2)),
+                                height: 80,
+                                child: Center(
+                                    child: Text(
+                                  '${DUMMY_DATA[index].qrCode}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                )),
+                              ),
                             ),
-                          ),
-                        );
-                      }))
+                          );
+                        }),
+                  ),
+                ))
               : Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(

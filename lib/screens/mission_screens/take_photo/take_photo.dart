@@ -9,12 +9,14 @@ const DUMMY_DATA = [
   Photo(id: '1', dirPhoto: 'assets/photos/photo1.jpg'),
   Photo(id: '2', dirPhoto: 'assets/photos/photo2.jpg'),
   Photo(id: '3', dirPhoto: 'assets/photos/photo3.jpg'),
-  // Photo(id: '4', dirPhoto: 'assets/photos/photo1.jpg'),
-  // Photo(id: '5', dirPhoto: 'assets/photos/photo2.jpg'),
-  // Photo(id: '6', dirPhoto: 'assets/photos/photo3.jpg'),
-  // Photo(id: '7', dirPhoto: 'assets/photos/photo1.jpg'),
-  // Photo(id: '8', dirPhoto: 'assets/photos/photo2.jpg'),
+  Photo(id: '4', dirPhoto: 'assets/photos/photo1.jpg'),
+  Photo(id: '5', dirPhoto: 'assets/photos/photo2.jpg'),
+  Photo(id: '6', dirPhoto: 'assets/photos/photo3.jpg'),
+  Photo(id: '7', dirPhoto: 'assets/photos/photo1.jpg'),
+  Photo(id: '8', dirPhoto: 'assets/photos/photo2.jpg'),
 ];
+
+var isChoice = '';
 
 class TakePhotoMission extends StatefulWidget {
   const TakePhotoMission({Key? key}) : super(key: key);
@@ -78,17 +80,47 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
           // List Photo
           DUMMY_DATA.isEmpty == false
               ? Expanded(
-                  child: GridView(
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20),
-                    padding: EdgeInsets.all(8),
-                    children: DUMMY_DATA
-                        .map((item) =>
-                            PhotoItem(id: item.id, dirPhoto: item.dirPhoto))
-                        .toList(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.black, width: 1)),
+                      child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 3 / 2,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20),
+                          itemCount: DUMMY_DATA.length,
+                          padding: EdgeInsets.all(8),
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () => setState(() {
+                                isChoice = DUMMY_DATA[index].id;
+                              }),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          DUMMY_DATA[index].dirPhoto),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                        color: Colors.black, width: 1)),
+                                child: isChoice == DUMMY_DATA[index].id
+                                    ? Icon(
+                                        Icons.check,
+                                        color: Colors.blue,
+                                        size: 80,
+                                      )
+                                    : null,
+                              ),
+                            );
+                          }),
+                    ),
                   ),
                 )
               : Padding(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PhotoItem extends StatelessWidget {
-  final String id;
+  final int id;
   final String dirPhoto;
 
   const PhotoItem({Key? key, required this.id, required this.dirPhoto})

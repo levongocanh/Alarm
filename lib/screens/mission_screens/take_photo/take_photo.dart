@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'dart:io';
 import 'package:alarm_app/screens/mission_screens/take_photo/photo_item.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +9,11 @@ const DUMMY_DATA = [
   Photo(id: '1', dirPhoto: 'assets/photos/photo1.jpg'),
   Photo(id: '2', dirPhoto: 'assets/photos/photo2.jpg'),
   Photo(id: '3', dirPhoto: 'assets/photos/photo3.jpg'),
-  Photo(id: '4', dirPhoto: 'assets/photos/photo1.jpg'),
-  Photo(id: '5', dirPhoto: 'assets/photos/photo2.jpg'),
-  Photo(id: '6', dirPhoto: 'assets/photos/photo3.jpg'),
-  Photo(id: '7', dirPhoto: 'assets/photos/photo1.jpg'),
-  Photo(id: '8', dirPhoto: 'assets/photos/photo2.jpg'),
+  // Photo(id: '4', dirPhoto: 'assets/photos/photo1.jpg'),
+  // Photo(id: '5', dirPhoto: 'assets/photos/photo2.jpg'),
+  // Photo(id: '6', dirPhoto: 'assets/photos/photo3.jpg'),
+  // Photo(id: '7', dirPhoto: 'assets/photos/photo1.jpg'),
+  // Photo(id: '8', dirPhoto: 'assets/photos/photo2.jpg'),
 ];
 
 class TakePhotoMission extends StatefulWidget {
@@ -27,76 +27,77 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        leading: IconButton(
+          icon: Icon(Icons.navigate_before, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        centerTitle: true,
+        title: Text(
+          'Chụp ảnh',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
       body: SafeArea(
         child: Column(children: [
-          // App bar
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
-                    Icons.navigate_before,
-                    color: Colors.black,
-                  )),
-              IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: Colors.black,
-                  )),
-            ],
-          ),
           // Text
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Chụp ảnh',
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    Text(
+                      'Select a spot far from your bed',
                       style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
                     ),
-                  ),
-                  Text(
-                    'Select a spot far from your bed',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
-                  ),
-                  Text(
-                    'you will snap to dismiss your alarm.',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                    '(The kitchen or bathroom works great!)',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                  ),
-                ],
+                    Text(
+                      'you will snap to dismiss your alarm.',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      '(The kitchen or bathroom works great!)',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
           // List Photo
-          Expanded(
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              padding: EdgeInsets.all(8),
-              children: DUMMY_DATA
-                  .map(
-                      (item) => PhotoItem(id: item.id, dirPhoto: item.dirPhoto))
-                  .toList(),
-            ),
-          ),
+          DUMMY_DATA.isEmpty == false
+              ? Expanded(
+                  child: GridView(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 3 / 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20),
+                    padding: EdgeInsets.all(8),
+                    children: DUMMY_DATA
+                        .map((item) =>
+                            PhotoItem(id: item.id, dirPhoto: item.dirPhoto))
+                        .toList(),
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'You haven\'t added any photos yet',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                  ),
+                ),
           // Add Photo Button
           Padding(
             padding: const EdgeInsets.all(8.0),

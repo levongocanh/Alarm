@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 
 class ScanQRMission extends StatefulWidget {
-  const ScanQRMission({Key? key}) : super(key: key);
+  Alarm alarm;
+  ScanQRMission({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<ScanQRMission> createState() => _ScanQRMissionState();
@@ -13,6 +15,7 @@ class ScanQRMission extends StatefulWidget {
 class _ScanQRMissionState extends State<ScanQRMission> {
   @override
   Widget build(BuildContext context) {
+    Alarm alarm = widget.alarm;
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -110,7 +113,15 @@ class _ScanQRMissionState extends State<ScanQRMission> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          Navigator.of(context).pop();
+          alarm.alarmMissionType = 'scanning';
+          alarm.missionDiffcutly = null;
+          alarm.numberOfProblems = null;
+          alarm.barcodeQRcodeId = 1; // replace with selected bar code id
+          alarm.photoId = null;
+
+          Navigator.of(context)
+            ..pop()
+            ..pop();
           debugPrint('Selected QR Scan Mission');
         },
       ),

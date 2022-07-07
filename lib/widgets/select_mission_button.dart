@@ -8,8 +8,11 @@ class SelectMissionButton extends StatelessWidget {
   final VoidCallback onTap;
   final Icon missionIcon;
   final String missionName;
+  final String missionInformation;
   final double iconWidth;
-  final double fontSize;
+  final double missionNameFontSize;
+  final double missionInformationFontSize;
+  final bool onSelected;
 
   const SelectMissionButton({
     this.height = 70,
@@ -19,8 +22,11 @@ class SelectMissionButton extends StatelessWidget {
     required this.onTap,
     required this.missionIcon,
     required this.missionName,
+    required this.missionInformation,
     this.iconWidth = 50,
-    this.fontSize = 25,
+    this.missionNameFontSize = 24,
+    this.missionInformationFontSize = 16,
+    required this.onSelected,
   });
 
   @override
@@ -40,15 +46,33 @@ class SelectMissionButton extends StatelessWidget {
             child: missionIcon,
           ),
           Expanded(
-            child: SizedBox(
-              child: Text(
-                missionName,
-                style:
-                    TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  missionName,
+                  style: TextStyle(
+                      fontSize: missionNameFontSize,
+                      fontWeight: FontWeight.bold),
+                ),
+                if (missionInformation.isNotEmpty)
+                  Text(
+                    missionInformation,
+                    style: TextStyle(
+                        fontSize: missionInformationFontSize,
+                        color: Colors.blue),
+                  ),
+              ],
             ),
           ),
-          SizedBox(width: iconWidth, child: const Icon(Icons.chevron_right)),
+          if (onSelected)
+            SizedBox(
+                width: iconWidth,
+                child: const Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                )),
         ]),
       ),
     );

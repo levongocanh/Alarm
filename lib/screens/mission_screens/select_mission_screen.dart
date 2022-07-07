@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/screens/mission_screens/math.dart';
 import 'package:alarm_app/screens/mission_screens/scan_qr/qr_scan.dart';
 import 'package:alarm_app/screens/mission_screens/step.dart';
@@ -9,7 +10,8 @@ import 'package:alarm_app/widgets/select_mission_button.dart';
 import 'package:flutter/material.dart';
 
 class SelectMission extends StatefulWidget {
-  const SelectMission({Key? key}) : super(key: key);
+  Alarm alarm;
+  SelectMission({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<SelectMission> createState() => _SelectMissionState();
@@ -18,6 +20,7 @@ class SelectMission extends StatefulWidget {
 class _SelectMissionState extends State<SelectMission> {
   @override
   Widget build(BuildContext context) {
+    Alarm alarm = widget.alarm;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -39,57 +42,104 @@ class _SelectMissionState extends State<SelectMission> {
             children: <Widget>[
               SelectMissionButton(
                 missionName: 'Mặc định',
+                missionInformation: '',
+                onSelected:
+                    widget.alarm.alarmMissionType == 'default' ? true : false,
                 missionIcon: Icon(Icons.alarm),
+                color: Colors.grey[300],
                 onTap: () => {
-                  Navigator.of(context).pop(),
+                  alarm.alarmMissionType = 'default',
+                  alarm.missionDiffcutly = null,
+                  alarm.numberOfProblems = null,
+                  alarm.barcodeQRcodeId = null,
+                  alarm.photoId = null,
+                  Navigator.of(context).pop(alarm),
                   debugPrint('Selected Default')
                 },
-                color: Colors.grey[300],
               ),
               SelectMissionButton(
                 missionName: 'Chụp ảnh',
+                missionInformation: '',
+                onSelected:
+                    widget.alarm.alarmMissionType == 'photo' ? true : false,
                 missionIcon: Icon(Icons.photo_camera),
                 onTap: () => {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => TakePhotoMission()))
+                          builder: (context) => TakePhotoMission(
+                                alarm: alarm,
+                              ))),
                 },
                 color: Colors.grey[300],
               ),
               SelectMissionButton(
                 missionName: 'Giải toán',
+                missionInformation: widget.alarm.alarmMissionType == 'math'
+                    ? '${widget.alarm.numberOfProblems} problems'
+                    : '',
+                onSelected:
+                    widget.alarm.alarmMissionType == 'math' ? true : false,
                 missionIcon: Icon(Icons.calculate),
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MathMission()))
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MathMission(
+                                alarm: alarm,
+                              )))
                 },
                 color: Colors.grey[300],
               ),
               SelectMissionButton(
                 missionName: 'Mã vạch/mã QR',
+                missionInformation: '',
+                onSelected:
+                    widget.alarm.alarmMissionType == 'scanning' ? true : false,
                 missionIcon: Icon(Icons.qr_code_scanner),
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ScanQRMission()))
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ScanQRMission(
+                                alarm: alarm,
+                              )))
                 },
                 color: Colors.grey[300],
               ),
               SelectMissionButton(
                 missionName: 'Typing',
+                missionInformation: widget.alarm.alarmMissionType == 'typing'
+                    ? '${widget.alarm.numberOfProblems} phrases'
+                    : '',
+                onSelected:
+                    widget.alarm.alarmMissionType == 'typing' ? true : false,
                 missionIcon: Icon(Icons.keyboard),
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TypingMission()))
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TypingMission(
+                                alarm: alarm,
+                              )))
                 },
                 color: Colors.grey[300],
               ),
               SelectMissionButton(
                 missionName: 'Step',
-                missionIcon: Icon(Icons.directions_run),
+                missionInformation: widget.alarm.alarmMissionType == 'step'
+                    ? '${widget.alarm.numberOfProblems} steps'
+                    : '',
+                onSelected:
+                    widget.alarm.alarmMissionType == 'step' ? true : false,
+                missionIcon: Icon(Icons.keyboard),
                 onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => StepMission()))
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StepMission(
+                                alarm: alarm,
+                              )))
                 },
                 color: Colors.grey[300],
               ),

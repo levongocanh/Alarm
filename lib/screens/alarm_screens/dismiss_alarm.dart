@@ -49,10 +49,18 @@ class DismissAlarm extends StatelessWidget {
           BottomButton(
             text: 'Dismiss',
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Calculator())); // to mission here
+              switch (alarm.alarmMissionType) {
+                case 'math':
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Calculator(
+                                alarm: alarm,
+                              )));
+                  break;
+                default:
+              }
+
               debugPrint('DismissAlarm');
             },
           ),

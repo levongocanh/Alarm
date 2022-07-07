@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MathMission extends StatefulWidget {
-  const MathMission({Key? key}) : super(key: key);
+  Alarm alarm;
+  MathMission({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<MathMission> createState() => _MathMissionState();
@@ -34,6 +36,7 @@ class _MathMissionState extends State<MathMission> {
 
   @override
   Widget build(BuildContext context) {
+    Alarm alarm = widget.alarm;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -195,7 +198,15 @@ class _MathMissionState extends State<MathMission> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          Navigator.of(context).pop();
+          alarm.alarmMissionType = 'math';
+          alarm.missionDiffcutly = _missionLevel.toInt();
+          alarm.numberOfProblems = _selected + 1;
+          alarm.barcodeQRcodeId = null;
+          alarm.photoId = null;
+
+          Navigator.of(context)
+            ..pop()
+            ..pop();
           debugPrint('Selected Math Mission');
         },
       ),

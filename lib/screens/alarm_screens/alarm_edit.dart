@@ -340,8 +340,20 @@ class _EditScreenState extends State<EditScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: InkWell(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SelectMission())),
+                  onTap: () async {
+                    var result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SelectMission(
+                                alarm: _alarm,
+                              )),
+                    );
+                    if (result != null) {
+                      setState(() {
+                        _alarm = result;
+                      });
+                    }
+                  },
                   child: Row(children: <Widget>[
                     const SizedBox(width: 50, child: Icon(Icons.alarm)),
                     Expanded(
@@ -555,6 +567,7 @@ class _EditScreenState extends State<EditScreen> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
+          // make sure alarm [isActive] == true
           if (_alarm.isActive == 0) {
             _alarm.isActive = 1;
           }

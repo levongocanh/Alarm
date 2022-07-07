@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class StepMission extends StatefulWidget {
-  const StepMission({Key? key}) : super(key: key);
+  Alarm alarm;
+  StepMission({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<StepMission> createState() => _StepMissionState();
@@ -13,9 +15,9 @@ class StepMission extends StatefulWidget {
 
 class _StepMissionState extends State<StepMission> {
   int _selected = 0;
-  
   @override
   Widget build(BuildContext context) {
+    Alarm alarm = widget.alarm;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -74,9 +76,10 @@ class _StepMissionState extends State<StepMission> {
                       selectionOverlay: Container(
                         decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(color: Colors.grey.shade400, width: 2),
-                              bottom: BorderSide(color: Colors.grey.shade400, width: 2)
-                            ),
+                              top: BorderSide(
+                                  color: Colors.grey.shade400, width: 2),
+                              bottom: BorderSide(
+                                  color: Colors.grey.shade400, width: 2)),
                         ),
                       ),
                       onSelectedItemChanged: (int index) {
@@ -117,7 +120,15 @@ class _StepMissionState extends State<StepMission> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          Navigator.of(context).pop();
+          alarm.alarmMissionType = 'step';
+          alarm.missionDiffcutly = null;
+          alarm.numberOfProblems = _selected * 10 + 20;
+          alarm.barcodeQRcodeId = null;
+          alarm.photoId = null;
+
+          Navigator.of(context)
+            ..pop()
+            ..pop();
           debugPrint('Selected Step Mission');
         },
       ),

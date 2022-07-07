@@ -104,6 +104,19 @@ class _EditScreenState extends State<EditScreen> {
         ),
       );
 
+  Future<void> getSelectedRingtoneId(BuildContext context) async {
+    int selectedRingtoneId = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SelectRingtone(
+          idRingtone: _alarm.alarmRingtoneId,
+        ),
+      ),
+    );
+    _alarm.alarmRingtoneId = selectedRingtoneId;
+    print(_alarm);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -421,14 +434,7 @@ class _EditScreenState extends State<EditScreen> {
                     ),
                     const Divider(),
                     InkWell(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SelectRingtone(
-                            idRingtone: _alarm.alarmRingtoneId,
-                          ),
-                        ),
-                      ),
+                      onTap: () => getSelectedRingtoneId(context),
                       child: Row(
                         children: <Widget>[
                           const SizedBox(

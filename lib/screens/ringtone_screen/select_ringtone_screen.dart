@@ -62,39 +62,49 @@ class _SelectRingtoneState extends State<SelectRingtone> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black, width: 1)),
-          child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: ringtones.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () => setState(() {
-                    isChoice = ringtones[index].ringtoneId!;
-                  }),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: isChoice != ringtones[index].ringtoneId
-                              ? Colors.transparent
-                              : Colors.blue,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.black, width: 2)),
-                      height: 80,
-                      child: Center(
+        child: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: ringtones.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () => setState(() {
+                  isChoice = ringtones[index].ringtoneId!;
+                }),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.black, width: 0.8)),
+                    height: 64,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: isChoice == ringtones[index].ringtoneId
+                              ? Icon(
+                                  Icons.check,
+                                  size: 34,
+                                  color: Colors.blueAccent,
+                                )
+                              : null,
+                        ),
+                        SizedBox(
+                          width: 280,
                           child: Text(
-                        ringtones[index].getName(),
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      )),
+                            ringtones[index].getName(),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }),
-        ),
+                ),
+              );
+            }),
       ),
       bottomNavigationBar: BottomButton(
         text: 'Save',

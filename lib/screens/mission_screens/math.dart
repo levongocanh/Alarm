@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'dart:math';
-
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
 import 'package:flutter/cupertino.dart';

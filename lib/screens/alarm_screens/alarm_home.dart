@@ -6,7 +6,19 @@ import 'package:alarm_app/screens/alarm_screens/alarm_edit.dart';
 import 'package:alarm_app/screens/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
+
+final List<String> buttons = [
+  '1',
+  '5',
+  '10',
+  'vibrate',
+  '15',
+  '30',
+  '60',
+  'refresh',
+];
 
 class AlarmHome extends StatefulWidget {
   const AlarmHome({Key? key}) : super(key: key);
@@ -20,6 +32,8 @@ class _AlarmHomeState extends State<AlarmHome> {
   bool isActive = false;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   List<Alarm> _alarms = [];
+
+  int fastAlarmTime = 0;
 
   late DatabaseManagement database;
   @override
@@ -48,6 +62,109 @@ class _AlarmHomeState extends State<AlarmHome> {
       }
     }
   }
+
+  Future<void> _navigateEditAlarm(BuildContext context, Alarm alarm) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => EditScreen(
+                alarm: alarm,
+              )),
+    );
+
+    if (!mounted) {
+      return;
+    } else {
+      getAlarmData();
+    }
+  }
+  // Future<String?> openCreateFastAlarm() async => showDialog<String?>(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: Text('Báo thức nhanh'),
+  //         content: SizedBox(
+  //           width: 300,
+  //           height: 300,
+  //           child: Column(
+  //             children: [
+  //               Text(
+  //                 '+${DateFormat.Hm().format(DateFormat.Hm().parse('${fastAlarmTime ~/ 60}:${fastAlarmTime % 60}'))}',
+  //                 style: TextStyle(
+  //                   fontSize: 50,
+  //                   fontWeight: FontWeight.bold,
+  //                 ),
+  //               ),
+  //               SizedBox(
+  //                 width: 300,
+  //                 height: 200,
+  //                 child: GridView.builder(
+  //                   itemCount: buttons.length,
+  //                   gridDelegate:
+  //                       const SliverGridDelegateWithFixedCrossAxisCount(
+  //                           crossAxisCount: 4),
+  //                   itemBuilder: (BuildContext context, int index) {
+  //                     // vibrate Button
+  //                     if (buttons[index] == 'vibrate') {
+  //                       return Padding(
+  //                         padding: EdgeInsets.all(3),
+  //                         child: ElevatedButton(
+  //                           child: Icon(Icons.volume_up),
+  //                           onPressed: () => {},
+  //                         ),
+  //                       );
+  //                     }
+
+  //                     // refresh button
+  //                     else if (buttons[index] == 'refresh') {
+  //                       return Padding(
+  //                         padding: EdgeInsets.all(3),
+  //                         child: ElevatedButton(
+  //                           child: Icon(Icons.refresh),
+  //                           onPressed: () {
+  //                             fastAlarmTime = 0;
+  //                           },
+  //                         ),
+  //                       );
+  //                     }
+
+  //                     //  increase minute buttons
+  //                     else {
+  //                       return Padding(
+  //                         padding: EdgeInsets.all(3),
+  //                         child: OutlinedButton(
+  //                           child: Text('${buttons[index]}m'),
+  //                           onPressed: () {
+  //                             debugPrint((buttons[index].toString()));
+  //                             setState() {
+  //                               fastAlarmTime = fastAlarmTime + int.parse(buttons[index]);
+  //                             }
+  //                             debugPrint(fastAlarmTime.toString());
+  //                           },
+  //                         ),
+  //                       );
+  //                     }
+  //                   },
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop('Cancel');
+  //             },
+  //             child: Text('Hủy'),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop('Success');
+  //             },
+  //             child: Text('OK'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 
   @override
   Widget build(BuildContext context) {
@@ -115,15 +232,7 @@ class _AlarmHomeState extends State<AlarmHome> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditScreen(
-                            alarm: _alarms[index],
-                          ),
-                          // settings: RouteSettings(arguments: _alarms[index]),
-                        ),
-                      );
+                      _navigateEditAlarm(context, _alarms[index]);
                     },
                     child: Row(
                       children: <Widget>[
@@ -158,13 +267,64 @@ class _AlarmHomeState extends State<AlarmHome> {
                     ),
                   ),
                 ),
-                Checkbox(
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value;
-                      });
-                    }),
+                PopupMenuButton(
+                  offset: Offset(0, 85),
+                  onSelected: (value) {
+                    switch (value) {
+                      case 0: // Xóa báo thức
+                        database.deleteAlarm(_alarms[index].alarmId!);
+                        getAlarmData();
+                        break;
+                      case 1: // Xem trước báo thức
+
+                        break;
+                      case 2: // Sao chép báo thức
+                        // deep copy alarm properties
+                        var alarm = Alarm.fromMap(_alarms[index].toMap());
+
+                        // đặt lại [alarmId] = null để không xung đột khi insert into table
+                        alarm.alarmId = null;
+
+                        database.insertAlarm(alarm);
+                        getAlarmData();
+                        break;
+                      default:
+                        break;
+                    }
+                  },
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 0,
+                      child: ListTile(
+                        leading: const Icon(Icons.delete),
+                        title: Text(
+                          'Xóa',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 1,
+                      child: ListTile(
+                        leading: const Icon(Icons.visibility),
+                        title: Text(
+                          'Xem báo thức',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 2,
+                      child: const ListTile(
+                        leading: Icon(Icons.copy),
+                        title: Text(
+                          'Sao chép báo thức',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
@@ -186,7 +346,25 @@ class _AlarmHomeState extends State<AlarmHome> {
             label: 'Báo thức',
             backgroundColor: Colors.blue,
             onTap: () {
-              debugPrint('Đã mở tạo báo thức');
+              var date = DateTime.now();
+              var defaultAlarm = Alarm(
+                  isActive: 1,
+                  alarmType: 'normal',
+                  alarmHour: int.parse(DateFormat.H().format(date)),
+                  alarmMinute: int.parse(DateFormat.m().format(date)) + 1,
+                  alarmRingtoneId: 1,
+                  alarmVolume: 8,
+                  alarmLabel: '',
+                  alarmVibrate: 1,
+                  sunday: 0,
+                  monday: 1,
+                  tuesday: 1,
+                  wednesday: 1,
+                  thursday: 1,
+                  friday: 1,
+                  saturday: 0,
+                  alarmMissionType: 'default');
+              _navigateEditAlarm(context, defaultAlarm);
             },
           ),
           SpeedDialChild(
@@ -194,6 +372,10 @@ class _AlarmHomeState extends State<AlarmHome> {
             label: 'Báo thức nhanh',
             backgroundColor: Colors.blue,
             onTap: () {
+              setState(() {
+                fastAlarmTime = 0;
+              });
+              // openCreateFastAlarm();
               debugPrint('Đã mở tạo báo thức nhanh');
             },
           ),

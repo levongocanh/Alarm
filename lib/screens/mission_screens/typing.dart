@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TypingMission extends StatefulWidget {
-  const TypingMission({Key? key}) : super(key: key);
+  Alarm alarm;
+  TypingMission({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<TypingMission> createState() => _TypingMissionState();
@@ -17,6 +19,7 @@ class _TypingMissionState extends State<TypingMission> {
 
   @override
   Widget build(BuildContext context) {
+    Alarm alarm = widget.alarm;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -49,7 +52,7 @@ class _TypingMissionState extends State<TypingMission> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-                        Container(
+            Container(
               height: 150,
               width: 80,
               decoration: BoxDecoration(
@@ -71,9 +74,10 @@ class _TypingMissionState extends State<TypingMission> {
                       selectionOverlay: Container(
                         decoration: BoxDecoration(
                           border: Border(
-                              top: BorderSide(color: Colors.grey.shade400, width: 2),
-                              bottom: BorderSide(color: Colors.grey.shade400, width: 2)
-                            ),
+                              top: BorderSide(
+                                  color: Colors.grey.shade400, width: 2),
+                              bottom: BorderSide(
+                                  color: Colors.grey.shade400, width: 2)),
                         ),
                       ),
                       onSelectedItemChanged: (int index) {
@@ -108,15 +112,22 @@ class _TypingMissionState extends State<TypingMission> {
                 ],
               ),
             )
-
           ],
         ),
       ),
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          Navigator.of(context).pop();
-          debugPrint('Selected Typing Mission');
+          alarm.alarmMissionType = 'typing';
+          alarm.missionDiffcutly = null;
+          alarm.numberOfProblems = _selected + 1;
+          alarm.barcodeQRcodeId = null;
+          alarm.photoId = null;
+
+          Navigator.of(context)
+            ..pop()
+            ..pop();
+          debugPrint('Selected Step Mission');
         },
       ),
     );

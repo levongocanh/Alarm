@@ -1,17 +1,23 @@
 import 'dart:math';
 
+import 'package:alarm_app/models/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class Calculator extends StatefulWidget {
+  Alarm alarm;
+
+  Calculator({Key? key, required this.alarm}) : super(key: key);
+
   @override
   State<Calculator> createState() => _Calculator();
 }
 
 class _Calculator extends State<Calculator> {
-  final _missionLevel = 5;
-  var userInput = '?';
+  // final _missionLevel = 5;
   var _expression;
+  var current = 0;
+  var userInput = '?';
 
   int random(min, max) {
     return min + Random().nextInt(max - min);
@@ -51,7 +57,6 @@ class _Calculator extends State<Calculator> {
           _expression = '${random(1, 9)}+${random(1, 9)}';
         });
     }
-    ;
     return _expression;
   }
 
@@ -77,6 +82,7 @@ class _Calculator extends State<Calculator> {
       backgroundColor: Colors.black,
       body: Column(
         children: <Widget>[
+          Text('$current/${widget.alarm.numberOfProblems}'),
           Container(
             color: Colors.white,
             height: 300,
@@ -85,7 +91,8 @@ class _Calculator extends State<Calculator> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  _expression ?? getMathExpressions(_missionLevel),
+                  _expression ??
+                      getMathExpressions(widget.alarm.missionDiffcutly),
                   style: const TextStyle(
                       fontSize: 30,
                       color: Colors.black,
@@ -166,7 +173,13 @@ class _Calculator extends State<Calculator> {
                       buttontapped: () {
                         if (userInput != '?') {
                           if (equalPressed()) {
-                            getMathExpressions(_missionLevel);
+                            setState(() {
+                              current++;
+                            });
+                            if (current == widget.alarm.numberOfProblems) {
+                              Navigator.of(context).pop();
+                            }
+                            getMathExpressions(widget.alarm.missionDiffcutly);
                             userInput = '?';
                           }
                         }

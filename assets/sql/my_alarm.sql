@@ -87,4 +87,5 @@ insert into alarm(isActive, alarmType, alarmHour, alarmMinute, alarmRingtoneId, 
 (1, 'normal', 6, 21, 1, 5, '', 0, 0, 0, 1, 0, 0, 0, 0, 'scanning', null, null, 1, null),
 (0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'typing', null, 5, null, null),
 (0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'default', null, null, null, null),
+(0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'step', null, 10, null, null),
 (1, 'fast', 6, 21, 1, 10, '', 0, 0, 0, 0, 0, 0, 0, 0, 'default', null, null, null, null);

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:io';
+import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,8 @@ final DUMMY_DATA = [
 var isChoice = 0;
 
 class TakePhotoMission extends StatefulWidget {
-  const TakePhotoMission({Key? key}) : super(key: key);
+  Alarm alarm;
+  TakePhotoMission({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<TakePhotoMission> createState() => _TakePhotoMissionState();
@@ -29,6 +31,7 @@ class TakePhotoMission extends StatefulWidget {
 class _TakePhotoMissionState extends State<TakePhotoMission> {
   @override
   Widget build(BuildContext context) {
+    Alarm alarm = widget.alarm;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

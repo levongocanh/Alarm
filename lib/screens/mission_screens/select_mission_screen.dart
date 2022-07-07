@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:alarm_app/screens/mission_screens/math.dart';
-import 'package:alarm_app/screens/mission_screens/qr_scan.dart';
+import 'package:alarm_app/screens/mission_screens/scan_qr/qr_scan.dart';
 import 'package:alarm_app/screens/mission_screens/step.dart';
 import 'package:alarm_app/screens/mission_screens/take_photo/take_photo.dart';
 import 'package:alarm_app/screens/mission_screens/typing.dart';

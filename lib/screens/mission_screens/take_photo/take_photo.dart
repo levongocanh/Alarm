@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'package:alarm_app/models/photo.dart';
-import 'package:alarm_app/screens/mission_screens/take_photo/photo_item.dart';
+import 'dart:io';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/photo.dart';
+
+// ignore: non_constant_identifier_names
 final DUMMY_DATA = [
   Photo(photoId: 1, photoPath: 'assets/photos/photo1.jpg'),
   Photo(photoId: 2, photoPath: 'assets/photos/photo2.jpg'),
@@ -15,6 +16,8 @@ final DUMMY_DATA = [
   Photo(photoId: 7, photoPath: 'assets/photos/photo1.jpg'),
   Photo(photoId: 8, photoPath: 'assets/photos/photo2.jpg'),
 ];
+
+var isChoice = 0;
 
 class TakePhotoMission extends StatefulWidget {
   const TakePhotoMission({Key? key}) : super(key: key);
@@ -27,76 +30,107 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        leading: IconButton(
+          icon: Icon(Icons.navigate_before, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        centerTitle: true,
+        title: Text(
+          'Chụp ảnh',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
       body: SafeArea(
         child: Column(children: [
-          // App bar
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
-                    Icons.navigate_before,
-                    color: Colors.black,
-                  )),
-              IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: Colors.black,
-                  )),
-            ],
-          ),
           // Text
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Chụp ảnh',
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
+                    Text(
+                      'Select a spot far from your bed',
                       style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
                     ),
-                  ),
-                  Text(
-                    'Select a spot far from your bed',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
-                  ),
-                  Text(
-                    'you will snap to dismiss your alarm.',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                    '(The kitchen or bathroom works great!)',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                  ),
-                ],
+                    Text(
+                      'you will snap to dismiss your alarm.',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      '(The kitchen or bathroom works great!)',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
           // List Photo
-          Expanded(
-            child: GridView(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              padding: EdgeInsets.all(8),
-              children: DUMMY_DATA
-                  .map(
-                      (item) => PhotoItem(id: item.photoId!, dirPhoto: item.photoPath))
-                  .toList(),
-            ),
-          ),
+          DUMMY_DATA.isEmpty == false
+              ? Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.black, width: 1)),
+                      child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 3 / 2,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20),
+                          itemCount: DUMMY_DATA.length,
+                          padding: EdgeInsets.all(8),
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () => setState(() {
+                                isChoice = DUMMY_DATA[index].photoId!;
+                              }),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          DUMMY_DATA[index].photoPath),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                        color: Colors.black, width: 1)),
+                                child: isChoice == DUMMY_DATA[index].photoId
+                                    ? Icon(
+                                        Icons.check,
+                                        color: Colors.blue,
+                                        size: 80,
+                                      )
+                                    : null,
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'You haven\'t added any photos yet',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+                  ),
+                ),
           // Add Photo Button
           Padding(
             padding: const EdgeInsets.all(8.0),

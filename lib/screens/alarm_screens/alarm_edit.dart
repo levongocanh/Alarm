@@ -424,7 +424,9 @@ class _EditScreenState extends State<EditScreen> {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SelectRingtone(),
+                          builder: (context) => SelectRingtone(
+                            idRingtone: _alarm.alarmRingtoneId,
+                          ),
                         ),
                       ),
                       child: Row(
@@ -547,6 +549,9 @@ class _EditScreenState extends State<EditScreen> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
+          if (_alarm.isActive == 0) {
+            _alarm.isActive = 1;
+          }
           // if [alarmId] == null: this is creating new alarm
           // else: this is editing alarm
           _alarm.alarmId == null

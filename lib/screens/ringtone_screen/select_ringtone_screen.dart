@@ -1,31 +1,49 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:alarm_app/models/database.dart';
 import 'package:flutter/material.dart';
+import 'package:alarm_app/models/ringtone.dart';
+import 'package:alarm_app/widgets/bottom_button.dart';
 
-import '../../models/ringtone.dart';
-import '../../widgets/bottom_button.dart';
+// var isChoice = 10;
 
-var isChoice = 10;
-
-var DUMMY_DATA = [
-  Ringtone(ringtoneId: 1, ringtonePath: 'assets/ringtones/bad_to_bone.mp3'),
-  Ringtone(ringtoneId: 2, ringtonePath: 'assets/ringtones/eminem.mp3'),
-  Ringtone(ringtoneId: 3, ringtonePath: 'assets/ringtones/fancy_like.mp3'),
-  Ringtone(ringtoneId: 4, ringtonePath: 'assets/ringtones/its_your_mother.mp3'),
-  Ringtone(ringtoneId: 5, ringtonePath: 'assets/ringtones/my_baby.mp3'),
-  Ringtone(ringtoneId: 6, ringtonePath: 'assets/ringtones/suga_boom_boom.mp3'),
-  Ringtone(
-      ringtoneId: 7, ringtonePath: 'assets/ringtones/welcome_to_my_home.mp3'),
-];
+// var DUMMY_DATA = [
+//   Ringtone(ringtoneId: 1, ringtonePath: 'assets/ringtones/bad_to_bone.mp3'),
+//   Ringtone(ringtoneId: 2, ringtonePath: 'assets/ringtones/eminem.mp3'),
+//   Ringtone(ringtoneId: 3, ringtonePath: 'assets/ringtones/fancy_like.mp3'),
+//   Ringtone(ringtoneId: 4, ringtonePath: 'assets/ringtones/its_your_mother.mp3'),
+//   Ringtone(ringtoneId: 5, ringtonePath: 'assets/ringtones/my_baby.mp3'),
+//   Ringtone(ringtoneId: 6, ringtonePath: 'assets/ringtones/suga_boom_boom.mp3'),
+//   Ringtone(
+//       ringtoneId: 7, ringtonePath: 'assets/ringtones/welcome_to_my_home.mp3'),
+// ];
 
 class SelectRingtone extends StatefulWidget {
-  const SelectRingtone({Key? key}) : super(key: key);
+  int idRingtone;
+  SelectRingtone({Key? key, required this.idRingtone}) : super(key: key);
 
   @override
   State<SelectRingtone> createState() => _SelectRingtoneState();
 }
 
 class _SelectRingtoneState extends State<SelectRingtone> {
+  late DatabaseManagement database;
+  List<Ringtone> ringtones = [];
+  late int isChoice;
+
+  @override
+  void initState() {
+    database = DatabaseManagement();
+    getRingtones();
+    isChoice = widget.idRingtone;
+    super.initState();
+  }
+
+  void getRingtones() async {
+    ringtones = await database.getRingtones();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +68,17 @@ class _SelectRingtoneState extends State<SelectRingtone> {
               border: Border.all(color: Colors.black, width: 1)),
           child: ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: DUMMY_DATA.length,
+              itemCount: ringtones.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () => setState(() {
-                    isChoice = DUMMY_DATA[index].ringtoneId!;
+                    isChoice = ringtones[index].ringtoneId!;
                   }),
                   child: Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: isChoice != DUMMY_DATA[index].ringtoneId
+                          color: isChoice != ringtones[index].ringtoneId
                               ? Colors.transparent
                               : Colors.blue,
                           borderRadius: BorderRadius.circular(8),
@@ -68,7 +86,7 @@ class _SelectRingtoneState extends State<SelectRingtone> {
                       height: 80,
                       child: Center(
                           child: Text(
-                        '${DUMMY_DATA[index].getName()}',
+                        ringtones[index].getName(),
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w500),
                       )),
@@ -81,7 +99,7 @@ class _SelectRingtoneState extends State<SelectRingtone> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(isChoice);
         },
       ),
     );

@@ -123,7 +123,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                                 height: 80,
                                 child: Center(
                                     child: Text(
-                                  '${DUMMY_DATA[index].qrCode}',
+                                  DUMMY_DATA[index].qrCode,
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500),

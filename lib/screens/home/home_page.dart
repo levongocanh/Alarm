@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     // The AlarmHistory will be inserted into database whenever user
     // completed dismiss an alarm
     Text(
-      'Index 1: Lịch sử - Comming soon',
+      'Index 1: Lịch sử - Coming soon',
       textAlign: TextAlign.center,
       softWrap: true,
       style: optionStyle,
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
     // below widget will be replaced by [NewDay]
     Text(
-      'Index 2: Bắt đầu ngày mới - Comming soon',
+      'Index 2: Bắt đầu ngày mới - Coming soon',
       textAlign: TextAlign.center,
       softWrap: true,
       style: optionStyle,
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
 
     // below widget will be replaced by [SettingScreen]
     Text(
-      'Index 3: Cài đặt - Comming soon',
+      'Index 3: Cài đặt - Coming soon',
       textAlign: TextAlign.center,
       softWrap: true,
       style: optionStyle,

@@ -16,7 +16,7 @@ class Ringtone {
       ringtoneId: json['ringtoneId'], ringtonePath: json["ringtonePath"]);
 
   String getName() {
-    String name = ringtonePath.split('/')[2];
+    String name = ringtonePath.split('\\')[4];
     name = name.split('.')[0];
     name = name.replaceAll('_', ' ');
     return name;

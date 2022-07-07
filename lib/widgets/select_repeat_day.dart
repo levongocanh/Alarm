@@ -1,12 +1,10 @@
-
-
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 
 class SelectRepeatDay extends StatelessWidget {
   final String text;
-  final double height; 
+  final double height;
   final double width;
   final double fontSize;
   final double margin;
@@ -19,7 +17,7 @@ class SelectRepeatDay extends StatelessWidget {
     this.height = 45,
     this.width = 45,
     this.fontSize = 20,
-    this.margin = 3, 
+    this.margin = 3,
     this.borderRadius = 5,
     this.color = Colors.black54,
     required this.onTap,
@@ -41,10 +39,7 @@ class SelectRepeatDay extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
-              fontWeight: FontWeight.bold, 
-              fontSize: fontSize
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize),
           ),
         ),
       ),

@@ -169,7 +169,14 @@ class Alarm {
     if (saturday == 1) {
       repeatDays = repeatDays == '' ? 'T7' : '$repeatDays, T7';
     }
-    return repeatDays;
+    switch (repeatDays) {
+      case 'T2, T3, T4, T5, T6':
+        return 'Các ngày trong tuần';
+      case 'CN, T2, T3, T4, T5, T6, T7':
+        return 'Hàng ngày';
+      default:
+        return repeatDays;
+    }
   }
 
   // result is an integer - minute

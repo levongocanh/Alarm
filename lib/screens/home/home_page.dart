@@ -15,16 +15,30 @@ class _HomePageState extends State<HomePage> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     AlarmHome(),
+
+    // below widget will be replaced by [ListView] of List<AlarmHistory>
+    // The AlarmHistory will be inserted into database whenever user
+    // completed dismiss an alarm
     Text(
-      'Index 1: Lịch sử',
+      'Index 1: Lịch sử - Comming soon',
+      textAlign: TextAlign.center,
+      softWrap: true,
       style: optionStyle,
     ),
+
+    // below widget will be replaced by [NewDay]
     Text(
-      'Index 2: Bắt đầu ngày mới',
+      'Index 2: Bắt đầu ngày mới - Comming soon',
+      textAlign: TextAlign.center,
+      softWrap: true,
       style: optionStyle,
     ),
+
+    // below widget will be replaced by [SettingScreen]
     Text(
-      'Index 3: Cài đặt',
+      'Index 3: Cài đặt - Comming soon',
+      textAlign: TextAlign.center,
+      softWrap: true,
       style: optionStyle,
     ),
   ];

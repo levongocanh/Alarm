@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:alarm_app/models/alarm.dart';
+import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
 import 'package:alarm_app/screens/mission_screens/select_mission_screen.dart';
 import 'package:alarm_app/screens/ringtone_screen/select_ringtone_screen.dart';
@@ -18,31 +19,19 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-  // bellow variables will replaced by alarm properties
-  // double _sliderValue = 0;
-  // bool _vibrate = false;
-  // bool _sunday = false;
-  // bool _monday = false;
-  // bool _tueday = false;
-  // bool _wednesday = false;
-  // bool _thursday = false;
-  // bool _friday = false;
-  // bool _saturday = false;
-  // String _label = '';
-  // int _selectedHour = 1;
-  // int _selectedMinute = 30;
-  // String _missionType = 'default';
-
   late FixedExtentScrollController scrollController;
   TextEditingController controller = TextEditingController();
   late Alarm _alarm;
+  late DatabaseManagement database;
 
   @override
   void initState() {
-    _alarm = widget.alarm;
+    // deep copy alarm object
+    _alarm = Alarm.fromMap(widget.alarm.toMap());
     scrollController =
         FixedExtentScrollController(initialItem: _alarm.alarmHour);
     controller.text = _alarm.alarmLabel;
+    database = DatabaseManagement();
     super.initState();
   }
 
@@ -73,7 +62,7 @@ class _EditScreenState extends State<EditScreen> {
               child: const Text('OK'),
             ),
 
-            // This cancel button will be re-open when I found a way to return old text
+            // This cancel button will be re-opened when I found a way to return the old text
             // MaterialButton(
             //   color: Colors.blueGrey,
             //   onPressed: () {
@@ -127,10 +116,13 @@ class _EditScreenState extends State<EditScreen> {
         actions: <Widget>[
           FloatingActionButton(
             hoverColor: Colors.transparent,
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PreviewAlarm()));
-              debugPrint('Open Preview Alarm');
+            onPressed: () async {
+              await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PreviewAlarm(
+                            alarm: _alarm,
+                          )));
             },
             child: const Icon(Icons.visibility),
           )
@@ -555,6 +547,11 @@ class _EditScreenState extends State<EditScreen> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
+          // if [alarmId] == null: this is creating new alarm
+          // else: this is editing alarm
+          _alarm.alarmId == null
+              ? database.insertAlarm(_alarm)
+              : database.updateAlarm(_alarm, _alarm.alarmId!);
           Navigator.of(context).pop();
           debugPrint('Saved alarm');
         },

@@ -19,15 +19,14 @@ class _AlarmHomeState extends State<AlarmHome> {
   bool? isChecked = false;
   bool isActive = false;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
-  // String selectedMenu = '';
   List<Alarm> _alarms = [];
 
   late DatabaseManagement database;
   @override
   void initState() {
-    super.initState();
     database = DatabaseManagement();
     getAlarmData();
+    super.initState();
   }
 
   void getAlarmData() async {
@@ -88,7 +87,9 @@ class _AlarmHomeState extends State<AlarmHome> {
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: Colors.grey[100],
+              color: _alarms[index].isActive == 1
+                  ? Colors.grey[100]
+                  : Colors.grey[400],
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -96,48 +97,67 @@ class _AlarmHomeState extends State<AlarmHome> {
                 Checkbox(
                     value: _alarms[index].isActive == 0 ? false : true,
                     onChanged: (bool? value) {
-                      setState(() {
-                        _alarms[index].isActive = value! == false ? 0 : 1;
-
-                        // update database whenever the [isActive] changed
-                        database.updateAlarm(
-                            _alarms[index], _alarms[index].alarmId!);
-                        debugPrint(value ? 'true' : 'false');
-                      });
+                      // delete fast alarm when it isn't active [isActive = false]
+                      if (_alarms[index].alarmType == 'fast' &&
+                          value! == false) {
+                        database.deleteAlarm(_alarms[index].alarmId!);
+                        getAlarmData();
+                      } else {
+                        setState(() {
+                          _alarms[index].isActive = value! == false ? 0 : 1;
+                          // update database whenever the [isActive] changed
+                          database.updateAlarm(
+                              _alarms[index], _alarms[index].alarmId!);
+                          debugPrint(value ? 'true' : 'false');
+                        });
+                      }
                     }),
                 Expanded(
-                    child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EditScreen()),
-                    );
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 100,
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          '${_alarms[index].alarmHour}:${_alarms[index].alarmMinute}',
-                          style: TextStyle(fontSize: 35),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditScreen(
+                            alarm: _alarms[index],
+                          ),
+                          // settings: RouteSettings(arguments: _alarms[index]),
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          _alarms[index].alarmLabel == ''
-                              ? 'test label'
-                              : _alarms[index].alarmLabel,
-                          style: TextStyle(fontSize: 20),
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          width: 100,
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            _alarms[index].getDisplayTime(),
+                            style: TextStyle(fontSize: 35),
+                          ),
                         ),
-                      ),
-                      Icon(
-                        Icons.alarm,
-                        size: 30.0,
-                      ),
-                    ],
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _alarms[index].alarmLabel == ''
+                                    ? 'test label'
+                                    : _alarms[index].alarmLabel,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              Text(
+                                _alarms[index].getRepeatDisplay(),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                        ),
+                        _alarms[index].getDisplayMission(),
+                      ],
+                    ),
                   ),
-                )),
+                ),
                 Checkbox(
                     value: isChecked,
                     onChanged: (bool? value) {
@@ -162,19 +182,21 @@ class _AlarmHomeState extends State<AlarmHome> {
         closeManually: false,
         children: [
           SpeedDialChild(
-              child: const Icon(Icons.alarm),
-              label: 'Báo thức',
-              backgroundColor: Colors.blue,
-              onTap: () {
-                debugPrint('Đã mở tạo báo thức');
-              }),
+            child: const Icon(Icons.alarm),
+            label: 'Báo thức',
+            backgroundColor: Colors.blue,
+            onTap: () {
+              debugPrint('Đã mở tạo báo thức');
+            },
+          ),
           SpeedDialChild(
-              child: const Icon(Icons.bolt),
-              label: 'Báo thức nhanh',
-              backgroundColor: Colors.blue,
-              onTap: () {
-                debugPrint('Đã mở tạo báo thức nhanh');
-              }),
+            child: const Icon(Icons.bolt),
+            label: 'Báo thức nhanh',
+            backgroundColor: Colors.blue,
+            onTap: () {
+              debugPrint('Đã mở tạo báo thức nhanh');
+            },
+          ),
         ],
       ),
     );

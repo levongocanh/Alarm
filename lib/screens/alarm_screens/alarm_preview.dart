@@ -38,4 +38,3 @@ class _PreviewAlarmState extends State<PreviewAlarm> {
     );
   }
 }
-

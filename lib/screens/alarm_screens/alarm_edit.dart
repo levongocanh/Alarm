@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
 import 'package:alarm_app/screens/mission_screens/select_mission_screen.dart';
 import 'package:alarm_app/screens/ringtone_screen/select_ringtone_screen.dart';
@@ -9,7 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EditScreen extends StatefulWidget {
-  const EditScreen({Key? key}) : super(key: key);
+  final Alarm alarm;
+  const EditScreen({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -17,29 +19,39 @@ class EditScreen extends StatefulWidget {
 
 class _EditScreenState extends State<EditScreen> {
   // bellow variables will replaced by alarm properties
-  double _sliderValue = 0;
-  bool _vibrate = false;
-  bool _sunday = false;
-  bool _monday = false;
-  bool _tueday = false;
-  bool _wednesday = false;
-  bool _thursday = false;
-  bool _friday = false;
-  bool _saturday = false;
-  String _label = '';
-  int _selectedHour = 1;
-  int _selectedMinute = 30;
-  String _missionType = 'default';
+  // double _sliderValue = 0;
+  // bool _vibrate = false;
+  // bool _sunday = false;
+  // bool _monday = false;
+  // bool _tueday = false;
+  // bool _wednesday = false;
+  // bool _thursday = false;
+  // bool _friday = false;
+  // bool _saturday = false;
+  // String _label = '';
+  // int _selectedHour = 1;
+  // int _selectedMinute = 30;
+  // String _missionType = 'default';
 
   late FixedExtentScrollController scrollController;
+  TextEditingController controller = TextEditingController();
+  late Alarm _alarm;
 
   @override
   void initState() {
-    scrollController = FixedExtentScrollController(initialItem: _selectedHour);
+    _alarm = widget.alarm;
+    scrollController =
+        FixedExtentScrollController(initialItem: _alarm.alarmHour);
+    controller.text = _alarm.alarmLabel;
     super.initState();
   }
 
-  TextEditingController controller = TextEditingController();
+  @override
+  void dispose() {
+    scrollController.dispose();
+    controller.dispose();
+    super.dispose();
+  }
 
   Future<String?> openEditLabel() => showDialog<String?>(
         context: context,
@@ -158,10 +170,8 @@ class _EditScreenState extends State<EditScreen> {
                           ),
                         ),
                         onSelectedItemChanged: (int index) {
-                          setState(() {
-                            _selectedHour = index;
-                          });
-                          debugPrint(_selectedHour.toString());
+                          _alarm.alarmHour = index;
+                          debugPrint(_alarm.alarmHour.toString());
                         },
                         children: List<Widget>.generate(
                           24,
@@ -194,7 +204,7 @@ class _EditScreenState extends State<EditScreen> {
                         magnification: 1,
                         diameterRatio: 10,
                         scrollController: FixedExtentScrollController(
-                            initialItem: _selectedMinute),
+                            initialItem: _alarm.alarmMinute),
                         selectionOverlay: Container(
                           decoration: BoxDecoration(
                             border: Border(
@@ -205,18 +215,18 @@ class _EditScreenState extends State<EditScreen> {
                           ),
                         ),
                         onSelectedItemChanged: (int index) {
-                          if (index == 0 && _selectedMinute == 59) {
-                            _selectedHour = (_selectedHour + 1) % 24;
-                          } else if (index == 59 && _selectedMinute == 0) {
-                            _selectedHour = (_selectedHour - 1) % 24;
+                          if (index == 0 && _alarm.alarmMinute == 59) {
+                            _alarm.alarmHour = (_alarm.alarmHour + 1) % 24;
+                          } else if (index == 59 && _alarm.alarmMinute == 0) {
+                            _alarm.alarmHour = (_alarm.alarmHour - 1) % 24;
                           }
-                          scrollController.animateTo(_selectedHour * 50,
+                          scrollController.animateTo(_alarm.alarmHour * 50,
                               duration: Duration(milliseconds: 10),
                               curve: Curves.ease);
-                          _selectedMinute = index;
+                          _alarm.alarmMinute = index;
 
                           debugPrint(
-                              'Selected Hour $_selectedHour, Selected minute $_selectedMinute');
+                              'Selected Hour ${_alarm.alarmHour}, Selected minute ${_alarm.alarmMinute}');
                         },
                         children: List<Widget>.generate(
                           60,
@@ -242,58 +252,58 @@ class _EditScreenState extends State<EditScreen> {
                   SelectRepeatDay(
                     text: 'CN',
                     onTap: () => setState(() {
-                      _sunday = !_sunday;
-                      debugPrint(_sunday.toString());
+                      _alarm.sunday = _alarm.sunday == 0 ? 1 : 0;
+                      debugPrint(_alarm.sunday.toString());
                     }),
-                    color: _sunday ? Colors.blue : Colors.black54,
+                    color: _alarm.sunday == 0 ? Colors.black54 : Colors.blue,
                   ),
                   SelectRepeatDay(
                     text: 'T2',
                     onTap: () => setState(() {
-                      _monday = !_monday;
-                      debugPrint(_monday.toString());
+                      _alarm.monday = _alarm.monday == 0 ? 1 : 0;
+                      debugPrint(_alarm.monday.toString());
                     }),
-                    color: _monday ? Colors.blue : Colors.black54,
+                    color: _alarm.monday == 0 ? Colors.black54 : Colors.blue,
                   ),
                   SelectRepeatDay(
                     text: 'T3',
                     onTap: () => setState(() {
-                      _tueday = !_tueday;
-                      debugPrint(_tueday.toString());
+                      _alarm.tuesday = _alarm.tuesday == 0 ? 1 : 0;
+                      debugPrint(_alarm.tuesday.toString());
                     }),
-                    color: _tueday ? Colors.blue : Colors.black54,
+                    color: _alarm.tuesday == 0 ? Colors.black54 : Colors.blue,
                   ),
                   SelectRepeatDay(
                     text: 'T4',
                     onTap: () => setState(() {
-                      _wednesday = !_wednesday;
-                      debugPrint(_wednesday.toString());
+                      _alarm.wednesday = _alarm.wednesday == 0 ? 1 : 0;
+                      debugPrint(_alarm.wednesday.toString());
                     }),
-                    color: _wednesday ? Colors.blue : Colors.black54,
+                    color: _alarm.wednesday == 0 ? Colors.black54 : Colors.blue,
                   ),
                   SelectRepeatDay(
                     text: 'T5',
                     onTap: () => setState(() {
-                      _thursday = !_thursday;
-                      debugPrint(_thursday.toString());
+                      _alarm.thursday = _alarm.thursday == 0 ? 1 : 0;
+                      debugPrint(_alarm.thursday.toString());
                     }),
-                    color: _thursday ? Colors.blue : Colors.black54,
+                    color: _alarm.thursday == 0 ? Colors.black54 : Colors.blue,
                   ),
                   SelectRepeatDay(
                     text: 'T6',
                     onTap: () => setState(() {
-                      _friday = !_friday;
-                      debugPrint(_friday.toString());
+                      _alarm.friday = _alarm.friday == 0 ? 1 : 0;
+                      debugPrint(_alarm.friday.toString());
                     }),
-                    color: _friday ? Colors.blue : Colors.black54,
+                    color: _alarm.friday == 0 ? Colors.black54 : Colors.blue,
                   ),
                   SelectRepeatDay(
                     text: 'T7',
                     onTap: () => setState(() {
-                      _saturday = !_saturday;
-                      debugPrint(_saturday.toString());
+                      _alarm.saturday = _alarm.saturday == 0 ? 1 : 0;
+                      debugPrint(_alarm.saturday.toString());
                     }),
-                    color: _saturday ? Colors.blue : Colors.black54,
+                    color: _alarm.saturday == 0 ? Colors.black54 : Colors.blue,
                   ),
                 ],
               ),
@@ -332,6 +342,7 @@ class _EditScreenState extends State<EditScreen> {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(
                             height: 45,
@@ -348,7 +359,7 @@ class _EditScreenState extends State<EditScreen> {
                             height: 25,
                             child: Text(
                               softWrap: true,
-                              'Selected mission to dismiss your alarm here',
+                              _alarm.getMissionDisplayName(),
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
@@ -374,13 +385,15 @@ class _EditScreenState extends State<EditScreen> {
                           SizedBox(width: 50, child: Icon(Icons.volume_up)),
                           Expanded(
                             child: Slider(
-                              value: _sliderValue,
+                              value: _alarm.alarmVolume.toDouble(),
                               max: 10,
                               onChanged: (double value) {
-                                if (value.ceilToDouble() != _sliderValue) {
+                                if (value.ceilToDouble() !=
+                                    _alarm.alarmVolume.toDouble()) {
                                   setState(() {
-                                    _sliderValue = value.ceilToDouble();
-                                    debugPrint(_sliderValue.toString());
+                                    _alarm.alarmVolume =
+                                        value.ceilToDouble().toInt();
+                                    debugPrint(_alarm.alarmVolume.toString());
                                   });
                                 }
                               },
@@ -395,27 +408,21 @@ class _EditScreenState extends State<EditScreen> {
                           SizedBox(
                             width: 50,
                             child: Icon(Icons.vibration,
-                                color: _vibrate
-                                    ? Colors.black
-                                    : Colors.grey.shade400),
+                                color: _alarm.alarmVibrate == 0
+                                    ? Colors.grey.shade400
+                                    : Colors.black),
                           ),
                           SizedBox(
                             width: 80,
-                            child: InkWell(
-                              onTap: () {
+                            child: Switch(
+                              value: _alarm.alarmVibrate == 0 ? false : true,
+                              onChanged: (bool value) {
                                 setState(() {
-                                  _vibrate = !_vibrate;
+                                  _alarm.alarmVibrate = value ? 1 : 0;
                                 });
                               },
-                              child: Switch(
-                                value: _vibrate,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _vibrate = value;
-                                  });
-                                },
-                              ),
                             ),
+                            // ),
                           ),
                         ],
                       ),
@@ -479,11 +486,11 @@ class _EditScreenState extends State<EditScreen> {
                     final String? label = await openEditLabel();
                     if (label == null || label.isEmpty) {
                       setState(() {
-                        _label = '';
+                        _alarm.alarmLabel = '';
                       });
                     } else {
                       setState(() {
-                        _label = label;
+                        _alarm.alarmLabel = label;
                       });
                     }
                   },
@@ -517,7 +524,9 @@ class _EditScreenState extends State<EditScreen> {
                             SizedBox(
                               height: 25,
                               child: Text(
-                                _label == '' ? 'None' : _label,
+                                _alarm.alarmLabel == ''
+                                    ? 'None'
+                                    : _alarm.alarmLabel,
                                 style: const TextStyle(fontSize: 18),
                               ),
                             ),
@@ -535,7 +544,7 @@ class _EditScreenState extends State<EditScreen> {
               BottomButton(
                 height: 55,
                 text: 'Xóa',
-                onTap: () => debugPrint('Deleted Alarm'),
+                onTap: () => debugPrint(_alarm.toString()),
                 color: Colors.grey,
                 margin: const EdgeInsetsDirectional.all(0),
               ),

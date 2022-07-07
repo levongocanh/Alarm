@@ -7,12 +7,10 @@ class Ringtone {
     required this.ringtonePath,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'ringtoneId': ringtoneId,
-      'ringtonePath': ringtonePath,
-    };
-  }
+  Map<String, dynamic> toMap() => {
+        'ringtoneId': ringtoneId,
+        'ringtonePath': ringtonePath,
+      };
 
   factory Ringtone.fromMap(Map<String, dynamic> json) => Ringtone(
       ringtoneId: json['ringtoneId'], ringtonePath: json["ringtonePath"]);

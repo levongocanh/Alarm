@@ -3,7 +3,6 @@
 import 'package:alarm_app/screens/dismiss_screen/math_mission.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class DismissAlarm extends StatelessWidget {
   final String label;
@@ -46,8 +45,10 @@ class DismissAlarm extends StatelessWidget {
           BottomButton(
             text: 'Dismiss',
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => Calculator())); // to mission here
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Calculator())); // to mission here
               debugPrint('DismissAlarm');
             },
           ),

@@ -2,20 +2,22 @@
 import 'dart:io';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
+
 import '../../../models/photo.dart';
 
-const DUMMY_DATA = [
-  Photo(id: '1', dirPhoto: 'assets/photos/photo1.jpg'),
-  Photo(id: '2', dirPhoto: 'assets/photos/photo2.jpg'),
-  Photo(id: '3', dirPhoto: 'assets/photos/photo3.jpg'),
-  Photo(id: '4', dirPhoto: 'assets/photos/photo1.jpg'),
-  Photo(id: '5', dirPhoto: 'assets/photos/photo2.jpg'),
-  Photo(id: '6', dirPhoto: 'assets/photos/photo3.jpg'),
-  Photo(id: '7', dirPhoto: 'assets/photos/photo1.jpg'),
-  Photo(id: '8', dirPhoto: 'assets/photos/photo2.jpg'),
+// ignore: non_constant_identifier_names
+final DUMMY_DATA = [
+  Photo(photoId: 1, photoPath: 'assets/photos/photo1.jpg'),
+  Photo(photoId: 2, photoPath: 'assets/photos/photo2.jpg'),
+  Photo(photoId: 3, photoPath: 'assets/photos/photo3.jpg'),
+  Photo(photoId: 4, photoPath: 'assets/photos/photo1.jpg'),
+  Photo(photoId: 5, photoPath: 'assets/photos/photo2.jpg'),
+  Photo(photoId: 6, photoPath: 'assets/photos/photo3.jpg'),
+  Photo(photoId: 7, photoPath: 'assets/photos/photo1.jpg'),
+  Photo(photoId: 8, photoPath: 'assets/photos/photo2.jpg'),
 ];
 
-var isChoice = '';
+var isChoice = 0;
 
 class TakePhotoMission extends StatefulWidget {
   const TakePhotoMission({Key? key}) : super(key: key);
@@ -97,19 +99,19 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () => setState(() {
-                                isChoice = DUMMY_DATA[index].id;
+                                isChoice = DUMMY_DATA[index].photoId!;
                               }),
                               child: Container(
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: AssetImage(
-                                          DUMMY_DATA[index].dirPhoto),
+                                          DUMMY_DATA[index].photoPath),
                                       fit: BoxFit.cover,
                                     ),
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
                                         color: Colors.black, width: 1)),
-                                child: isChoice == DUMMY_DATA[index].id
+                                child: isChoice == DUMMY_DATA[index].photoId
                                     ? Icon(
                                         Icons.check,
                                         color: Colors.blue,

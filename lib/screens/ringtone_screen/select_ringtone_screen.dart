@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:alarm_app/models/database.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_app/models/ringtone.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
@@ -18,6 +19,19 @@ import 'package:alarm_app/widgets/bottom_button.dart';
 //       ringtoneId: 7, ringtonePath: 'assets/ringtones/welcome_to_my_home.mp3'),
 // ];
 
+String formatTime(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+  final hours = twoDigits(duration.inHours);
+  final minutes = twoDigits(duration.inMinutes.remainder(60));
+  final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+  return [
+    if (duration.inHours > 0) hours,
+    minutes,
+    seconds,
+  ].join(':');
+}
+
 class SelectRingtone extends StatefulWidget {
   int idRingtone;
   SelectRingtone({Key? key, required this.idRingtone}) : super(key: key);
@@ -31,7 +45,6 @@ class _SelectRingtoneState extends State<SelectRingtone> {
   List<Ringtone> ringtones = [];
   late int isChoice;
 
-  @override
   void initState() {
     database = DatabaseManagement();
     getRingtones();
@@ -66,38 +79,44 @@ class _SelectRingtoneState extends State<SelectRingtone> {
             padding: const EdgeInsets.all(8),
             itemCount: ringtones.length,
             itemBuilder: (BuildContext context, int index) {
+              final player = AudioPlayer();
+
               return GestureDetector(
-                onTap: () => setState(() {
-                  isChoice = ringtones[index].ringtoneId!;
-                }),
+                onTap: () async => {
+                  setState(() {
+                    isChoice = ringtones[index].ringtoneId!;
+                  }),
+                  player.play(DeviceFileSource('assets/ringtones/my_baby.mp3')),
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Container(
                     decoration: BoxDecoration(
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.black, width: 0.8)),
-                    height: 64,
+                        border: Border.all(color: Colors.black, width: 1.2)),
+                    height: 70,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: isChoice == ringtones[index].ringtoneId
-                              ? Icon(
-                                  Icons.check,
-                                  size: 34,
+                        isChoice == ringtones[index].ringtoneId
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                child: Icon(
+                                  Icons.check_circle_rounded,
+                                  size: 32,
                                   color: Colors.blueAccent,
-                                )
-                              : null,
-                        ),
-                        SizedBox(
-                          width: 280,
-                          child: Text(
-                            ringtones[index].getName(),
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
+                                ),
+                              )
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                child: Icon(Icons.circle_outlined, size: 32),
+                              ),
+                        Text(
+                          ringtones[index].getName(),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),

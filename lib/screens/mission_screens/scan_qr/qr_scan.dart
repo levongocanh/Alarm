@@ -101,41 +101,57 @@ class _ScanQRMissionState extends State<ScanQRMission> {
               ? Expanded(
                   child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black, width: 1)),
-                    child: ListView.builder(
-                        padding: const EdgeInsets.all(8),
-                        itemCount: DUMMY_DATA.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () => setState(() {
-                              isChoice = DUMMY_DATA[index].id;
-                            }),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: isChoice != DUMMY_DATA[index].id
-                                        ? Colors.transparent
-                                        : Colors.blue,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                        color: Colors.black, width: 2)),
-                                height: 80,
-                                child: Center(
-                                    child: Text(
-                                  DUMMY_DATA[index].qrCode,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500),
-                                )),
+                  child: ListView.builder(
+                      padding: const EdgeInsets.all(4),
+                      itemCount: DUMMY_DATA.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () => setState(() {
+                            isChoice = DUMMY_DATA[index].id;
+                          }),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                      color: Colors.black, width: 1)),
+                              height: 60,
+                              child: Row(
+                                children: [
+                                  isChoice == DUMMY_DATA[index].id
+                                      ? Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 24),
+                                          child: Icon(
+                                            Icons.check_circle,
+                                            size: 28,
+                                            color: Colors.blueAccent,
+                                          ),
+                                        )
+                                      : Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 24),
+                                          child: Icon(
+                                            Icons.circle_outlined,
+                                            size: 28,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                  Center(
+                                      child: Text(
+                                    DUMMY_DATA[index].qrCode,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  )),
+                                ],
                               ),
                             ),
-                          );
-                        }),
-                  ),
+                          ),
+                        );
+                      }),
                 ))
               : Padding(
                   padding: const EdgeInsets.all(12.0),

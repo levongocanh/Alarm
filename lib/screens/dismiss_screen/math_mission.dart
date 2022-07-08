@@ -82,7 +82,10 @@ class _Calculator extends State<Calculator> {
       backgroundColor: Colors.black,
       body: Column(
         children: <Widget>[
-          Text('$current/${widget.alarm.numberOfProblems}'),
+          Text(
+            '$current/${widget.alarm.numberOfProblems}',
+            style: const TextStyle(color: Colors.black, fontSize: 20),
+          ),
           Container(
             color: Colors.white,
             height: 300,

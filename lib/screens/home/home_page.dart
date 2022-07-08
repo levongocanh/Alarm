@@ -1,3 +1,4 @@
+import 'package:alarm_app/screens/history/alarm_history.dart';
 import 'package:flutter/material.dart';
 import '../alarm_screens/alarm_home.dart';
 
@@ -19,12 +20,7 @@ class _HomePageState extends State<HomePage> {
     // below widget will be replaced by [ListView] of List<AlarmHistory>
     // The AlarmHistory will be inserted into database whenever user
     // completed dismiss an alarm
-    Text(
-      'Index 1: Lịch sử - Coming soon',
-      textAlign: TextAlign.center,
-      softWrap: true,
-      style: optionStyle,
-    ),
+    HistoryPage(),
 
     // below widget will be replaced by [NewDay]
     Text(

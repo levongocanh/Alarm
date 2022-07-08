@@ -89,3 +89,11 @@ insert into alarm(isActive, alarmType, alarmHour, alarmMinute, alarmRingtoneId, 
 (0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'default', null, null, null, null),
 (0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'step', null, 10, null, null),
 (1, 'fast', 6, 21, 1, 10, '', 0, 0, 0, 0, 0, 0, 0, 0, 'default', null, null, null, null);
+
+insert into alarmHistory(alarmHistoryDate, alarmHistoryTime, alarmHistoryMissionType) values 
+('2022:07:06', '15:06', 'math'),
+('2022:07:06', '21:10', 'fast'),
+('2022:07:07', '7:06', 'typing'),
+('2022:07:08', '15:06', 'step'),
+('2022:07:08', '19:06', 'photo'),
+('2022:07:08', '19:30', 'scanning');

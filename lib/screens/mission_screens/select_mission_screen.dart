@@ -132,7 +132,7 @@ class _SelectMissionState extends State<SelectMission> {
                     : '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'step' ? true : false,
-                missionIcon: Icon(Icons.keyboard),
+                missionIcon: Icon(Icons.directions_run),
                 onTap: () => {
                   Navigator.push(
                       context,

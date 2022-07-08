@@ -59,6 +59,8 @@ class _SelectRingtoneState extends State<SelectRingtone> {
 
   @override
   Widget build(BuildContext context) {
+    AudioCache audioCache = AudioCache();
+    // AudioPlayer audioPlayer = AudioPlayer();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -79,15 +81,17 @@ class _SelectRingtoneState extends State<SelectRingtone> {
             padding: const EdgeInsets.all(8),
             itemCount: ringtones.length,
             itemBuilder: (BuildContext context, int index) {
-              final player = AudioPlayer();
+              // AudioPlayer advancedPlayer = AudioPlayer();
+              // String? localFilePath;
+              // String? localAudioCacheURI;
 
               return GestureDetector(
                 onTap: () async => {
                   setState(() {
                     isChoice = ringtones[index].ringtoneId!;
+                    audioCache.clearAll();
+                    audioCache.play(ringtones[index].ringtonePath);
                   }),
-                  player
-                      .play(DeviceFileSource('assets\\ringtones\\my_baby.mp3')),
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),

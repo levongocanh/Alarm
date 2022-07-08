@@ -1,8 +1,6 @@
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import '../../../models/barcode_qrcode.dart';
@@ -47,9 +45,40 @@ class _DismissQRcodeState extends State<DismissQRcode> {
       if (!mounted) return;
 
       if (qrCodeScan == selectedQR) {
-        print(qrCodeScan == selectedQR);
-        Navigator.of(context).pop();
-      } else {}
+        AlertDialog(
+          title: const Text('Bạn đã tắt báo thức thành công'),
+          actions: [
+            MaterialButton(
+              color: Colors.blueAccent,
+              onPressed: () {
+                Navigator.of(context).pop('OK');
+              },
+              child: const Text('OK'),
+            ),
+
+            // This cancel button will be re-opened when I found a way to return the old text
+            MaterialButton(
+              color: Colors.blueGrey,
+              onPressed: () {
+                Navigator.of(context).pop('Cancel');
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      } else {
+        AlertDialog(
+            title: const Text('Bạn chưa tắt báo thức thành công'),
+            actions: [
+              MaterialButton(
+                color: Colors.blueAccent,
+                onPressed: () {
+                  Navigator.of(context).pop('OK');
+                },
+                child: const Text('OK'),
+              ),
+            ]);
+      }
     } on PlatformException {
       selectedQR = 'Failed to get platform version.';
     }

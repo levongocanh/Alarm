@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/screens/alarm_screens/dismiss_alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
@@ -17,6 +17,8 @@ class PreviewAlarm extends StatefulWidget {
 class _PreviewAlarmState extends State<PreviewAlarm> {
   @override
   Widget build(BuildContext context) {
+    AudioCache audioCache = AudioCache();
+    audioCache.play('ringtones/my_baby.mp3');
     // uncomment below code for full screen mode
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return Scaffold(

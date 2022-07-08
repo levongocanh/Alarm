@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:alarm_app/models/alarm.dart';
+import 'package:alarm_app/models/database.dart';
+import 'package:alarm_app/models/ringtone.dart';
 import 'package:alarm_app/screens/dismiss_screen/math_mission.dart';
 import 'package:alarm_app/screens/mission_screens/scan_qr/qr_scan_dismiss.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DismissAlarm extends StatelessWidget {
+class DismissAlarm extends StatefulWidget {
   final Alarm alarm;
   final double labelSize;
   final double timeSize;
@@ -18,12 +21,37 @@ class DismissAlarm extends StatelessWidget {
     this.timeSize = 80,
   });
 
+  @override
+  State<DismissAlarm> createState() => _DismissAlarmState();
+}
+
+class _DismissAlarmState extends State<DismissAlarm> {
+  late DatabaseManagement database;
+  AudioCache audioCache = AudioCache();
+  List<Ringtone> ringtones = [];
+
+  @override
+  void initState() {
+    database = DatabaseManagement();
+    getRingtones();
+    super.initState();
+  }
+
+  void getRingtones() async {
+    ringtones = await database.getRingtones();
+    setState(() {});
+  }
+
+  String findRingtonePath(int id) =>
+      (ringtones.firstWhere((i) => i.ringtoneId == id)).ringtonePath;
+
   String getCurrentDisplayTime() {
     return DateFormat.Hm().format(DateTime.now());
   }
 
   @override
   Widget build(BuildContext context) {
+    audioCache.play(findRingtonePath(widget.alarm.alarmRingtoneId));
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
       child: Column(
@@ -33,16 +61,16 @@ class DismissAlarm extends StatelessWidget {
               children: [
                 Text(
                   textAlign: TextAlign.center,
-                  alarm.alarmLabel,
+                  widget.alarm.alarmLabel,
                   softWrap: true,
                   style: TextStyle(
-                      fontSize: labelSize, fontWeight: FontWeight.bold),
+                      fontSize: widget.labelSize, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   getCurrentDisplayTime(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: timeSize, fontWeight: FontWeight.bold),
+                      fontSize: widget.timeSize, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -50,21 +78,21 @@ class DismissAlarm extends StatelessWidget {
           BottomButton(
             text: 'Dismiss',
             onTap: () {
-              switch (alarm.alarmMissionType) {
+              switch (widget.alarm.alarmMissionType) {
                 case 'math':
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => Calculator(
-                                alarm: alarm,
+                                alarm: widget.alarm,
                               )));
                   break;
                 case 'scanning':
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              DismissQRcode(idQRcode: alarm.barcodeQRcodeId!)));
+                          builder: (context) => DismissQRcode(
+                              idQRcode: widget.alarm.barcodeQRcodeId!)));
                   break;
                 default:
                   Navigator.of(context).pop();

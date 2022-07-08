@@ -2,6 +2,7 @@
 
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/screens/dismiss_screen/math_mission.dart';
+import 'package:alarm_app/screens/mission_screens/scan_qr/qr_scan_dismiss.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -58,7 +59,16 @@ class DismissAlarm extends StatelessWidget {
                                 alarm: alarm,
                               )));
                   break;
+                case 'scanning':
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DismissQRcode(idQRcode: alarm.barcodeQRcodeId!)));
+                  break;
                 default:
+                  Navigator.of(context).pop();
+                  break;
               }
 
               debugPrint('DismissAlarm');

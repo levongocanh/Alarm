@@ -86,7 +86,8 @@ class _SelectRingtoneState extends State<SelectRingtone> {
                   setState(() {
                     isChoice = ringtones[index].ringtoneId!;
                   }),
-                  player.play(DeviceFileSource('assets/ringtones/my_baby.mp3')),
+                  player
+                      .play(DeviceFileSource('assets\\ringtones\\my_baby.mp3')),
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),

@@ -1,24 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:alarm_app/models/alarm.dart';
-import 'package:alarm_app/models/qr.dart';
+import 'package:alarm_app/models/barcode_qrcode.dart';
+import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter/services.dart';
-
-// ignore: non_constant_identifier_names
-var DUMMY_DATA = [
-  QR(id: '1', qrCode: '157875687123'),
-  QR(id: '2', qrCode: '157875687321'),
-  QR(id: '3', qrCode: '157875687487'),
-  QR(id: '4', qrCode: '157875687875'),
-  QR(id: '5', qrCode: '157875687458'),
-  QR(id: '6', qrCode: '157875687875'),
-  QR(id: '7', qrCode: '157875687458'),
-  QR(id: '8', qrCode: '157875687875'),
-  QR(id: '9', qrCode: '157875687458'),
-];
-String isChoice = '';
 
 class ScanQRMission extends StatefulWidget {
   Alarm alarm;
@@ -29,7 +16,48 @@ class ScanQRMission extends StatefulWidget {
 }
 
 class _ScanQRMissionState extends State<ScanQRMission> {
+  late DatabaseManagement database;
+  List<BarcodeQRcode> barcodeQRcodes = [];
+  late int isChoice;
   String qrCode = 'Unknown';
+  @override
+  void initState() {
+    database = DatabaseManagement();
+    getBarcodeQRcode();
+    isChoice = widget.alarm.barcodeQRcodeId!;
+    super.initState();
+  }
+
+  void getBarcodeQRcode() async {
+    barcodeQRcodes = await database.getBarcodeQRcode();
+    setState(() {});
+  }
+
+  Future<String?> openEditQRcode(int id) async => showDialog<String?>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Bạn có muốn xóa QR code này ?'),
+          actions: [
+            MaterialButton(
+              color: Colors.blueAccent,
+              onPressed: () {
+                database.deleteBarcodeQRcode(id);
+                Navigator.of(context).pop('OK');
+              },
+              child: const Text('OK'),
+            ),
+
+            // This cancel button will be re-opened when I found a way to return the old text
+            MaterialButton(
+              color: Colors.blueGrey,
+              onPressed: () {
+                Navigator.of(context).pop('Cancel');
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        ),
+      );
 
   Future<void> scanQRCode() async {
     try {
@@ -40,12 +68,11 @@ class _ScanQRMissionState extends State<ScanQRMission> {
         ScanMode.QR,
       );
 
-      if (!mounted) return;
-
-      setState(() {
-        this.qrCode = qrCode;
-        debugPrint(qrCode);
-      });
+      this.qrCode = qrCode;
+      if (qrCode != '-1') {
+        database.insertBarcodeQRcode(BarcodeQRcode(code: qrCode));
+        debugPrint(BarcodeQRcode(code: qrCode).toString());
+      }
     } on PlatformException {
       qrCode = 'Failed to get platform version.';
     }
@@ -54,6 +81,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
   @override
   Widget build(BuildContext context) {
     Alarm alarm = widget.alarm;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -97,18 +125,28 @@ class _ScanQRMissionState extends State<ScanQRMission> {
           ),
           // List code
 
-          DUMMY_DATA.isEmpty == false
+          barcodeQRcodes.isEmpty == false
               ? Expanded(
                   child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
                       padding: const EdgeInsets.all(4),
-                      itemCount: DUMMY_DATA.length,
+                      itemCount: barcodeQRcodes.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () => setState(() {
-                            isChoice = DUMMY_DATA[index].id;
+                            isChoice = barcodeQRcodes[index].barcodeQRcodeId!;
                           }),
+                          onLongPress: () async {
+                            var res = await openEditQRcode(
+                                barcodeQRcodes[index].barcodeQRcodeId!);
+                            getBarcodeQRcode();
+                            if (res == 'OK') {
+                              setState(() {
+                                isChoice = barcodeQRcodes[0].barcodeQRcodeId!;
+                              });
+                            }
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
@@ -120,7 +158,8 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                               height: 60,
                               child: Row(
                                 children: [
-                                  isChoice == DUMMY_DATA[index].id
+                                  isChoice ==
+                                          barcodeQRcodes[index].barcodeQRcodeId
                                       ? Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 24),
@@ -141,7 +180,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                                         ),
                                   Center(
                                       child: Text(
-                                    DUMMY_DATA[index].qrCode,
+                                    barcodeQRcodes[index].code,
                                     style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
@@ -165,7 +204,10 @@ class _ScanQRMissionState extends State<ScanQRMission> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-              onTap: () => {scanQRCode()},
+              onTap: () async {
+                await scanQRCode();
+                getBarcodeQRcode();
+              },
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(

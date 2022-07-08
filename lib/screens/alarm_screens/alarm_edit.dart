@@ -322,7 +322,7 @@ class _EditScreenState extends State<EditScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Time left",
+                  _alarm.getTimeLeft()!,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

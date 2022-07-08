@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// convert minutes difference between two DateTime to Date
+String convert(durationInMinute) {
+  return durationInMinute >= 60
+      ? '${durationInMinute ~/ 60} giờ ${durationInMinute % 60} phút'
+      : '$durationInMinute phút';
+}
+
 class Alarm {
   int? alarmId;
   int isActive;
@@ -179,8 +186,37 @@ class Alarm {
     }
   }
 
-  // result is an integer - minute
-  int getTimeLeft() {
-    return 0;
+  String? getTimeLeft() {
+    final now = DateTime.now();
+    // convert [alarmHour] and [alarmMinute] to DateTime
+    final alarmTime =
+        DateTime(now.year, now.month, now.day, alarmHour, alarmMinute);
+
+    var result = alarmTime.difference(now).inMinutes;
+    // if [isNegative] = false => now > alarmTime => + 6 days
+    // if [isNegative] = true => now < alarmTime => + 7 days
+
+    int adding = result.isNegative ? 7 : 6;
+
+    for (var i = 1; i <= adding; i++) {
+      DateTime newTime = alarmTime.add(Duration(days: i));
+
+      switch (newTime.weekday) {
+        case 1: // monday
+          return monday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+        case 2: // tuesday
+          return tuesday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+        case 3: // wednesday
+          return wednesday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+        case 4: // thursday
+          return thursday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+        case 5: // friday
+          return friday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+        case 6: // saturday
+          return saturday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+        default: // sunday
+          return sunday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+      }
+    }
   }
 }

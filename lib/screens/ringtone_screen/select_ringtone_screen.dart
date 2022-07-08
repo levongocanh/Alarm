@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:alarm_app/models/database.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:alarm_app/models/ringtone.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
@@ -18,6 +19,19 @@ import 'package:alarm_app/widgets/bottom_button.dart';
 //       ringtoneId: 7, ringtonePath: 'assets/ringtones/welcome_to_my_home.mp3'),
 // ];
 
+String formatTime(Duration duration) {
+  String twoDigits(int n) => n.toString().padLeft(2, '0');
+  final hours = twoDigits(duration.inHours);
+  final minutes = twoDigits(duration.inMinutes.remainder(60));
+  final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+  return [
+    if (duration.inHours > 0) hours,
+    minutes,
+    seconds,
+  ].join(':');
+}
+
 class SelectRingtone extends StatefulWidget {
   int idRingtone;
   SelectRingtone({Key? key, required this.idRingtone}) : super(key: key);
@@ -31,7 +45,6 @@ class _SelectRingtoneState extends State<SelectRingtone> {
   List<Ringtone> ringtones = [];
   late int isChoice;
 
-  @override
   void initState() {
     database = DatabaseManagement();
     getRingtones();
@@ -46,6 +59,8 @@ class _SelectRingtoneState extends State<SelectRingtone> {
 
   @override
   Widget build(BuildContext context) {
+    AudioCache audioCache = AudioCache();
+    // AudioPlayer audioPlayer = AudioPlayer();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -62,39 +77,58 @@ class _SelectRingtoneState extends State<SelectRingtone> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black, width: 1)),
-          child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: ringtones.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () => setState(() {
+        child: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: ringtones.length,
+            itemBuilder: (BuildContext context, int index) {
+              // AudioPlayer advancedPlayer = AudioPlayer();
+              // String? localFilePath;
+              // String? localAudioCacheURI;
+
+              return GestureDetector(
+                onTap: () async => {
+                  setState(() {
                     isChoice = ringtones[index].ringtoneId!;
+                    audioCache.clearAll();
+                    audioCache.play(ringtones[index].ringtonePath);
                   }),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: isChoice != ringtones[index].ringtoneId
-                              ? Colors.transparent
-                              : Colors.blue,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.black, width: 2)),
-                      height: 80,
-                      child: Center(
-                          child: Text(
-                        ringtones[index].getName(),
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      )),
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.black, width: 1.2)),
+                    height: 70,
+                    child: Row(
+                      children: [
+                        isChoice == ringtones[index].ringtoneId
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                child: Icon(
+                                  Icons.check_circle_rounded,
+                                  size: 32,
+                                  color: Colors.blueAccent,
+                                ),
+                              )
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                child: Icon(Icons.circle_outlined, size: 32),
+                              ),
+                        Text(
+                          ringtones[index].getName(),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              }),
-        ),
+                ),
+              );
+            }),
       ),
       bottomNavigationBar: BottomButton(
         text: 'Save',

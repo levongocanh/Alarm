@@ -63,12 +63,12 @@ insert into setting(appTheme, muteDuringMission, appLanguage, speakerAlways, asc
 ('light', 0, 'vi', 0, 0);
 
 insert into ringtone(ringtonePath) values
-('assets\\ringtones\\fancy_like.mp3'), 
-('assets\\ringtones\\money_jiggle_jiggle.mp3'), 
-('assets\\ringtones\\my_baby.mp3'), 
-('assets\\ringtones\\ringing_old_phone.mp3'), 
-('assets\\ringtones\\suga_boom_boom.mp3'), 
-('assets\\ringtones\\welcome_to_my_house.mp3');
+('ringtones/fancy_like.mp3'), 
+('ringtones/money_jiggle_jiggle.mp3'), 
+('ringtones/my_baby.mp3'), 
+('ringtones/ringing_old_phone.mp3'), 
+('ringtones/suga_boom_boom.mp3'), 
+('ringtones/welcome_to_my_house.mp3');
 
 insert into photo(photoPath) values
 ('assets\\photos\\photo1.jpg'),

@@ -59,6 +59,8 @@ class DismissAlarm extends StatelessWidget {
                               )));
                   break;
                 default:
+                  Navigator.of(context).pop();
+                  break;
               }
 
               debugPrint('DismissAlarm');

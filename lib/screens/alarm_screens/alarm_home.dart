@@ -3,6 +3,7 @@
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_edit.dart';
+import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
 import 'package:alarm_app/screens/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -269,14 +270,19 @@ class _AlarmHomeState extends State<AlarmHome> {
                 ),
                 PopupMenuButton(
                   offset: Offset(0, 85),
-                  onSelected: (value) {
+                  onSelected: (value) async {
                     switch (value) {
                       case 0: // Xóa báo thức
                         database.deleteAlarm(_alarms[index].alarmId!);
                         getAlarmData();
                         break;
                       case 1: // Xem trước báo thức
-
+                        await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PreviewAlarm(
+                                      alarm: _alarms[index],
+                                    )));
                         break;
                       case 2: // Sao chép báo thức
                         // deep copy alarm properties

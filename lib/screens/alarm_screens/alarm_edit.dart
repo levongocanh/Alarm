@@ -2,6 +2,7 @@
 
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/models/database.dart';
+import 'package:alarm_app/models/ringtone.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
 import 'package:alarm_app/screens/mission_screens/select_mission_screen.dart';
 import 'package:alarm_app/screens/ringtone_screen/select_ringtone_screen.dart';
@@ -22,6 +23,8 @@ class _EditScreenState extends State<EditScreen> {
   late FixedExtentScrollController scrollController;
   TextEditingController controller = TextEditingController();
   late Alarm _alarm;
+  List<Ringtone> ringtones = [];
+
   late DatabaseManagement database;
 
   @override
@@ -32,6 +35,7 @@ class _EditScreenState extends State<EditScreen> {
         FixedExtentScrollController(initialItem: _alarm.alarmHour);
     controller.text = _alarm.alarmLabel;
     database = DatabaseManagement();
+    getRingtones();
     super.initState();
   }
 
@@ -41,6 +45,14 @@ class _EditScreenState extends State<EditScreen> {
     controller.dispose();
     super.dispose();
   }
+
+  void getRingtones() async {
+    ringtones = await database.getRingtones();
+    setState(() {});
+  }
+
+  Ringtone findRingtone(int id) =>
+      (ringtones.firstWhere((i) => i.ringtoneId == id));
 
   Future<String?> openEditLabel() => showDialog<String?>(
         context: context,
@@ -114,7 +126,8 @@ class _EditScreenState extends State<EditScreen> {
       ),
     );
     _alarm.alarmRingtoneId = selectedRingtoneId;
-    print(_alarm);
+    setState(() {});
+    debugPrint(_alarm.toString());
   }
 
   @override
@@ -470,7 +483,9 @@ class _EditScreenState extends State<EditScreen> {
                                 SizedBox(
                                   height: 25,
                                   child: Text(
-                                    'Ringtone name',
+                                    ringtones.isNotEmpty
+                                        ? findRingtone(_alarm.alarmRingtoneId).getName()
+                                        : 'Ringtone name',
                                     style: TextStyle(fontSize: 18),
                                   ),
                                 ),

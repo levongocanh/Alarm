@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:alarm_app/models/ringtone.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 
-String formatTime(Duration duration) {
-  String twoDigits(int n) => n.toString().padLeft(2, '0');
-  final hours = twoDigits(duration.inHours);
-  final minutes = twoDigits(duration.inMinutes.remainder(60));
-  final seconds = twoDigits(duration.inSeconds.remainder(60));
+// String formatTime(Duration duration) {
+//   String twoDigits(int n) => n.toString().padLeft(2, '0');
+//   final hours = twoDigits(duration.inHours);
+//   final minutes = twoDigits(duration.inMinutes.remainder(60));
+//   final seconds = twoDigits(duration.inSeconds.remainder(60));
 
-  return [
-    if (duration.inHours > 0) hours,
-    minutes,
-    seconds,
-  ].join(':');
-}
+//   return [
+//     if (duration.inHours > 0) hours,
+//     minutes,
+//     seconds,
+//   ].join(':');
+// }
 
 class SelectRingtone extends StatefulWidget {
   int idRingtone;
@@ -32,6 +32,7 @@ class _SelectRingtoneState extends State<SelectRingtone> {
   List<Ringtone> ringtones = [];
   late int isChoice;
 
+  @override
   void initState() {
     database = DatabaseManagement();
     getRingtones();
@@ -54,7 +55,7 @@ class _SelectRingtoneState extends State<SelectRingtone> {
         foregroundColor: Colors.black,
         leading: IconButton(
           icon: Icon(Icons.navigate_before, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop(isChoice),
         ),
         centerTitle: true,
         title: Text(
@@ -76,6 +77,7 @@ class _SelectRingtoneState extends State<SelectRingtone> {
                 onTap: () async => {
                   setState(() {
                     isChoice = ringtones[index].ringtoneId!;
+                    debugPrint(isChoice.toString());
                     audioCache.clearAll();
                     audioCache.play(ringtones[index].ringtonePath);
                   }),

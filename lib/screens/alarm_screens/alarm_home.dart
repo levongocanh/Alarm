@@ -32,6 +32,7 @@ class _AlarmHomeState extends State<AlarmHome> {
   bool? isChecked = false;
   bool isActive = false;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  String nextAlarm = '';
   List<Alarm> _alarms = [];
 
   int fastAlarmTime = 0;
@@ -46,6 +47,15 @@ class _AlarmHomeState extends State<AlarmHome> {
 
   void getAlarmData() async {
     _alarms = await database.getAlarms();
+
+    // sort by [IsActive] => [alarmHour] => [alarmMinute]
+    _alarms.sort((a, b) => a.alarmMinute.compareTo(b.alarmMinute));
+    _alarms.sort((a, b) => a.alarmHour.compareTo(b.alarmHour));
+    _alarms.sort((a, b) => b.isActive.compareTo(a.isActive));
+
+    nextAlarm =
+        _alarms[0].isActive == 1 ? _alarms[0].getTimeLeftInString() : '';
+
     setState(() {});
   }
 
@@ -187,7 +197,9 @@ class _AlarmHomeState extends State<AlarmHome> {
               ),
             ),
             Text(
-              'Không có báo thức sắp tới',
+              nextAlarm.isNotEmpty
+                  ? 'Còn$nextAlarm'
+                  : 'Không có báo thức sắp tới',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -219,16 +231,14 @@ class _AlarmHomeState extends State<AlarmHome> {
                       if (_alarms[index].alarmType == 'fast' &&
                           value! == false) {
                         database.deleteAlarm(_alarms[index].alarmId!);
-                        getAlarmData();
                       } else {
-                        setState(() {
-                          _alarms[index].isActive = value! == false ? 0 : 1;
-                          // update database whenever the [isActive] changed
-                          database.updateAlarm(
-                              _alarms[index], _alarms[index].alarmId!);
-                          debugPrint(value ? 'true' : 'false');
-                        });
+                        _alarms[index].isActive = value! == false ? 0 : 1;
+                        // update database whenever the [isActive] changed
+                        database.updateAlarm(
+                            _alarms[index], _alarms[index].alarmId!);
+                        // debugPrint(value ? 'true' : 'false');
                       }
+                      getAlarmData();
                     }),
                 Expanded(
                   child: InkWell(
@@ -251,10 +261,11 @@ class _AlarmHomeState extends State<AlarmHome> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // only display alarm label when [alarmLabel] != ''
-                              if (_alarms[index].alarmLabel.isNotEmpty) Text(
-                                _alarms[index].alarmLabel,
-                                style: TextStyle(fontSize: 20),
-                              ),
+                              if (_alarms[index].alarmLabel.isNotEmpty)
+                                Text(
+                                  _alarms[index].alarmLabel,
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               Text(
                                 _alarms[index].getRepeatDisplay(),
                                 style: TextStyle(fontSize: 20),

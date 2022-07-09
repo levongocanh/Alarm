@@ -179,7 +179,7 @@ class Alarm {
     }
   }
 
-  int? getTimeLeftInMinutes() {
+  int getTimeLeftInMinutes() {
     final now = DateTime.now();
     // convert [alarmHour] and [alarmMinute] to DateTime
     final alarmTime =
@@ -200,7 +200,7 @@ class Alarm {
           : result;
     }
 
-    // int adding = result.isNegative ? 6 : 7;
+    // add 8 days
     for (var i = result.isNegative ? 0 : 1; i <= 8; i++) {
       DateTime newTime = alarmTime.add(Duration(days: i));
       var differenceInMinutes = newTime.difference(now).inMinutes;
@@ -247,7 +247,7 @@ class Alarm {
   }
 
   // convert minutes difference between two DateTime in Minutes to date in String
-  String? getTimeLeftInString() {
+  String getTimeLeftInString() {
     return convertTimeLeftToString(getTimeLeftInMinutes());
   }
 }

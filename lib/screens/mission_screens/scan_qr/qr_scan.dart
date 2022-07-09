@@ -18,12 +18,17 @@ class ScanQRMission extends StatefulWidget {
 class _ScanQRMissionState extends State<ScanQRMission> {
   late DatabaseManagement database;
   List<BarcodeQRcode> barcodeQRcodes = [];
-  late int isChoice;
+  int? isChoice;
+  late Alarm alarm;
   String qrCode = 'Unknown';
+
   @override
   void initState() {
     database = DatabaseManagement();
     getBarcodeQRcode();
+    alarm = widget.alarm;
+    isChoice = widget.alarm.barcodeQRcodeId;
+
     super.initState();
   }
 
@@ -79,9 +84,6 @@ class _ScanQRMissionState extends State<ScanQRMission> {
 
   @override
   Widget build(BuildContext context) {
-    Alarm alarm = widget.alarm;
-    isChoice = widget.alarm.barcodeQRcodeId!;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -106,8 +108,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
+                  children: const [
                     Text(
                       'Select a QR code or barcode far from your bed',
                       style:
@@ -245,16 +246,22 @@ class _ScanQRMissionState extends State<ScanQRMission> {
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          alarm.alarmMissionType = 'scanning';
-          alarm.missionDiffcutly = null;
-          alarm.numberOfProblems = null;
-          alarm.barcodeQRcodeId = isChoice; // replace with selected bar code id
-          alarm.photoId = null;
+          if (isChoice != null) {
+            alarm.alarmMissionType = 'scanning';
+            alarm.missionDiffcutly = null;
+            alarm.numberOfProblems = null;
+            alarm.barcodeQRcodeId =
+                isChoice; // replace with selected bar code id
+            alarm.photoId = null;
 
-          Navigator.of(context)
-            ..pop()
-            ..pop();
-          debugPrint('Selected QR Scan Mission');
+            Navigator.of(context)
+              ..pop()
+              ..pop();
+            debugPrint('Selected QR Scan Mission');
+          } else {
+            debugPrint('Please select the code');
+            Navigator.of(context).pop();
+          }
         },
       ),
     );

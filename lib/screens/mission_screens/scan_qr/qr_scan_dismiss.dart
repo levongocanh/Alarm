@@ -7,8 +7,8 @@ import '../../../models/barcode_qrcode.dart';
 import '../../../models/database.dart';
 
 class DismissQRcode extends StatefulWidget {
-  int idQRcode;
-  DismissQRcode({Key? key, required this.idQRcode}) : super(key: key);
+  final int idQRcode;
+  const DismissQRcode({Key? key, required this.idQRcode}) : super(key: key);
 
   @override
   State<DismissQRcode> createState() => _DismissQRcodeState();
@@ -16,12 +16,12 @@ class DismissQRcode extends StatefulWidget {
 
 class _DismissQRcodeState extends State<DismissQRcode> {
   late DatabaseManagement database;
+  String qrCode = '';
   List<BarcodeQRcode> barcodeQRcodes = [];
   @override
   void initState() {
     database = DatabaseManagement();
     getBarcodeQRcode();
-    // qrCode = findQRCode(widget.idQRcode).code;
     super.initState();
   }
 
@@ -62,7 +62,7 @@ class _DismissQRcodeState extends State<DismissQRcode> {
               onPressed: () {
                 Navigator.of(context).pop('Cancel');
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
           ],
         );
@@ -86,18 +86,19 @@ class _DismissQRcodeState extends State<DismissQRcode> {
 
   @override
   Widget build(BuildContext context) {
-    String qrCode = findQRCode(widget.idQRcode).code;
-
+    if (barcodeQRcodes.isNotEmpty) {
+      qrCode = findQRCode(widget.idQRcode).code;
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Nhiệm vụ quét QR',
           style: TextStyle(color: Colors.black),
         ),
@@ -107,15 +108,13 @@ class _DismissQRcodeState extends State<DismissQRcode> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          // ignore: prefer_const_literals_to_create_immutables
           children: [
-            // ignore: prefer_const_constructors
-            Icon(
+            const Icon(
               Icons.qr_code_scanner,
               size: 84,
             ),
             Text(qrCode,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
           ],
         ),
       )),

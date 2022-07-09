@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 
 class PreviewAlarm extends StatefulWidget {
-  Alarm alarm;
-  PreviewAlarm({Key? key, required this.alarm}) : super(key: key);
+  final Alarm alarm;
+  const PreviewAlarm({Key? key, required this.alarm}) : super(key: key);
 
   @override
   State<PreviewAlarm> createState() => _PreviewAlarmState();
@@ -17,8 +17,6 @@ class PreviewAlarm extends StatefulWidget {
 class _PreviewAlarmState extends State<PreviewAlarm> {
   @override
   Widget build(BuildContext context) {
-    AudioCache audioCache = AudioCache();
-    audioCache.play('ringtones/my_baby.mp3');
     // uncomment below code for full screen mode
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return Scaffold(

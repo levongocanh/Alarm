@@ -27,7 +27,10 @@ class DismissAlarm extends StatefulWidget {
 
 class _DismissAlarmState extends State<DismissAlarm> {
   late DatabaseManagement database;
-  AudioCache audioCache = AudioCache();
+  final audioPlayer = AudioPlayer();
+  AudioCache cachePlayer =
+      AudioCache(fixedPlayer: AudioPlayer(mode: PlayerMode.MEDIA_PLAYER));
+
   List<Ringtone> ringtones = [];
 
   @override
@@ -51,7 +54,11 @@ class _DismissAlarmState extends State<DismissAlarm> {
 
   @override
   Widget build(BuildContext context) {
-    audioCache.play(findRingtonePath(widget.alarm.alarmRingtoneId));
+    debugPrint(ringtones.toString());
+    // if (ringtones.isNotEmpty) debugPrint(findRingtonePath(widget.alarm.alarmRingtoneId));
+    // debugPrint(getApplicationDocumentsDirectory().toString());
+    if (ringtones.isNotEmpty)
+      cachePlayer.play(findRingtonePath(widget.alarm.alarmRingtoneId));
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
       child: Column(

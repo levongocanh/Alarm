@@ -198,7 +198,7 @@ class _AlarmHomeState extends State<AlarmHome> {
             ),
             Text(
               nextAlarm.isNotEmpty
-                  ? 'Còn$nextAlarm'
+                  ? 'Còn $nextAlarm'
                   : 'Không có báo thức sắp tới',
               style: TextStyle(
                 fontSize: 18,

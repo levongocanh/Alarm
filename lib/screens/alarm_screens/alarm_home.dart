@@ -250,10 +250,9 @@ class _AlarmHomeState extends State<AlarmHome> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                _alarms[index].alarmLabel == ''
-                                    ? 'test label'
-                                    : _alarms[index].alarmLabel,
+                              // only display alarm label when [alarmLabel] != ''
+                              if (_alarms[index].alarmLabel.isNotEmpty) Text(
+                                _alarms[index].alarmLabel,
                                 style: TextStyle(fontSize: 20),
                               ),
                               Text(

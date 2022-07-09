@@ -24,7 +24,6 @@ class _ScanQRMissionState extends State<ScanQRMission> {
   void initState() {
     database = DatabaseManagement();
     getBarcodeQRcode();
-    isChoice = widget.alarm.barcodeQRcodeId!;
     super.initState();
   }
 
@@ -81,6 +80,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
   @override
   Widget build(BuildContext context) {
     Alarm alarm = widget.alarm;
+    isChoice = widget.alarm.barcodeQRcodeId!;
 
     return Scaffold(
       appBar: AppBar(
@@ -248,7 +248,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
           alarm.alarmMissionType = 'scanning';
           alarm.missionDiffcutly = null;
           alarm.numberOfProblems = null;
-          alarm.barcodeQRcodeId = 1; // replace with selected bar code id
+          alarm.barcodeQRcodeId = isChoice; // replace with selected bar code id
           alarm.photoId = null;
 
           Navigator.of(context)

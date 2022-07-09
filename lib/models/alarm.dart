@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-// convert minutes difference between two DateTime to Date
-String convert(durationInMinute) {
-  return durationInMinute >= 60
-      ? '${durationInMinute ~/ 60} giờ ${durationInMinute % 60} phút'
-      : '$durationInMinute phút';
-}
-
 class Alarm {
   int? alarmId;
   int isActive;
@@ -186,37 +179,90 @@ class Alarm {
     }
   }
 
-  String? getTimeLeft() {
+  int? getTimeLeftInMinutes() {
     final now = DateTime.now();
     // convert [alarmHour] and [alarmMinute] to DateTime
     final alarmTime =
         DateTime(now.year, now.month, now.day, alarmHour, alarmMinute);
 
     var result = alarmTime.difference(now).inMinutes;
-    // if [isNegative] = false => now > alarmTime => + 6 days
-    // if [isNegative] = true => now < alarmTime => + 7 days
 
-    int adding = result.isNegative ? 7 : 6;
+    // no [repeatWeekDays] selected this will calculated for the next day
+    if (friday == 0 &&
+        monday == 0 &&
+        tuesday == 0 &&
+        wednesday == 0 &&
+        thursday == 0 &&
+        friday == 0 &&
+        saturday == 0) {
+      return result.isNegative
+          ? alarmTime.add(const Duration(days: 1)).difference(now).inMinutes
+          : result;
+    }
 
-    for (var i = 1; i <= adding; i++) {
+    // int adding = result.isNegative ? 6 : 7;
+    for (var i = result.isNegative ? 0 : 1; i <= 8; i++) {
       DateTime newTime = alarmTime.add(Duration(days: i));
+      var differenceInMinutes = newTime.difference(now).inMinutes;
 
       switch (newTime.weekday) {
         case 1: // monday
-          return monday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+          if (monday == 1 && !differenceInMinutes.isNegative) {
+            return differenceInMinutes;
+          }
+          break;
         case 2: // tuesday
-          return tuesday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+          if (tuesday == 1 && !differenceInMinutes.isNegative) {
+            return differenceInMinutes;
+          }
+          break;
         case 3: // wednesday
-          return wednesday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+          if (wednesday == 1 && !differenceInMinutes.isNegative) {
+            return differenceInMinutes;
+          }
+          break;
         case 4: // thursday
-          return thursday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+          if (thursday == 1 && !differenceInMinutes.isNegative) {
+            return differenceInMinutes;
+          }
+          break;
         case 5: // friday
-          return friday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+          if (friday == 1 && !differenceInMinutes.isNegative) {
+            return differenceInMinutes;
+          }
+          break;
         case 6: // saturday
-          return saturday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+          if (saturday == 1 && !differenceInMinutes.isNegative) {
+            return differenceInMinutes;
+          }
+          break;
         default: // sunday
-          return sunday == 1 ? convert(newTime.difference(now).inMinutes) : '';
+          if (sunday == 1 && !differenceInMinutes.isNegative) {
+            return differenceInMinutes;
+          }
+          break;
       }
     }
+    return -1;
   }
+
+  // convert minutes difference between two DateTime in Minutes to date in String
+  String? getTimeLeftInString() {
+    return convertTimeLeftToString(getTimeLeftInMinutes());
+  }
+}
+
+String convertTimeLeftToString(durationInMinutes) {
+  if (durationInMinutes <= 1) {
+    return 'dưới 1 phút';
+  }
+  var days = durationInMinutes ~/ 1440;
+  durationInMinutes -= days * 1440;
+  var hours = durationInMinutes ~/ 60;
+  durationInMinutes -= hours * 60;
+  var minutes = durationInMinutes % 60;
+  var stringDays = days > 0 ? '$days ngày' : '';
+  var stringHours = hours > 0 ? '$hours giờ' : '';
+  var stringMinutes = '$minutes phút';
+  return '$stringDays $stringHours $stringMinutes';
 }

@@ -14,8 +14,8 @@ class SelectRepeatDay extends StatelessWidget {
 
   SelectRepeatDay({
     required this.text,
-    this.height = 45,
-    this.width = 45,
+    this.height = 40,
+    this.width = 40,
     this.fontSize = 20,
     this.margin = 3,
     this.borderRadius = 5,
@@ -34,7 +34,6 @@ class SelectRepeatDay extends StatelessWidget {
         color: color,
       ),
       child: InkWell(
-        // change state selected of day for repeat here
         onTap: onTap,
         child: Center(
           child: Text(

@@ -6,19 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:alarm_app/models/ringtone.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 
-// var isChoice = 10;
-
-// var DUMMY_DATA = [
-//   Ringtone(ringtoneId: 1, ringtonePath: 'assets/ringtones/bad_to_bone.mp3'),
-//   Ringtone(ringtoneId: 2, ringtonePath: 'assets/ringtones/eminem.mp3'),
-//   Ringtone(ringtoneId: 3, ringtonePath: 'assets/ringtones/fancy_like.mp3'),
-//   Ringtone(ringtoneId: 4, ringtonePath: 'assets/ringtones/its_your_mother.mp3'),
-//   Ringtone(ringtoneId: 5, ringtonePath: 'assets/ringtones/my_baby.mp3'),
-//   Ringtone(ringtoneId: 6, ringtonePath: 'assets/ringtones/suga_boom_boom.mp3'),
-//   Ringtone(
-//       ringtoneId: 7, ringtonePath: 'assets/ringtones/welcome_to_my_home.mp3'),
-// ];
-
 String formatTime(Duration duration) {
   String twoDigits(int n) => n.toString().padLeft(2, '0');
   final hours = twoDigits(duration.inHours);

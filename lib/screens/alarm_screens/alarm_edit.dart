@@ -322,8 +322,9 @@ class _EditScreenState extends State<EditScreen> {
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  _alarm.getTimeLeft()!,
-                  textAlign: TextAlign.left,
+                  'Báo thức được đặt cho ${_alarm.getTimeLeftInString()} tính từ bây giờ',
+                  softWrap: true,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,

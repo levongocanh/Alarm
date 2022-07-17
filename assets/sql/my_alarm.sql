@@ -33,7 +33,7 @@ create table alarm (
 	saturday integer,
 
 	alarmMissionType text not null,
-	missionDiffcutly integer,
+	missionDifficulty integer,
 	numberOfProblems integer,
 	barcodeQRcodeId integer,
 	photoId integer,
@@ -81,18 +81,18 @@ insert into barcodeQRcode(code) values
 ('code3'),
 ('code4');
 
-insert into alarm(isActive, alarmType, alarmHour, alarmMinute, alarmRingtoneId, alarmVolume, alarmLabel, alarmVibrate, sunday, monday, tuesday, wednesday, thursday, friday, saturday, alarmMissionType, missionDiffcutly, numberOfProblems, barcodeQRcodeId, photoId) values
+insert into alarm(isActive, alarmType, alarmHour, alarmMinute, alarmRingtoneId, alarmVolume, alarmLabel, alarmVibrate, sunday, monday, tuesday, wednesday, thursday, friday, saturday, alarmMissionType, missionDifficulty, numberOfProblems, barcodeQRcodeId, photoId) values
 (1, 'normal', 10, 15, 1, 5, '', 0, 0, 0, 0, 0, 0, 0, 0, 'math', 3, 5, null, null),
 (1, 'normal', 6, 45, 1, 5, '', 0, 0, 1, 0, 0, 0, 0, 0, 'photo', null, null, null, 1),
 (1, 'normal', 6, 21, 1, 5, '', 0, 0, 0, 1, 0, 0, 0, 0, 'scanning', null, null, 1, null),
 (0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'typing', null, 5, null, null),
 (0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'default', null, null, null, null),
 (0, 'normal', 15, 8, 1, 5, '', 0, 0, 0, 0, 0, 0, 1, 0, 'step', null, 10, null, null),
-(1, 'fast', 6, 21, 1, 10, '', 0, 0, 0, 0, 0, 0, 0, 0, 'default', null, null, null, null);
+(1, 'quick', 6, 21, 1, 10, '', 0, 0, 0, 0, 0, 0, 0, 0, 'default', null, null, null, null);
 
 insert into alarmHistory(alarmHistoryDate, alarmHistoryTime, alarmHistoryMissionType) values 
 ('2022:07:06', '15:06', 'math'),
-('2022:07:06', '21:10', 'fast'),
+('2022:07:06', '21:10', 'quick'),
 ('2022:07:07', '7:06', 'typing'),
 ('2022:07:08', '15:06', 'step'),
 ('2022:07:08', '19:06', 'photo'),

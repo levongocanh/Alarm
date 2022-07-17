@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class BottomButton extends StatelessWidget {
   final String text;
@@ -11,14 +10,14 @@ class BottomButton extends StatelessWidget {
   final Color color;
   final double textSize;
 
-  BottomButton({
+  const BottomButton({
     required this.text,
-    this.height = 60,
-    this.margin = const EdgeInsetsDirectional.all(10),
+    this.height = 55,
+    this.margin = const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
     this.borderRadius = 8,
     required this.onTap,
-    this.color = Colors.blueAccent,
-    this.textSize = 24,
+    this.color = Colors.blue,
+    this.textSize = 18,
   });
 
   @override
@@ -35,7 +34,7 @@ class BottomButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: textSize, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
       ),

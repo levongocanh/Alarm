@@ -27,7 +27,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
     database = DatabaseManagement();
     getBarcodeQRcode();
     alarm = widget.alarm;
-    isChoice = widget.alarm.barcodeQRcodeId;
+    isChoice = alarm.barcodeQRcodeId;
 
     super.initState();
   }
@@ -248,7 +248,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
         onTap: () {
           if (isChoice != null) {
             alarm.alarmMissionType = 'scanning';
-            alarm.missionDiffcutly = null;
+            alarm.missionDifficulty = null;
             alarm.numberOfProblems = null;
             alarm.barcodeQRcodeId =
                 isChoice; // replace with selected bar code id

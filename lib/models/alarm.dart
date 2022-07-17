@@ -21,7 +21,7 @@ class Alarm {
   int saturday;
 
   String alarmMissionType;
-  int? missionDiffcutly;
+  int? missionDifficulty;
   int? numberOfProblems;
   int? barcodeQRcodeId;
   int? photoId;
@@ -44,7 +44,7 @@ class Alarm {
     required this.friday,
     required this.saturday,
     required this.alarmMissionType,
-    this.missionDiffcutly,
+    this.missionDifficulty,
     this.numberOfProblems,
     this.barcodeQRcodeId,
     this.photoId,
@@ -68,7 +68,7 @@ class Alarm {
         'friday': friday,
         'saturday': saturday,
         'alarmMissionType': alarmMissionType,
-        'missionDiffcutly': missionDiffcutly,
+        'missionDifficulty': missionDifficulty,
         'numberOfProblems': numberOfProblems,
         'barcodeQRcodeId': barcodeQRcodeId,
         'photoId': photoId,
@@ -92,7 +92,7 @@ class Alarm {
         friday: json['friday'],
         saturday: json['saturday'],
         alarmMissionType: json['alarmMissionType'],
-        missionDiffcutly: json['missionDiffcutly'],
+        missionDifficulty: json['missionDifficulty'],
         numberOfProblems: json['numberOfProblems'],
         barcodeQRcodeId: json['barcodeQRcodeId'],
         photoId: json['photoId'],
@@ -100,7 +100,7 @@ class Alarm {
 
   @override
   String toString() {
-    return 'Alarm{ alarmId: $alarmId, isActive: $isActive, alarmType: $alarmType, alarmHour: $alarmHour, alarmMinute: $alarmMinute, alarmRingtoneId: $alarmRingtoneId, alarmVolume: $alarmVolume, alarmLabel: $alarmLabel, alarmVibrate: $alarmVibrate, sunday: $sunday, monday: $monday, tuesday: $tuesday, wednesday: $wednesday, thursday: $thursday, friday: $friday, saturday: $saturday, alarmMissionType: $alarmMissionType, missionDiffcutly: $missionDiffcutly, barcodeQRcodeId: $barcodeQRcodeId, photoId: $photoId}';
+    return 'Alarm{ alarmId: $alarmId, isActive: $isActive, alarmType: $alarmType, alarmHour: $alarmHour, alarmMinute: $alarmMinute, alarmRingtoneId: $alarmRingtoneId, alarmVolume: $alarmVolume, alarmLabel: $alarmLabel, alarmVibrate: $alarmVibrate, sunday: $sunday, monday: $monday, tuesday: $tuesday, wednesday: $wednesday, thursday: $thursday, friday: $friday, saturday: $saturday, alarmMissionType: $alarmMissionType, missionDifficulty: $missionDifficulty, barcodeQRcodeId: $barcodeQRcodeId, photoId: $photoId}';
   }
 
   String getDisplayTime() {
@@ -109,7 +109,7 @@ class Alarm {
   }
 
   Icon getDisplayMission() {
-    if (alarmType == 'fast') {
+    if (alarmType == 'quick') {
       return const Icon(Icons.bolt);
     } else {
       switch (alarmMissionType) {
@@ -137,6 +137,8 @@ class Alarm {
         return 'Typing';
       case 'photo':
         return 'Chụp ảnh';
+      case 'shake':
+        return 'Lắc điện thoại';
       case 'step':
         return 'Step';
       case 'scanning':
@@ -264,5 +266,5 @@ String convertTimeLeftToString(durationInMinutes) {
   var stringDays = days > 0 ? '$days ngày' : '';
   var stringHours = hours > 0 ? '$hours giờ' : '';
   var stringMinutes = '$minutes phút';
-  return '$stringDays $stringHours $stringMinutes';
+  return '$stringDays $stringHours $stringMinutes'.trim();
 }

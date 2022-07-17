@@ -84,18 +84,19 @@ class _Calculator extends State<Calculator> {
         children: <Widget>[
           Text(
             '$current/${widget.alarm.numberOfProblems}',
-            style: const TextStyle(color: Colors.black, fontSize: 20),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
           ),
           Container(
             color: Colors.white,
-            height: 300,
+            height: 200,
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
                   _expression ??
-                      getMathExpressions(widget.alarm.missionDiffcutly),
+                      getMathExpressions(widget.alarm.missionDifficulty),
                   style: const TextStyle(
                       fontSize: 30,
                       color: Colors.black,
@@ -182,7 +183,7 @@ class _Calculator extends State<Calculator> {
                             if (current == widget.alarm.numberOfProblems) {
                               Navigator.of(context).pop();
                             }
-                            getMathExpressions(widget.alarm.missionDiffcutly);
+                            getMathExpressions(widget.alarm.missionDifficulty);
                             userInput = '?';
                           }
                         }

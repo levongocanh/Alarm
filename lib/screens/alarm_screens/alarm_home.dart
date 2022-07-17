@@ -1,14 +1,12 @@
-// ignore_for_file: unused_import, prefer_final_fields, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_final_fields, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_edit.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
-import 'package:alarm_app/screens/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
-import 'package:sqflite/sqflite.dart';
 
 final List<String> buttons = [
   '1',
@@ -35,7 +33,7 @@ class _AlarmHomeState extends State<AlarmHome> {
   String nextAlarm = '';
   List<Alarm> _alarms = [];
 
-  int fastAlarmTime = 0;
+  int quickAlarmTime = 0;
 
   late DatabaseManagement database;
   @override
@@ -60,7 +58,7 @@ class _AlarmHomeState extends State<AlarmHome> {
   }
 
   Icon getMissionIcon(Alarm alarm) {
-    if (alarm.alarmType == 'fast') {
+    if (alarm.alarmType == 'quick') {
       return Icon(Icons.bolt);
     } else {
       switch (alarm.alarmMissionType) {
@@ -89,7 +87,7 @@ class _AlarmHomeState extends State<AlarmHome> {
       getAlarmData();
     }
   }
-  // Future<String?> openCreateFastAlarm() async => showDialog<String?>(
+  // Future<String?> openCreateQuickAlarm() async => showDialog<String?>(
   //       context: context,
   //       builder: (context) => AlertDialog(
   //         title: Text('Báo thức nhanh'),
@@ -99,7 +97,7 @@ class _AlarmHomeState extends State<AlarmHome> {
   //           child: Column(
   //             children: [
   //               Text(
-  //                 '+${DateFormat.Hm().format(DateFormat.Hm().parse('${fastAlarmTime ~/ 60}:${fastAlarmTime % 60}'))}',
+  //                 '+${DateFormat.Hm().format(DateFormat.Hm().parse('${quickAlarmTime ~/ 60}:${quickAlarmTime % 60}'))}',
   //                 style: TextStyle(
   //                   fontSize: 50,
   //                   fontWeight: FontWeight.bold,
@@ -132,7 +130,7 @@ class _AlarmHomeState extends State<AlarmHome> {
   //                         child: ElevatedButton(
   //                           child: Icon(Icons.refresh),
   //                           onPressed: () {
-  //                             fastAlarmTime = 0;
+  //                             quickAlarmTime = 0;
   //                           },
   //                         ),
   //                       );
@@ -147,9 +145,9 @@ class _AlarmHomeState extends State<AlarmHome> {
   //                           onPressed: () {
   //                             debugPrint((buttons[index].toString()));
   //                             setState() {
-  //                               fastAlarmTime = fastAlarmTime + int.parse(buttons[index]);
+  //                               quickAlarmTime = quickAlarmTime + int.parse(buttons[index]);
   //                             }
-  //                             debugPrint(fastAlarmTime.toString());
+  //                             debugPrint(quickAlarmTime.toString());
   //                           },
   //                         ),
   //                       );
@@ -199,7 +197,7 @@ class _AlarmHomeState extends State<AlarmHome> {
             Text(
               nextAlarm.isNotEmpty
                   ? 'Còn $nextAlarm'
-                  : 'Không có báo thức sắp tới',
+                  : 'Không có báo thức sắp tới',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -227,8 +225,8 @@ class _AlarmHomeState extends State<AlarmHome> {
                 Checkbox(
                     value: _alarms[index].isActive == 0 ? false : true,
                     onChanged: (bool? value) {
-                      // delete fast alarm when it isn't active [isActive = false]
-                      if (_alarms[index].alarmType == 'fast' &&
+                      // delete quick alarm when it isn't active [isActive = false]
+                      if (_alarms[index].alarmType == 'quick' &&
                           value! == false) {
                         database.deleteAlarm(_alarms[index].alarmId!);
                       } else {
@@ -242,8 +240,12 @@ class _AlarmHomeState extends State<AlarmHome> {
                     }),
                 Expanded(
                   child: InkWell(
-                    onTap: () {
-                      _navigateEditAlarm(context, _alarms[index]);
+                    onTap: () async {
+                      if (_alarms[index].alarmType == 'quick') {
+                        debugPrint('Không thể thay đổi báo thức nhanh.');
+                      } else {
+                        await _navigateEditAlarm(context, _alarms[index]);
+                      }
                     },
                     child: Row(
                       children: <Widget>[
@@ -389,9 +391,9 @@ class _AlarmHomeState extends State<AlarmHome> {
             backgroundColor: Colors.blue,
             onTap: () {
               setState(() {
-                fastAlarmTime = 0;
+                quickAlarmTime = 0;
               });
-              // openCreateFastAlarm();
+              // openCreateQuickAlarm();
               debugPrint('Đã mở tạo báo thức nhanh');
             },
           ),

@@ -19,7 +19,7 @@ class Ringtone {
     String name = ringtonePath.split('/')[1];
     name = name.split('.')[0];
     name = name.replaceAll('_', ' ');
-    return name;
+    return name[0].toUpperCase() + name.substring(1);
   }
 
   @override

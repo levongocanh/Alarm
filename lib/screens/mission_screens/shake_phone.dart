@@ -1,52 +1,61 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class StepMission extends StatefulWidget {
+class ShakeMission extends StatefulWidget {
   Alarm alarm;
-  StepMission({Key? key, required this.alarm}) : super(key: key);
+  ShakeMission({Key? key, required this.alarm}) : super(key: key);
 
   @override
-  State<StepMission> createState() => _StepMissionState();
+  State<ShakeMission> createState() => _ShakeMissionState();
 }
 
-class _StepMissionState extends State<StepMission> {
-  int _selected = 0;
+class _ShakeMissionState extends State<ShakeMission> {
+  late int _selected;
+  late double _missionLevel;
+  late Alarm alarm;
+  @override
+  void initState() {
+    alarm = widget.alarm;
+    _selected = (alarm.alarmType == 'shake' ? alarm.numberOfProblems : 0)!;
+    _missionLevel =
+        (alarm.alarmType == 'shake' ? alarm.missionDifficulty : 0)!.toDouble();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Alarm alarm = widget.alarm;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
-          'Step',
+        title: const Text(
+          'Shake Phone',
           style: TextStyle(color: Colors.black),
         ),
       ),
       body: Container(
-        margin: EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
+        margin: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
         child: ListView(
           children: <Widget>[
             MissionInformation(
-              missionName: 'Step',
+              missionName: 'Shake',
               missionNameSize: 35,
               missionDescription:
-                  'Select how many steps that you will take to dismiss your alarm.',
+                  'Select how many times you will shake your phone to dismiss your alarm.',
               missionDescriptionSize: 20,
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 10, left: 5, top: 20),
+              padding: const EdgeInsets.only(bottom: 10, left: 5, top: 20),
               child: Text(
-                'Number of Steps',
+                'Number of shakes',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -56,7 +65,6 @@ class _StepMissionState extends State<StepMission> {
             ),
             Container(
               height: 150,
-              width: 100,
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(8),
@@ -87,13 +95,13 @@ class _StepMissionState extends State<StepMission> {
                         debugPrint(_selected.toString());
                       },
                       children: List<Widget>.generate(
-                        8,
+                        200,
                         (int index) {
-                          index = index * 10 + 20;
+                          index = index * 5 + 5;
                           return Center(
                             child: Text(
                               '$index',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 35),
                             ),
                           );
@@ -101,10 +109,10 @@ class _StepMissionState extends State<StepMission> {
                       ),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
-                      'step',
+                      'shakes',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -113,16 +121,75 @@ class _StepMissionState extends State<StepMission> {
                   )
                 ],
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10, left: 5, top: 20),
+              child: Text(
+                'Shake Sensitivity',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade800,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Slider(
+                    value: _missionLevel,
+                    max: 2,
+                    onChanged: (double value) {
+                      if (value.ceilToDouble() != _missionLevel) {
+                        setState(() {
+                          _missionLevel = value.ceilToDouble();
+                          debugPrint(_missionLevel.toString());
+                        });
+                      }
+                    },
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: const [
+                        Text(
+                          'Easy',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            'Hard',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+              ]),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomButton(
         text: 'Save',
         onTap: () {
-          alarm.alarmMissionType = 'step';
-          alarm.missionDifficulty = null;
-          alarm.numberOfProblems = _selected * 10 + 20;
+          alarm.alarmMissionType = 'shake';
+          alarm.missionDifficulty = _missionLevel.toInt();
+          alarm.numberOfProblems = _selected * 5 + 5;
           alarm.barcodeQRcodeId = null;
           alarm.photoId = null;
 

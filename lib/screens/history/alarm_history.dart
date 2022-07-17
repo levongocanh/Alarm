@@ -30,7 +30,7 @@ class _HistoryPageState extends State<HistoryPage> {
     switch (missionType) {
       case 'math':
         return const Icon(Icons.calculate);
-      case 'fast':
+      case 'quick':
         return const Icon(Icons.bolt);
       case 'typing':
         return const Icon(Icons.keyboard);
@@ -53,8 +53,8 @@ class _HistoryPageState extends State<HistoryPage> {
             child: ListView.builder(
               itemCount: alarmHistory.length,
               itemBuilder: (context, index) => Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                margin: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 height: 70,
                 decoration: BoxDecoration(
                     color: Colors.white,

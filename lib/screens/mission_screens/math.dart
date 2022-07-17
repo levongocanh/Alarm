@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
@@ -42,17 +41,17 @@ class _MathMissionState extends State<MathMission> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Giải toán',
           style: TextStyle(color: Colors.black),
         ),
       ),
       body: Container(
-        margin: EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
+        margin: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
         child: ListView(
           children: <Widget>[
             MissionInformation(
@@ -62,7 +61,7 @@ class _MathMissionState extends State<MathMission> {
                   'Select the difficulty of the math problems you will solve to dismiss your alarm.',
               missionDescriptionSize: 20,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(bottom: 10, left: 5, top: 20),
               child: Text(
                 'Difficulty',
@@ -71,7 +70,7 @@ class _MathMissionState extends State<MathMission> {
             ),
             Container(
               height: 145,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(8),
@@ -79,13 +78,13 @@ class _MathMissionState extends State<MathMission> {
               child: Column(children: [
                 Text(
                   getExampleOfExpression(_missionLevel),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 23,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Slider(
                     value: _missionLevel,
                     max: 5,
@@ -100,9 +99,9 @@ class _MathMissionState extends State<MathMission> {
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
-                      children: [
+                      children: const [
                         Text(
                           'Easy',
                           textAlign: TextAlign.left,
@@ -125,7 +124,7 @@ class _MathMissionState extends State<MathMission> {
                     )),
               ]),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(bottom: 10, left: 5, top: 20),
               child: Text(
                 "Number of Problems",
@@ -171,7 +170,7 @@ class _MathMissionState extends State<MathMission> {
                           return Center(
                             child: Text(
                               '$index',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 35),
                             ),
                           );
@@ -179,7 +178,7 @@ class _MathMissionState extends State<MathMission> {
                       ),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
                       'problems',
@@ -199,7 +198,7 @@ class _MathMissionState extends State<MathMission> {
         text: 'Save',
         onTap: () {
           alarm.alarmMissionType = 'math';
-          alarm.missionDiffcutly = _missionLevel.toInt();
+          alarm.missionDifficulty = _missionLevel.toInt();
           alarm.numberOfProblems = _selected + 1;
           alarm.barcodeQRcodeId = null;
           alarm.photoId = null;

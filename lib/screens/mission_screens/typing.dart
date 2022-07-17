@@ -119,7 +119,7 @@ class _TypingMissionState extends State<TypingMission> {
         text: 'Save',
         onTap: () {
           alarm.alarmMissionType = 'typing';
-          alarm.missionDiffcutly = null;
+          alarm.missionDifficulty = null;
           alarm.numberOfProblems = _selected + 1;
           alarm.barcodeQRcodeId = null;
           alarm.photoId = null;

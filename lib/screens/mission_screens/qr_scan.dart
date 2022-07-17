@@ -114,7 +114,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
         text: 'Save',
         onTap: () {
           alarm.alarmMissionType = 'scanning';
-          alarm.missionDiffcutly = null;
+          alarm.missionDifficulty = null;
           alarm.numberOfProblems = null;
           alarm.barcodeQRcodeId = 1; // replace with selected bar code id
           alarm.photoId = null;

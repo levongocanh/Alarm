@@ -3,6 +3,7 @@
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/screens/mission_screens/math.dart';
 import 'package:alarm_app/screens/mission_screens/scan_qr/qr_scan.dart';
+import 'package:alarm_app/screens/mission_screens/shake_phone.dart';
 import 'package:alarm_app/screens/mission_screens/step.dart';
 import 'package:alarm_app/screens/mission_screens/take_photo/take_photo.dart';
 import 'package:alarm_app/screens/mission_screens/typing.dart';
@@ -49,7 +50,7 @@ class _SelectMissionState extends State<SelectMission> {
                 color: Colors.grey[300],
                 onTap: () => {
                   alarm.alarmMissionType = 'default',
-                  alarm.missionDiffcutly = null,
+                  alarm.missionDifficulty = null,
                   alarm.numberOfProblems = null,
                   alarm.barcodeQRcodeId = null,
                   alarm.photoId = null,
@@ -86,6 +87,24 @@ class _SelectMissionState extends State<SelectMission> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => MathMission(
+                                alarm: alarm,
+                              )))
+                },
+                color: Colors.grey[300],
+              ),
+              SelectMissionButton(
+                missionName: 'Lắc điện thoại',
+                missionInformation: widget.alarm.alarmMissionType == 'shake'
+                    ? '${widget.alarm.numberOfProblems} shakes'
+                    : '',
+                onSelected:
+                    widget.alarm.alarmMissionType == 'shake' ? true : false,
+                missionIcon: Icon(Icons.vibration),
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShakeMission(
                                 alarm: alarm,
                               )))
                 },

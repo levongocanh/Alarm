@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-import 'dart:io';
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +35,11 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Chụp ảnh',
           style: TextStyle(color: Colors.black),
         ),
@@ -57,7 +55,7 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   // ignore: prefer_const_literals_to_create_immutables
-                  children: [
+                  children: const [
                     Text(
                       'Select a spot far from your bed',
                       style:
@@ -92,13 +90,13 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
                           border: Border.all(color: Colors.black, width: 1)),
                       child: GridView.builder(
                           gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent: 200,
                                   childAspectRatio: 3 / 2,
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20),
                           itemCount: DUMMY_DATA.length,
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () => setState(() {
@@ -115,7 +113,7 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
                                     border: Border.all(
                                         color: Colors.black, width: 1)),
                                 child: isChoice == DUMMY_DATA[index].photoId
-                                    ? Icon(
+                                    ? const Icon(
                                         Icons.check,
                                         color: Colors.blue,
                                         size: 80,
@@ -127,8 +125,8 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
                     ),
                   ),
                 )
-              : Padding(
-                  padding: const EdgeInsets.all(12.0),
+              : const Padding(
+                  padding: EdgeInsets.all(12.0),
                   child: Text(
                     'You haven\'t added any photos yet',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
@@ -152,7 +150,7 @@ class _TakePhotoMissionState extends State<TakePhotoMission> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
-                    children: [
+                    children: const [
                       Icon(
                         Icons.add,
                         size: 32,

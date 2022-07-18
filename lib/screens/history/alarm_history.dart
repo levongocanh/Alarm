@@ -48,37 +48,38 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            color: Colors.grey,
-            child: ListView.builder(
-              itemCount: alarmHistory.length,
-              itemBuilder: (context, index) => Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                height: 70,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5)),
-                child: Row(children: [
-                  Expanded(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            alarmHistory[index].alarmHistoryTime,
-                            style: const TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            alarmHistory[index].alarmHistoryDate,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ]),
-                  ),
-                  getMissionIcon(alarmHistory[index].alarmHistoryMissionType),
-                ]),
+      body: Container(
+        color: Colors.grey,
+        child: ListView.builder(
+          itemCount: alarmHistory.length,
+          itemBuilder: (context, index) => Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            height: 70,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Row(children: [
+              Expanded(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        alarmHistory[index].alarmHistoryTime,
+                        style: const TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        alarmHistory[index].alarmHistoryDate,
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ]),
               ),
-            )));
+              getMissionIcon(alarmHistory[index].alarmHistoryMissionType),
+            ]),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
@@ -25,17 +23,17 @@ class _TypingMissionState extends State<TypingMission> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Typing',
           style: TextStyle(color: Colors.black),
         ),
       ),
       body: Container(
-        margin: EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
+        margin: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
         child: ListView(
           children: <Widget>[
             MissionInformation(
@@ -45,7 +43,7 @@ class _TypingMissionState extends State<TypingMission> {
                   'Select how many phrases that you will type to dismiss your alarm.',
               missionDescriptionSize: 20,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(bottom: 10, left: 5, top: 20),
               child: Text(
                 'Number of phrases',
@@ -91,7 +89,7 @@ class _TypingMissionState extends State<TypingMission> {
                           return Center(
                             child: Text(
                               '$index',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 35),
                             ),
                           );
@@ -99,7 +97,7 @@ class _TypingMissionState extends State<TypingMission> {
                       ),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
                       'phrases',

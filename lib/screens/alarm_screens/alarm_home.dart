@@ -3,7 +3,7 @@
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/screens/alarm_screens/alarm_edit.dart';
-import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
+import 'package:alarm_app/screens/alarm_screens/dismiss_alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
@@ -292,7 +292,7 @@ class _AlarmHomeState extends State<AlarmHome> {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PreviewAlarm(
+                                builder: (context) => DismissAlarm(
                                       alarm: _alarms[index],
                                     )));
                         break;

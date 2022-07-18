@@ -1,19 +1,22 @@
 import 'dart:math';
 
 import 'package:alarm_app/models/alarm.dart';
+import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class Calculator extends StatefulWidget {
   Alarm alarm;
+  bool isPreview;
 
-  Calculator({Key? key, required this.alarm}) : super(key: key);
+  Calculator({Key? key, required this.alarm, this.isPreview = true})
+      : super(key: key);
 
   @override
-  State<Calculator> createState() => _Calculator();
+  State<Calculator> createState() => _CalculatorState();
 }
 
-class _Calculator extends State<Calculator> {
+class _CalculatorState extends State<Calculator> {
   // final _missionLevel = 5;
   var _expression;
   var current = 0;
@@ -78,149 +81,174 @@ class _Calculator extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: <Widget>[
-          Text(
-            '$current/${widget.alarm.numberOfProblems}',
-            style: const TextStyle(
-                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
-          ),
-          Container(
-            color: Colors.white,
-            height: 200,
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  _expression ??
-                      getMathExpressions(widget.alarm.missionDifficulty),
-                  style: const TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                    width: 200,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          '=',
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          userInput,
-                          style: TextStyle(
-                              fontSize: 30,
-                              color:
-                                  userInput == '?' ? Colors.grey : Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+    return WillPopScope(
+      // disable back button
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Column(
+          children: <Widget>[
+            Text(
+              '$current/${widget.alarm.numberOfProblems}',
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
+            ),
+            Container(
+              color: Colors.white,
+              height: 200,
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    _expression ??
+                        getMathExpressions(widget.alarm.missionDifficulty),
+                    style: const TextStyle(
+                        fontSize: 30,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: 200,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            '=',
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            userInput,
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: userInput == '?'
+                                    ? Colors.grey
+                                    : Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: SizedBox(
-              width: 250,
-              child: GridView.builder(
-                itemCount: buttons.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemBuilder: (BuildContext context, int index) {
-                  // Delete Button
-                  if (buttons[index] == 'DEL') {
-                    return IconButton(
-                      icon: const Icon(
-                        Icons.backspace,
-                        color: Colors.white,
-                      ),
-                      color: Colors.red,
-                      buttontapped: () {
-                        if (userInput.isNotEmpty && userInput != '?') {
-                          if (userInput.length > 1) {
-                            setState(() {
-                              userInput =
-                                  userInput.substring(0, userInput.length - 1);
-                            });
-                          } else {
-                            setState(() {
-                              userInput = '?';
-                            });
-                          }
-                        }
-                      },
-                      // buttonText: buttons[index],
-                    );
-                  }
-
-                  // evalute button
-                  else if (buttons[index] == 'V') {
-                    return IconButton(
-                      icon: const Icon(
-                        Icons.check,
-                        color: Colors.white,
-                      ),
-                      color: Colors.green,
-                      buttontapped: () {
-                        if (userInput != '?') {
-                          if (equalPressed()) {
-                            setState(() {
-                              current++;
-                            });
-                            if (current == widget.alarm.numberOfProblems) {
-                              Navigator.of(context).pop();
-                            }
-                            getMathExpressions(widget.alarm.missionDifficulty);
-                            userInput = '?';
-                          }
-                        }
-                        debugPrint('This is calculate function');
-                      },
-                    );
-                  }
-
-                  //  number buttons
-                  else {
-                    return NumberButton(
-                      buttontapped: () {
-                        // Max length of result is 7 (9999*100+9999)
-                        if (userInput != '?') {
-                          if (userInput.length < 8) {
-                            setState(() {
-                              userInput += buttons[index];
-                            });
-                          } else {
-                            debugPrint('out of max length');
-                          }
-                        } else {
-                          setState(() {
-                            userInput = buttons[index];
-                          });
-                        }
-                      },
-                      buttonText: buttons[index],
-                      color: Colors.blueGrey.shade800,
-                      textColor: Colors.white,
-                    );
-                  }
-                },
+                ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 3,
+              child: SizedBox(
+                width: 250,
+                child: GridView.builder(
+                  itemCount: buttons.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3),
+                  itemBuilder: (BuildContext context, int index) {
+                    // Delete Button
+                    if (buttons[index] == 'DEL') {
+                      return IconButton(
+                        icon: const Icon(
+                          Icons.backspace,
+                          color: Colors.white,
+                        ),
+                        color: Colors.red,
+                        buttontapped: () {
+                          if (userInput.isNotEmpty && userInput != '?') {
+                            if (userInput.length > 1) {
+                              setState(() {
+                                userInput = userInput.substring(
+                                    0, userInput.length - 1);
+                              });
+                            } else {
+                              setState(() {
+                                userInput = '?';
+                              });
+                            }
+                          }
+                        },
+                        // buttonText: buttons[index],
+                      );
+                    }
+
+                    // evalute button
+                    else if (buttons[index] == 'V') {
+                      return IconButton(
+                        icon: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                        color: Colors.green,
+                        buttontapped: () {
+                          if (userInput != '?') {
+                            if (equalPressed()) {
+                              setState(() {
+                                current++;
+                              });
+                              if (current == widget.alarm.numberOfProblems) {
+                                Navigator.of(context).pop();
+                              }
+                              getMathExpressions(
+                                  widget.alarm.missionDifficulty);
+                              userInput = '?';
+                            }
+                          }
+                          debugPrint('This is calculate function');
+                        },
+                      );
+                    }
+
+                    //  number buttons
+                    else {
+                      return NumberButton(
+                        buttontapped: () {
+                          // Max length of result is 7 (9999*100+9999)
+                          if (userInput != '?') {
+                            if (userInput.length < 8) {
+                              setState(() {
+                                userInput += buttons[index];
+                              });
+                            } else {
+                              debugPrint('out of max length');
+                            }
+                          } else {
+                            setState(() {
+                              userInput = buttons[index];
+                            });
+                          }
+                        },
+                        buttonText: buttons[index],
+                        color: Colors.blueGrey.shade800,
+                        textColor: Colors.white,
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: widget.isPreview == true
+            ? BottomButton(
+                text: 'Exit Preview',
+                margin: const EdgeInsetsDirectional.all(0),
+                borderRadius: 0,
+                color: Colors.white,
+                textColor: Colors.black,
+                onTap: () {
+                  Navigator.of(context)
+                    ..pop()
+                    ..pop();
+                  debugPrint('Exit Preview');
+                },
+              )
+            : null,
       ),
     );
   }

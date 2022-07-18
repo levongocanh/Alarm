@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/screens/mission_screens/math.dart';
 import 'package:alarm_app/screens/mission_screens/scan_qr/qr_scan.dart';
@@ -27,17 +25,17 @@ class _SelectMissionState extends State<SelectMission> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Select Mission',
           style: TextStyle(color: Colors.black),
         ),
       ),
       body: Container(
-        margin: EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
+        margin: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
         child: Center(
           child: ListView(
             children: <Widget>[
@@ -46,7 +44,7 @@ class _SelectMissionState extends State<SelectMission> {
                 missionInformation: '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'default' ? true : false,
-                missionIcon: Icon(Icons.alarm),
+                missionIcon: const Icon(Icons.alarm),
                 color: Colors.grey[300],
                 onTap: () => {
                   alarm.alarmMissionType = 'default',
@@ -63,7 +61,7 @@ class _SelectMissionState extends State<SelectMission> {
                 missionInformation: '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'photo' ? true : false,
-                missionIcon: Icon(Icons.photo_camera),
+                missionIcon: const Icon(Icons.photo_camera),
                 onTap: () => {
                   Navigator.push(
                       context,
@@ -81,7 +79,7 @@ class _SelectMissionState extends State<SelectMission> {
                     : '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'math' ? true : false,
-                missionIcon: Icon(Icons.calculate),
+                missionIcon: const Icon(Icons.calculate),
                 onTap: () => {
                   Navigator.push(
                       context,
@@ -99,7 +97,7 @@ class _SelectMissionState extends State<SelectMission> {
                     : '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'shake' ? true : false,
-                missionIcon: Icon(Icons.vibration),
+                missionIcon: const Icon(Icons.vibration),
                 onTap: () => {
                   Navigator.push(
                       context,
@@ -115,7 +113,7 @@ class _SelectMissionState extends State<SelectMission> {
                 missionInformation: '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'scanning' ? true : false,
-                missionIcon: Icon(Icons.qr_code_scanner),
+                missionIcon: const Icon(Icons.qr_code_scanner),
                 onTap: () => {
                   Navigator.push(
                       context,
@@ -133,7 +131,7 @@ class _SelectMissionState extends State<SelectMission> {
                     : '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'typing' ? true : false,
-                missionIcon: Icon(Icons.keyboard),
+                missionIcon: const Icon(Icons.keyboard),
                 onTap: () => {
                   Navigator.push(
                       context,
@@ -151,7 +149,7 @@ class _SelectMissionState extends State<SelectMission> {
                     : '',
                 onSelected:
                     widget.alarm.alarmMissionType == 'step' ? true : false,
-                missionIcon: Icon(Icons.directions_run),
+                missionIcon: const Icon(Icons.directions_run),
                 onTap: () => {
                   Navigator.push(
                       context,

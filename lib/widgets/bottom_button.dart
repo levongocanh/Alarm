@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class BottomButton extends StatelessWidget {
   final String text;
@@ -8,6 +7,7 @@ class BottomButton extends StatelessWidget {
   final double borderRadius;
   final VoidCallback onTap;
   final Color color;
+  final Color textColor;
   final double textSize;
 
   const BottomButton({
@@ -17,6 +17,7 @@ class BottomButton extends StatelessWidget {
     this.borderRadius = 8,
     required this.onTap,
     this.color = Colors.blue,
+    this.textColor = Colors.white,
     this.textSize = 18,
   });
 
@@ -34,7 +35,7 @@ class BottomButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(fontSize: textSize, color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: textSize, color: textColor, fontWeight: FontWeight.bold),
           ),
         ),
       ),

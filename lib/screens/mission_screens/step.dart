@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:alarm_app/widgets/mission_information.dart';
@@ -23,17 +22,17 @@ class _StepMissionState extends State<StepMission> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Step',
           style: TextStyle(color: Colors.black),
         ),
       ),
       body: Container(
-        margin: EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
+        margin: const EdgeInsetsDirectional.only(start: 15, end: 15, top: 15),
         child: ListView(
           children: <Widget>[
             MissionInformation(
@@ -44,7 +43,7 @@ class _StepMissionState extends State<StepMission> {
               missionDescriptionSize: 20,
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 10, left: 5, top: 20),
+              padding: const EdgeInsets.only(bottom: 10, left: 5, top: 20),
               child: Text(
                 'Number of Steps',
                 style: TextStyle(
@@ -93,7 +92,7 @@ class _StepMissionState extends State<StepMission> {
                           return Center(
                             child: Text(
                               '$index',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 35),
                             ),
                           );
@@ -101,7 +100,7 @@ class _StepMissionState extends State<StepMission> {
                       ),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 20),
                     child: Text(
                       'step',

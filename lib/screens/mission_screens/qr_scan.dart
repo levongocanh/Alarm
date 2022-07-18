@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +24,13 @@ class _ScanQRMissionState extends State<ScanQRMission> {
             children: [
               IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.navigate_before,
                     color: Colors.black,
                   )),
               IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.remove_red_eye_outlined,
                     color: Colors.black,
                   )),
@@ -46,19 +44,19 @@ class _ScanQRMissionState extends State<ScanQRMission> {
               Column(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       'Mã vạch/Mã QR',
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Select a QR code or barcode far from your bed',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
                   ),
-                  Text(
+                  const Text(
                     'that you will scan to dismiss your alarm.',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
                   ),
@@ -69,7 +67,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
           // List code
 
           // Add a code button
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
           Padding(
@@ -90,12 +88,12 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.add,
                         size: 32,
                         color: Colors.black,
                       ),
-                      Text(
+                      const Text(
                         'Add a code',
                         style: TextStyle(
                             color: Colors.black,

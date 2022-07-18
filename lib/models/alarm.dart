@@ -190,7 +190,7 @@ class Alarm {
     var result = alarmTime.difference(now).inMinutes;
 
     // no [repeatWeekDays] selected this will calculated for the next day
-    if (friday == 0 &&
+    if (sunday == 0 &&
         monday == 0 &&
         tuesday == 0 &&
         wednesday == 0 &&
@@ -203,7 +203,7 @@ class Alarm {
     }
 
     // add 8 days
-    for (var i = result.isNegative ? 0 : 1; i <= 8; i++) {
+    for (var i = result.isNegative ? 0 : 1; i <= 9; i++) {
       DateTime newTime = alarmTime.add(Duration(days: i));
       var differenceInMinutes = newTime.difference(now).inMinutes;
 
@@ -263,7 +263,7 @@ String convertTimeLeftToString(durationInMinutes) {
   var hours = durationInMinutes ~/ 60;
   durationInMinutes -= hours * 60;
   var minutes = durationInMinutes % 60;
-  var stringDays = days > 0 ? '$days ngày' : '';
+  var stringDays = days > 0 ? '$days ngày,' : '';
   var stringHours = hours > 0 ? '$hours giờ' : '';
   var stringMinutes = '$minutes phút';
   return '$stringDays $stringHours $stringMinutes'.trim();

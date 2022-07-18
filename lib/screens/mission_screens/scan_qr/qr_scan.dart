@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/models/barcode_qrcode.dart';
 import 'package:alarm_app/models/database.dart';
@@ -57,7 +56,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
               onPressed: () {
                 Navigator.of(context).pop('Cancel');
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
           ],
         ),
@@ -89,11 +88,11 @@ class _ScanQRMissionState extends State<ScanQRMission> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         leading: IconButton(
-          icon: Icon(Icons.navigate_before, color: Colors.black),
+          icon: const Icon(Icons.navigate_before, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Quét QR',
           style: TextStyle(color: Colors.black),
         ),
@@ -161,8 +160,8 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                                 children: [
                                   isChoice ==
                                           barcodeQRcodes[index].barcodeQRcodeId
-                                      ? Padding(
-                                          padding: const EdgeInsets.symmetric(
+                                      ? const Padding(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 24),
                                           child: Icon(
                                             Icons.check_circle,
@@ -170,8 +169,8 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                                             color: Colors.blueAccent,
                                           ),
                                         )
-                                      : Padding(
-                                          padding: const EdgeInsets.symmetric(
+                                      : const Padding(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 24),
                                           child: Icon(
                                             Icons.circle_outlined,
@@ -182,7 +181,7 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                                   Center(
                                       child: Text(
                                     barcodeQRcodes[index].code,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
                                   )),
@@ -193,8 +192,8 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                         );
                       }),
                 ))
-              : Padding(
-                  padding: const EdgeInsets.all(12.0),
+              : const Padding(
+                  padding: EdgeInsets.all(12.0),
                   child: Text(
                     'You haven\'t added any QR code yet',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
@@ -223,12 +222,12 @@ class _ScanQRMissionState extends State<ScanQRMission> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.add,
                         size: 32,
                         color: Colors.black,
                       ),
-                      Text(
+                      const Text(
                         'Add a code',
                         style: TextStyle(
                             color: Colors.black,

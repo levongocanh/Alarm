@@ -24,6 +24,6 @@ class Ringtone {
 
   @override
   String toString() {
-    return 'Ringtone{ringtoneId: $ringtoneId, photoPath: $ringtonePath}';
+    return 'Ringtone{ringtoneId: $ringtoneId, ringtonePath: $ringtonePath}';
   }
 }

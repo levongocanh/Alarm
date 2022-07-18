@@ -1,10 +1,9 @@
+import 'package:alarm_app/models/barcode_qrcode.dart';
+import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
-import '../../../models/barcode_qrcode.dart';
-import '../../../models/database.dart';
 
 class DismissQRcode extends StatefulWidget {
   final int idQRcode;
@@ -89,38 +88,45 @@ class _DismissQRcodeState extends State<DismissQRcode> {
     if (barcodeQRcodes.isNotEmpty) {
       qrCode = findQRCode(widget.idQRcode).code;
     }
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        leading: IconButton(
-          icon: const Icon(Icons.navigate_before, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+    return WillPopScope(
+      // disable back button
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          leading: IconButton(
+            icon: const Icon(Icons.navigate_before, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          centerTitle: true,
+          title: const Text(
+            'Nhiệm vụ quét QR',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
-        centerTitle: true,
-        title: const Text(
-          'Nhiệm vụ quét QR',
-          style: TextStyle(color: Colors.black),
+        body: SafeArea(
+            child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.qr_code_scanner,
+                size: 84,
+              ),
+              Text(qrCode,
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.w500)),
+            ],
+          ),
+        )),
+        bottomNavigationBar: BottomButton(
+          text: 'Scan QR code',
+          onTap: () => scanQRCode(qrCode),
         ),
-      ),
-      body: SafeArea(
-          child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.qr_code_scanner,
-              size: 84,
-            ),
-            Text(qrCode,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),
-          ],
-        ),
-      )),
-      bottomNavigationBar: BottomButton(
-        text: 'Scan QR code',
-        onTap: () => scanQRCode(qrCode),
       ),
     );
   }

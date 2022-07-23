@@ -29,7 +29,6 @@ class TakePhotoMission extends StatefulWidget {
 class _TakePhotoMissionState extends State<TakePhotoMission> {
   @override
   Widget build(BuildContext context) {
-    Alarm alarm = widget.alarm;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

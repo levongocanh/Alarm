@@ -1,12 +1,11 @@
 import 'package:alarm_app/models/alarm.dart';
 import 'package:alarm_app/models/database.dart';
 import 'package:alarm_app/models/ringtone.dart';
-// import 'package:alarm_app/screens/alarm_screens/alarm_preview.dart';
 import 'package:alarm_app/screens/alarm_screens/dismiss_alarm.dart';
 import 'package:alarm_app/screens/mission_screens/select_mission_screen.dart';
 import 'package:alarm_app/screens/ringtone_screen/select_ringtone_screen.dart';
 import 'package:alarm_app/widgets/bottom_button.dart';
-import 'package:alarm_app/widgets/select_repeat_weekDay.dart';
+import 'package:alarm_app/widgets/select_repeat_weekday.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -152,45 +151,70 @@ class _EditScreenState extends State<EditScreen> {
         ),
       );
 
-  Future<String?> openDeleteConfirmationForm() => showDialog<String?>(
+  Future<bool?> openDeleteConfirmationForm() => showDialog<bool?>(
         context: context,
-        builder: (context) => AlertDialog(
-            title: const Text('Label'),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            backgroundColor: Colors.white,
-            content: Column(
+        builder: (context) => FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Material(
+            type: MaterialType.transparency,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  height: 300,
-                  padding: const EdgeInsets.all(8.0),
                   decoration: const BoxDecoration(
                     color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Column(
-                    children: const [
-                      Text("a"),
-                      Divider(),
-                      Text("b"),
-                      Divider(),
-                      Text("c"),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 100,
+                        child: Center(
+                          child: Text(
+                            "Xóa báo thức này",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      BottomButton(
+                        text: 'Xóa',
+                        height: 50,
+                        margin: const EdgeInsetsDirectional.only(
+                            start: 30, end: 30, bottom: 15),
+                        color: Colors.blue,
+                        onTap: () {
+                          database.deleteAlarm(_alarm.alarmId!);
+                          Navigator.of(context)
+                            ..pop()
+                            ..pop();
+                        },
+                      ),
+                      BottomButton(
+                        text: 'Hủy',
+                        height: 50,
+                        margin: const EdgeInsetsDirectional.only(
+                            start: 30, end: 30, bottom: 15),
+                        color: Colors.grey,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 50,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  child: const Center(child: Text("d")),
-                )
               ],
-            )),
+            ),
+          ),
+        ),
       );
 
   Future<void> getSelectedRingtoneId(BuildContext context) async {
@@ -693,7 +717,9 @@ class _EditScreenState extends State<EditScreen> {
                   },
                 ),
                 // add a space
-                const SizedBox(height: 20,)
+                const SizedBox(
+                  height: 20,
+                )
               ],
             ),
           ),

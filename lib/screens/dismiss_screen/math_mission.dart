@@ -26,7 +26,13 @@ class _CalculatorState extends State<Calculator> {
     return min + Random().nextInt(max - min);
   }
 
-  String getMathExpressions(missionLevel) {
+  @override
+  void initState() {
+    
+    super.initState();
+  }
+
+  Future<String> getMathExpressions(missionLevel) {
     switch (missionLevel) {
       case 1:
         setState(() {

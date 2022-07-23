@@ -46,7 +46,7 @@ class _AlarmHomeState extends State<AlarmHome> {
   void getAlarmData() async {
     _alarms = await database.getAlarms();
 
-    // sort by [IsActive] => [alarmHour] => [alarmMinute]
+    // sort by [isActive] => [alarmHour] => [alarmMinute]
     _alarms.sort((a, b) => a.alarmMinute.compareTo(b.alarmMinute));
     _alarms.sort((a, b) => a.alarmHour.compareTo(b.alarmHour));
     _alarms.sort((a, b) => b.isActive.compareTo(a.isActive));
@@ -76,9 +76,10 @@ class _AlarmHomeState extends State<AlarmHome> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => EditScreen(
-                alarm: alarm,
-              )),
+        builder: (context) => EditScreen(
+          alarm: alarm,
+        ),
+      ),
     );
 
     if (!mounted) {
@@ -211,8 +212,8 @@ class _AlarmHomeState extends State<AlarmHome> {
         child: ListView.builder(
           itemCount: _alarms.length,
           itemBuilder: (context, index) => Container(
-            height: 85,
-            margin: const EdgeInsets.all(5),
+            height: 100,
+            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: _alarms[index].isActive == 1
@@ -254,7 +255,7 @@ class _AlarmHomeState extends State<AlarmHome> {
                           padding: EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
                             _alarms[index].getDisplayTime(),
-                            style: TextStyle(fontSize: 35),
+                            style: TextStyle(fontSize: 25),
                           ),
                         ),
                         Expanded(
@@ -266,6 +267,7 @@ class _AlarmHomeState extends State<AlarmHome> {
                               if (_alarms[index].alarmLabel.isNotEmpty)
                                 Text(
                                   _alarms[index].alarmLabel,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(fontSize: 20),
                                 ),
                               Text(
@@ -281,14 +283,14 @@ class _AlarmHomeState extends State<AlarmHome> {
                   ),
                 ),
                 PopupMenuButton(
-                  offset: Offset(0, 85),
+                  offset: Offset(0, 100),
                   onSelected: (value) async {
                     switch (value) {
-                      case 0: // Xóa báo thức
+                      case 0: // delete alarm
                         database.deleteAlarm(_alarms[index].alarmId!);
                         getAlarmData();
                         break;
-                      case 1: // Xem trước báo thức
+                      case 1: // Preview alarm
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -296,11 +298,11 @@ class _AlarmHomeState extends State<AlarmHome> {
                                       alarm: _alarms[index],
                                     )));
                         break;
-                      case 2: // Sao chép báo thức
+                      case 2: // duplicate alarm
                         // deep copy alarm properties
                         var alarm = Alarm.fromMap(_alarms[index].toMap());
 
-                        // đặt lại [alarmId] = null để không xung đột khi insert into table
+                        // set [alarmId] = null to avoid conflict when insert into table
                         alarm.alarmId = null;
 
                         database.insertAlarm(alarm);
